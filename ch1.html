@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter I — Functions · Thomas Calculus</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script>
+  window.CURRENT_CH  = 1;
+  window.CURRENT_SEC = 'overview';
+  window._ch1Sections = ['overview','definition','graphs','combining','trig','types','plotter','quiz'];
+</script>
+</head>
+<body class="sb-open">
+
+<aside id="sidebar"></aside>
+<button id="toggleBtn" onclick="toggleSidebar()" title="Toggle sidebar (S)">☰</button>
+
+<main id="main">
+  <!-- topbar -->
+  <div class="topbar">
+    <div class="topbar-crumb">Chapter I &nbsp;›&nbsp; <span id="crumbSec">Functions and Their Graphs</span></div>
+    <div class="topbar-right">
+      <span class="kb-hint">S sidebar</span>
+      <span class="kb-hint">← → navigate</span>
+      <span class="kb-hint">F fullscreen</span>
+    </div>
+  </div>
+
+  <!-- ══ OVERVIEW ══ -->
+  <div id="page-overview" class="page active">
+  <div class="container">
+    <div class="hero">
+      <div class="badge">Thomas Calculus · Chapter I</div>
+      <h1><span class="hl">Functions</span> and Their Graphs</h1>
+      <p>เรียนรู้แนวคิดพื้นฐานของ Calculus ผ่านภาพและการโต้ตอบ</p>
+    </div>
+    <div class="section-grid">
+      <div class="section-card" onclick="showSec('definition')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="4" cy="7" r="1.5"/><circle cx="4" cy="13" r="1.5"/><circle cx="16" cy="10" r="2"/><path d="M5.5 7.5 C9 8.5 9 9.5 14 10"/><path d="M5.5 12.5 C9 11.5 9 10.5 14 10"/></svg></div>
+        <h3>นิยามของฟังก์ชัน</h3><p>Domain, Range, กฎการจับคู่</p>
+      </div>
+      <div class="section-card" onclick="showSec('graphs')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 18 V2M2 18 H18"/><path d="M3 15 Q7 12 10 10 Q13 8 17 4"/></svg></div>
+        <h3>กราฟของฟังก์ชัน</h3><p>Vertical Line Test, Symmetry</p>
+      </div>
+      <div class="section-card" onclick="showSec('combining')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 18 V2M2 18 H18"/><path d="M3 16 Q7 10 10 10" stroke-opacity=".6"/><path d="M10 10 Q13 10 17 4"/><path d="M10 4 L10 16" stroke-dasharray="2 1.5" stroke-opacity=".5"/></svg></div>
+        <h3>Combining &amp; Transformations</h3><p>f+g · f∘g · Shift · Scale</p>
+      </div>
+      <div class="section-card" onclick="showSec('trig')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 18 V2M2 18 H18"/><path d="M2 10 Q5.5 4 9 10 Q12.5 16 16 10"/><circle cx="11" cy="9" r="3.5" stroke-opacity=".4"/></svg></div>
+        <h3>Trigonometric Functions</h3><p>Unit Circle · sin · cos · tan</p>
+      </div>
+      <div class="section-card" onclick="showSec('types')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 18 V2M2 18 H18"/><path d="M3 15 L17 5" stroke-opacity=".5"/><path d="M3 16 Q10 16 17 4"/><path d="M3 12 Q6 6 10 6 Q14 6 17 12" stroke-opacity=".7"/></svg></div>
+        <h3>ประเภทของฟังก์ชัน</h3><p>Linear, Poly, Trig, Exp, Log</p>
+      </div>
+      <div class="section-card" onclick="showSec('plotter')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 18 V2M2 18 H18"/><path d="M4 14 L7 9 L11 11 L14 6 L17 7" stroke-dasharray="2 1.5"/><circle cx="14" cy="6" r="1.8" fill="currentColor" stroke="none"/></svg></div>
+        <h3>Function Plotter</h3><p>พิมพ์สมการ ดูกราฟทันที</p>
+      </div>
+      <div class="section-card" onclick="showSec('quiz')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="10" cy="10" r="8" stroke-opacity=".35"/><path d="M8 8 Q8 5.5 10 5.5 Q12 5.5 12 7.5 Q12 9.5 10 10 L10 11.5"/><circle cx="10" cy="14" r=".8" fill="currentColor" stroke="none"/></svg></div>
+        <h3>แบบฝึกหัด</h3><p>ทดสอบความเข้าใจ 8 ข้อ</p>
+      </div>
+    </div>
+    <div class="cs" style="margin-top:1.8rem">
+      <h2>Function คืออะไร?</h2>
+      <p>ก่อนจะเข้าสู่ Calculus (Limit, Derivative, Integral) เราต้องเข้าใจ <strong style="color:var(--yellow)">Function</strong> ให้ดีก่อน เพราะ Calculus คือการศึกษา <em>การเปลี่ยนแปลง</em> ของฟังก์ชัน</p>
+      <div class="grid2" style="margin-top:.9rem">
+        <div class="def-box"><div class="lbl">แนวคิดใน Chapter I</div>
+          <ul class="info-list"><li>Function คืออะไร และนิยาม</li><li>Domain และ Range</li><li>กราฟและการอ่านกราฟ</li><li>Piecewise Functions</li></ul></div>
+        <div class="def-box"><div class="lbl">ทำไมต้องรู้?</div>
+          <ul class="info-list"><li>Derivative = อัตราการเปลี่ยนแปลงของ f(x)</li><li>Integral = พื้นที่ใต้กราฟ f(x)</li><li>Limit = พฤติกรรมของ f(x) เมื่อ x→a</li><li>ทุกอย่างใน Calculus เริ่มจากฟังก์ชัน</li></ul></div>
+      </div>
+    </div>
+    <div class="cs">
+      <h2>แผนภาพ Function Machine</h2>
+      <div class="canvas-wrap"><canvas id="overviewCanvas" width="760" height="240"></canvas></div>
+    </div>
+    <div class="page-nav">
+      <span class="page-nav-btn disabled">← ก่อนหน้า</span>
+      <span class="page-nav-ctr">1 / 8</span>
+      <button class="page-nav-btn" onclick="showSec('definition')">นิยามฟังก์ชัน →</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ DEFINITION ══ -->
+  <div id="page-definition" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>1.1 นิยามของฟังก์ชัน</h2>
+      <div class="def-box">
+        <div class="lbl">Definition — Thomas Calculus §1.1</div>
+        <p><strong style="color:var(--yellow)">ฟังก์ชัน (Function)</strong> จาก set D ไปยัง set Y คือ กฎที่นำ <em>ทุก</em> element x ใน D ไปสู่ element <em>หนึ่งตัวเดียว</em> f(x) ใน Y</p>
+        <br><p class="mth">f : D → Y &nbsp;&nbsp; x ↦ f(x)</p>
+      </div>
+
+      <h3>Domain และ Range</h3>
+      <div class="grid2">
+        <div class="thm-box"><div class="lbl">Domain (โดเมน)</div><p>เซตของ input ทั้งหมดที่ฟังก์ชันรับได้</p><div class="formula">D(f) = { x ∈ ℝ | f(x) defined }</div></div>
+        <div class="thm-box"><div class="lbl">Range (เรนจ์)</div><p>เซตของ output ทั้งหมดที่เกิดขึ้นจริง</p><div class="formula">R(f) = { f(x) | x ∈ D }</div></div>
+      </div>
+
+      <h3>"1 input ต้องได้ output เดียวเท่านั้น"</h3>
+      <div class="canvas-wrap">
+        <canvas id="functionTestCanvas" width="640" height="190"></canvas>
+        <div class="controls">
+          <button class="btn on" onclick="drawFunctionTest(true)">✓ เป็นฟังก์ชัน</button>
+          <button class="btn"    onclick="drawFunctionTest(false)">✗ ไม่เป็นฟังก์ชัน</button>
+        </div>
+      </div>
+
+      <h3>การหา Domain</h3>
+      <table>
+        <tr><th>ฟังก์ชัน</th><th>ข้อจำกัด</th><th>Domain</th></tr>
+        <tr><td><code style="color:var(--yellow)">f(x) = x²</code></td><td>ไม่มีข้อจำกัด</td><td><span class="badge b-g">(-∞, +∞)</span></td></tr>
+        <tr><td><code style="color:var(--yellow)">f(x) = 1/x</code></td><td>x ≠ 0</td><td><span class="badge b-b">(-∞,0)∪(0,+∞)</span></td></tr>
+        <tr><td><code style="color:var(--yellow)">f(x) = √x</code></td><td>x ≥ 0</td><td><span class="badge b-y">[0, +∞)</span></td></tr>
+        <tr><td><code style="color:var(--yellow)">f(x) = ln(x)</code></td><td>x > 0</td><td><span class="badge b-y">(0, +∞)</span></td></tr>
+        <tr><td><code style="color:var(--yellow)">f(x) = √(4−x²)</code></td><td>|x| ≤ 2</td><td><span class="badge b-g">[-2, 2]</span></td></tr>
+      </table>
+
+      <h3>Domain & Range เชิงภาพ</h3>
+      <div class="canvas-wrap">
+        <h4>คลิกเพื่อดู Domain & Range</h4>
+        <canvas id="domainCanvas" width="760" height="270"></canvas>
+        <div class="controls">
+          <button class="btn on" id="bD0" onclick="showDomainEx(0)">f(x) = x²</button>
+          <button class="btn"    id="bD1" onclick="showDomainEx(1)">f(x) = √x</button>
+          <button class="btn"    id="bD2" onclick="showDomainEx(2)">f(x) = 1/x</button>
+          <button class="btn"    id="bD3" onclick="showDomainEx(3)">f(x) = √(4−x²)</button>
+        </div>
+      </div>
+
+      <h3>Piecewise Functions (ฟังก์ชันแบบแบ่งส่วน)</h3>
+      <div class="ex-box">
+        <div class="lbl">Example — Absolute Value</div>
+        <div class="formula">|x| = { x &nbsp; ถ้า x ≥ 0<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;−x &nbsp; ถ้า x &lt; 0 }</div>
+      </div>
+      <div class="canvas-wrap">
+        <canvas id="piecewiseCanvas" width="760" height="250"></canvas>
+        <div class="controls">
+          <button class="btn on" id="bPW0" onclick="showPiecewise(0)">|x| — Absolute Value</button>
+          <button class="btn"    id="bPW1" onclick="showPiecewise(1)">Floor ⌊x⌋</button>
+          <button class="btn"    id="bPW2" onclick="showPiecewise(2)">Sign Function</button>
+        </div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('overview')">← ภาพรวม</button>
+      <span class="page-nav-ctr">2 / 8</span>
+      <button class="page-nav-btn" onclick="showSec('graphs')">กราฟของฟังก์ชัน →</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ GRAPHS ══ -->
+  <div id="page-graphs" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>1.2 กราฟของฟังก์ชัน</h2>
+      <div class="def-box">
+        <div class="lbl">Definition — Graph of a Function</div>
+        <p>กราฟของ f คือเซตของคู่อันดับ <span class="mth">(x, f(x))</span> สำหรับทุก x ใน Domain</p>
+      </div>
+
+      <h3>Vertical Line Test</h3>
+      <p>กราฟเป็นกราฟของฟังก์ชัน <strong style="color:var(--green)">ก็ต่อเมื่อ</strong> เส้นตั้งทุกเส้นตัดกราฟ <strong style="color:var(--yellow)">ไม่เกิน 1 จุด</strong></p>
+      <div class="canvas-wrap">
+        <h4>เลื่อน Slider เพื่อทดสอบ Vertical Line Test</h4>
+        <canvas id="vltCanvas" width="760" height="290"></canvas>
+        <div class="controls">
+          <span class="ctrl-label">x =</span>
+          <input type="range" id="vltSlider" min="0" max="100" value="50" oninput="drawVLT(this.value)">
+          <span id="vltVal" style="color:var(--yellow);font-family:monospace;min-width:60px"></span>
+          <button class="btn on" id="bVLT0" onclick="setVLTMode(0)">y = x² (ฟังก์ชัน)</button>
+          <button class="btn"    id="bVLT1" onclick="setVLTMode(1)">วงกลม (ไม่ใช่ฟังก์ชัน)</button>
+        </div>
+      </div>
+
+      <h3>Symmetry (ความสมมาตร)</h3>
+      <div class="grid2">
+        <div class="thm-box"><div class="lbl">Even — สมมาตรแกน y</div><p>f(−x) = f(x)</p><div class="formula">x², cos(x), |x|</div></div>
+        <div class="thm-box"><div class="lbl">Odd — สมมาตรจุดกำเนิด</div><p>f(−x) = −f(x)</p><div class="formula">x³, sin(x), x</div></div>
+      </div>
+      <div class="canvas-wrap">
+        <h4>ความสมมาตรของฟังก์ชัน</h4>
+        <canvas id="symmetryCanvas" width="760" height="270"></canvas>
+        <div class="controls">
+          <button class="btn on" id="bSym0" onclick="showSymmetry(0)">x² — Even</button>
+          <button class="btn"    id="bSym1" onclick="showSymmetry(1)">x³ — Odd</button>
+          <button class="btn"    id="bSym2" onclick="showSymmetry(2)">x²+x — Neither</button>
+          <button class="btn"    id="bSym3" onclick="showSymmetry(3)">|x| — Even</button>
+          <button class="btn"    id="bSym4" onclick="showSymmetry(4)">sin(x) — Odd</button>
+        </div>
+      </div>
+
+      <h3>Increasing / Decreasing</h3>
+      <p style="color:#94a3b8;font-size:.88rem;margin-bottom:.75rem">ฟังก์ชันเดียวกันอาจ <strong style="color:var(--green)">เพิ่ม</strong> ในบางช่วงและ <strong style="color:var(--red)">ลด</strong> ในช่วงอื่น — เราพูดถึง increasing/decreasing เสมอโดยอ้างอิง <em>ช่วง</em> ที่กำหนด ไม่ใช่ทั้งกราฟ</p>
+      <div class="grid2">
+        <div class="def-box">
+          <div class="lbl">Increasing on [a,b]</div>
+          <p><span class="mth">x₁ &lt; x₂ ⟹ f(x₁) &lt; f(x₂)</span></p>
+          <p style="margin-top:.45rem;font-size:.83rem;color:#94a3b8">เมื่อ x เพิ่มขึ้น ค่า f(x) เพิ่มขึ้นตาม — กราฟ<strong style="color:var(--green)"> ไต่ขึ้น</strong>จากซ้ายไปขวา</p>
+        </div>
+        <div class="def-box">
+          <div class="lbl">Decreasing on [a,b]</div>
+          <p><span class="mth">x₁ &lt; x₂ ⟹ f(x₁) &gt; f(x₂)</span></p>
+          <p style="margin-top:.45rem;font-size:.83rem;color:#94a3b8">เมื่อ x เพิ่มขึ้น ค่า f(x) กลับ<strong style="color:var(--red)">ลดลง</strong> — กราฟลาดลงจากซ้ายไปขวา</p>
+        </div>
+      </div>
+      <div class="canvas-wrap"><canvas id="monotonicCanvas" width="760" height="270"></canvas></div>
+      <div class="thm-box" style="margin-top:.65rem">
+        <div class="lbl">ตัวอย่าง: f(x) = x³ − 3x — ช่วง Monotonic</div>
+        <div class="grid2" style="margin-top:.5rem;gap:.5rem">
+          <div>
+            <p><span style="color:var(--green)">↑ Increasing</span> บน <span style="color:var(--yellow)">(-∞, −1)</span> และ <span style="color:var(--yellow)">(1, +∞)</span></p>
+            <p style="margin-top:.3rem"><span style="color:var(--red)">↓ Decreasing</span> บน <span style="color:var(--yellow)">(−1, 1)</span></p>
+          </div>
+          <div>
+            <p>จุดเปลี่ยนที่ x = −1 → <span style="color:var(--yellow)">Local Max = 2</span></p>
+            <p style="margin-top:.3rem">จุดเปลี่ยนที่ x = 1 → <span style="color:var(--yellow)">Local Min = −2</span></p>
+          </div>
+        </div>
+        <p style="margin-top:.55rem;font-size:.82rem;color:#64748b">หมายเหตุ: จุดเปลี่ยนระหว่าง increasing/decreasing คือ "Local Extremum" — จะศึกษาละเอียดใน Chapter IV (Applications of Derivatives)</p>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('definition')">← นิยามฟังก์ชัน</button>
+      <span class="page-nav-ctr">3 / 8</span>
+      <button class="page-nav-btn" onclick="showSec('combining')">Combining Functions →</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ COMBINING ══ -->
+  <div id="page-combining" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>1.2 การรวมฟังก์ชันและการแปลงกราฟ</h2>
+      <p style="color:#94a3b8;font-size:.88rem;margin-bottom:1rem">เมื่อมีฟังก์ชัน f และ g เราสามารถสร้างฟังก์ชันใหม่ได้หลายวิธี ทั้งทางพีชคณิตและการประกอบ</p>
+
+      <h3>การดำเนินการทางพีชคณิต (Arithmetic Combinations)</h3>
+      <div class="grid2">
+        <div class="def-box">
+          <div class="lbl">สูตรพื้นฐาน — Thomas §1.2</div>
+          <div class="formula">(f + g)(x) = f(x) + g(x)</div>
+          <div class="formula">(f − g)(x) = f(x) − g(x)</div>
+          <div class="formula">(f · g)(x) = f(x) · g(x)</div>
+          <div class="formula">(f / g)(x) = f(x)/g(x), &nbsp; g(x) ≠ 0</div>
+        </div>
+        <div class="thm-box">
+          <div class="lbl">Domain ของ Combination</div>
+          <p>D(f+g) = D(f-g) = D(f·g) = D(f) ∩ D(g)</p>
+          <p style="margin-top:.4rem">D(f/g) = D(f) ∩ D(g) ∖ {x : g(x)=0}</p>
+          <p style="margin-top:.6rem;font-size:.82rem;color:#94a3b8">ต้องอยู่ใน Domain ของทั้งสองฟังก์ชัน และ f/g ต้อง g ≠ 0</p>
+        </div>
+      </div>
+
+      <div class="canvas-wrap">
+        <h4>เลือก f(x) และ operation — g(x) = x + 1 (เส้นประสีเขียว)</h4>
+        <canvas id="combineCanvas" width="760" height="240"></canvas>
+        <div class="controls">
+          <button class="btn on" id="bCB0" onclick="setCombBase(0)">f = x²</button>
+          <button class="btn"    id="bCB1" onclick="setCombBase(1)">f = sin x</button>
+          <button class="btn"    id="bCB2" onclick="setCombBase(2)">f = |x|</button>
+          <button class="btn"    id="bCB3" onclick="setCombBase(3)">f = √|x|</button>
+          &nbsp;&nbsp;
+          <button class="btn on" id="bCM0" onclick="setCombMode(0)">f + g</button>
+          <button class="btn"    id="bCM1" onclick="setCombMode(1)">f − g</button>
+          <button class="btn"    id="bCM2" onclick="setCombMode(2)">f · g</button>
+          <button class="btn"    id="bCM3" onclick="setCombMode(3)">f ∘ g</button>
+        </div>
+      </div>
+
+      <h3>การประกอบฟังก์ชัน (Composition)</h3>
+      <div class="def-box">
+        <div class="lbl">Definition — Composite Function</div>
+        <p class="mth">(f ∘ g)(x) = f(g(x))</p>
+        <p style="margin-top:.5rem;font-size:.85rem;color:#94a3b8">อ่านว่า "f composed with g" — นำ output ของ g เป็น input ของ f</p>
+      </div>
+      <div class="ex-box">
+        <div class="lbl">ตัวอย่าง: f(x) = x², g(x) = x + 1</div>
+        <p style="margin-top:.35rem"><strong style="color:var(--yellow)">(f ∘ g)(x)</strong> = f(g(x)) = f(x+1) = <span style="color:var(--green)">(x+1)² = x²+2x+1</span></p>
+        <p style="margin-top:.25rem"><strong style="color:var(--yellow)">(g ∘ f)(x)</strong> = g(f(x)) = g(x²) = <span style="color:var(--green)">x² + 1</span></p>
+        <p style="margin-top:.5rem;color:var(--red);font-size:.84rem">⚠ f∘g ≠ g∘f โดยทั่วไป — Composition ไม่ Commutative</p>
+      </div>
+
+      <h3>การเลื่อนกราฟ (Shifting)</h3>
+      <div class="grid2">
+        <div class="thm-box">
+          <div class="lbl">Vertical Shift</div>
+          <p class="mth">y = f(x) + k</p>
+          <p style="font-size:.83rem;color:#94a3b8;margin-top:.4rem">k &gt; 0 → เลื่อนขึ้น k หน่วย<br>k &lt; 0 → เลื่อนลง |k| หน่วย</p>
+        </div>
+        <div class="thm-box">
+          <div class="lbl">Horizontal Shift</div>
+          <p class="mth">y = f(x − h)</p>
+          <p style="font-size:.83rem;color:#94a3b8;margin-top:.4rem">h &gt; 0 → เลื่อนขวา h หน่วย<br>h &lt; 0 → เลื่อนซ้าย |h| หน่วย</p>
+        </div>
+      </div>
+
+      <h3>การยืด/บีบและสะท้อนกราฟ (Scaling &amp; Reflection)</h3>
+      <div class="grid2">
+        <div class="thm-box">
+          <div class="lbl">Vertical Scale</div>
+          <p class="mth">y = c · f(x)</p>
+          <p style="font-size:.83rem;color:#94a3b8;margin-top:.4rem">c &gt; 1 → ยืดแนวตั้ง (stretch)<br>0 &lt; c &lt; 1 → บีบแนวตั้ง (compress)<br>c &lt; 0 → สะท้อนผ่านแกน x</p>
+        </div>
+        <div class="thm-box">
+          <div class="lbl">Horizontal Scale</div>
+          <p class="mth">y = f(c · x)</p>
+          <p style="font-size:.83rem;color:#94a3b8;margin-top:.4rem">c &gt; 1 → บีบแนวนอน (compress)<br>0 &lt; c &lt; 1 → ยืดแนวนอน (stretch)<br>c &lt; 0 → สะท้อนผ่านแกน y</p>
+        </div>
+      </div>
+
+      <div class="canvas-wrap">
+        <h4>y = a · f(b(x − h)) + k &nbsp;&nbsp;&nbsp; (เส้นประ = ฟังก์ชันเดิม)</h4>
+        <canvas id="transformCanvas" width="760" height="270"></canvas>
+        <div class="controls">
+          <select id="tranBase" onchange="redrawTransform()" style="background:#0f1e2a;color:#e2e8f0;border:1px solid #253850;border-radius:5px;padding:.25rem .5rem;font-size:.8rem">
+            <option value="0">f(x) = x²</option>
+            <option value="1">f(x) = sin(x)</option>
+            <option value="2">f(x) = √|x|</option>
+            <option value="3">f(x) = |x|</option>
+          </select>
+          <span class="ctrl-label">h =</span>
+          <input type="range" id="tranH" min="-30" max="30" value="0" oninput="redrawTransform()">
+          <span id="tranHV" style="color:var(--yellow);font-family:monospace;min-width:32px">0.0</span>
+          <span class="ctrl-label">k =</span>
+          <input type="range" id="tranK" min="-30" max="30" value="0" oninput="redrawTransform()">
+          <span id="tranKV" style="color:var(--yellow);font-family:monospace;min-width:32px">0.0</span>
+          <span class="ctrl-label">a =</span>
+          <input type="range" id="tranA" min="2" max="30" value="10" oninput="redrawTransform()">
+          <span id="tranAV" style="color:var(--green);font-family:monospace;min-width:32px">1.0</span>
+          <span class="ctrl-label">b =</span>
+          <input type="range" id="tranB" min="2" max="30" value="10" oninput="redrawTransform()">
+          <span id="tranBV" style="color:#4cc9f0;font-family:monospace;min-width:32px">1.0</span>
+        </div>
+      </div>
+
+      <h3>สรุป: การแปลงกราฟ</h3>
+      <table>
+        <tr><th>การแปลง</th><th>สูตร</th><th>ผล</th></tr>
+        <tr><td>Shift ขึ้น k หน่วย</td><td><code style="color:var(--yellow)">f(x) + k</code></td><td><span class="badge b-g">เลื่อนขึ้น</span></td></tr>
+        <tr><td>Shift ขวา h หน่วย</td><td><code style="color:var(--yellow)">f(x − h)</code></td><td><span class="badge b-g">เลื่อนขวา</span></td></tr>
+        <tr><td>Vertical stretch</td><td><code style="color:var(--yellow)">c·f(x), c&gt;1</code></td><td><span class="badge b-b">ยืดแนวตั้ง</span></td></tr>
+        <tr><td>Vertical compress</td><td><code style="color:var(--yellow)">c·f(x), 0&lt;c&lt;1</code></td><td><span class="badge b-y">บีบแนวตั้ง</span></td></tr>
+        <tr><td>Reflect แกน x</td><td><code style="color:var(--yellow)">−f(x)</code></td><td><span class="badge" style="background:#e9456022;color:var(--red)">สะท้อน</span></td></tr>
+        <tr><td>Horizontal compress</td><td><code style="color:var(--yellow)">f(cx), c&gt;1</code></td><td><span class="badge b-b">บีบแนวนอน</span></td></tr>
+      </table>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('graphs')">← กราฟของฟังก์ชัน</button>
+      <span class="page-nav-ctr">4 / 8</span>
+      <button class="page-nav-btn" onclick="showSec('trig')">Trigonometric Functions →</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ TRIG ══ -->
+  <div id="page-trig" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>1.3 ฟังก์ชันตรีโกณมิติ (Trigonometric Functions)</h2>
+
+      <div class="def-box">
+        <div class="lbl">Unit Circle — วงกลมหนึ่งหน่วย</div>
+        <p>วงกลมรัศมี 1 ที่จุดกำเนิด x² + y² = 1 &nbsp; สำหรับมุม θ จุดบนวงกลมคือ <span class="mth">(cos θ, sin θ)</span></p>
+      </div>
+
+      <div class="canvas-wrap">
+        <h4>Unit Circle — เลื่อน Slider เพื่อเปลี่ยนมุม θ</h4>
+        <canvas id="unitCircleCanvas" width="760" height="300"></canvas>
+        <div class="controls">
+          <span class="ctrl-label">θ =</span>
+          <input type="range" id="ucAngle" min="0" max="360" value="45" oninput="redrawUnitCircle()">
+          <span id="ucDegVal" style="color:var(--yellow);font-family:monospace;min-width:50px">45°</span>
+          <button class="btn" onclick="document.getElementById('ucAngle').value=0;redrawUnitCircle()">0°</button>
+          <button class="btn" onclick="document.getElementById('ucAngle').value=30;redrawUnitCircle()">30°</button>
+          <button class="btn" onclick="document.getElementById('ucAngle').value=45;redrawUnitCircle()">45°</button>
+          <button class="btn" onclick="document.getElementById('ucAngle').value=60;redrawUnitCircle()">60°</button>
+          <button class="btn" onclick="document.getElementById('ucAngle').value=90;redrawUnitCircle()">90°</button>
+          <button class="btn" onclick="document.getElementById('ucAngle').value=180;redrawUnitCircle()">180°</button>
+          <button class="btn" onclick="document.getElementById('ucAngle').value=270;redrawUnitCircle()">270°</button>
+        </div>
+      </div>
+
+      <h3>ฟังก์ชันตรีโกณมิติทั้ง 6</h3>
+      <table>
+        <tr><th>ฟังก์ชัน</th><th>นิยาม</th><th>Domain</th><th>Range</th><th>Period</th></tr>
+        <tr><td><strong style="color:#4cc9f0">sin(x)</strong></td><td>y-coord บน unit circle</td><td>ℝ</td><td>[−1, 1]</td><td>2π</td></tr>
+        <tr><td><strong style="color:#00d4aa">cos(x)</strong></td><td>x-coord บน unit circle</td><td>ℝ</td><td>[−1, 1]</td><td>2π</td></tr>
+        <tr><td><strong style="color:#ffd166">tan(x)</strong></td><td>sin(x)/cos(x)</td><td>x ≠ π/2+nπ</td><td>ℝ</td><td>π</td></tr>
+        <tr><td><strong style="color:#b5179e">csc(x)</strong></td><td>1/sin(x)</td><td>x ≠ nπ</td><td>(−∞,−1]∪[1,∞)</td><td>2π</td></tr>
+        <tr><td><strong style="color:#e94560">sec(x)</strong></td><td>1/cos(x)</td><td>x ≠ π/2+nπ</td><td>(−∞,−1]∪[1,∞)</td><td>2π</td></tr>
+        <tr><td><strong style="color:#4a5a70">cot(x)</strong></td><td>cos(x)/sin(x)</td><td>x ≠ nπ</td><td>ℝ</td><td>π</td></tr>
+      </table>
+
+      <div class="canvas-wrap">
+        <h4>กราฟฟังก์ชันตรีโกณมิติ — เลือกฟังก์ชัน</h4>
+        <canvas id="trig6Canvas" width="760" height="250"></canvas>
+        <div class="controls">
+          <button class="btn on" id="bT6s"  onclick="setTrig6('sin')">sin(x)</button>
+          <button class="btn"    id="bT6c"  onclick="setTrig6('cos')">cos(x)</button>
+          <button class="btn"    id="bT6t"  onclick="setTrig6('tan')">tan(x)</button>
+          <button class="btn"    id="bT6sc" onclick="setTrig6('csc')">csc(x)</button>
+          <button class="btn"    id="bT6se" onclick="setTrig6('sec')">sec(x)</button>
+          <button class="btn"    id="bT6ct" onclick="setTrig6('cot')">cot(x)</button>
+        </div>
+      </div>
+
+      <h3>การแปลงฟังก์ชัน Sine: y = A sin(Bx + C) + D</h3>
+      <div class="grid2">
+        <div class="thm-box"><div class="lbl">พารามิเตอร์</div>
+          <p><strong style="color:var(--yellow)">A</strong> = Amplitude &nbsp; (ระยะสูงสุดจากแกน x)</p>
+          <p style="margin-top:.3rem"><strong style="color:var(--green)">B</strong> = ความถี่ &nbsp; Period T = 2π/|B|</p>
+          <p style="margin-top:.3rem"><strong style="color:#4cc9f0">C</strong> = Phase shift ซ้าย/ขวา −C/B</p>
+          <p style="margin-top:.3rem"><strong style="color:#b5179e">D</strong> = Vertical shift</p>
+        </div>
+        <div class="ex-box"><div class="lbl">ตัวอย่าง: y = 2 sin(3x − π) + 1</div>
+          <p style="margin-top:.35rem;font-size:.85rem">A = 2 → สูงสุด/ต่ำสุด ±2</p>
+          <p style="margin-top:.2rem;font-size:.85rem">B = 3 → Period = 2π/3 ≈ 2.09</p>
+          <p style="margin-top:.2rem;font-size:.85rem">C = −π → Phase shift = π/3 ขวา</p>
+          <p style="margin-top:.2rem;font-size:.85rem">D = 1 → เลื่อนขึ้น 1 หน่วย</p>
+        </div>
+      </div>
+
+      <div class="canvas-wrap">
+        <h4>y = A sin(Bx + C) + D &nbsp;&nbsp; (เส้นประ = sin(x) เดิม)</h4>
+        <canvas id="sinTransCanvas" width="760" height="260"></canvas>
+        <div class="controls">
+          <span class="ctrl-label">A =</span>
+          <input type="range" id="stA" min="2" max="30" value="10" oninput="redrawSinTrans()">
+          <span id="stAV" style="color:var(--yellow);font-family:monospace;min-width:32px">1.0</span>
+          <span class="ctrl-label">B =</span>
+          <input type="range" id="stB" min="2" max="30" value="10" oninput="redrawSinTrans()">
+          <span id="stBV" style="color:var(--green);font-family:monospace;min-width:32px">1.0</span>
+          <span class="ctrl-label">C =</span>
+          <input type="range" id="stC" min="-31" max="31" value="0" oninput="redrawSinTrans()">
+          <span id="stCV" style="color:#4cc9f0;font-family:monospace;min-width:50px">0.00</span>
+          <span class="ctrl-label">D =</span>
+          <input type="range" id="stD" min="-20" max="20" value="0" oninput="redrawSinTrans()">
+          <span id="stDV" style="color:#b5179e;font-family:monospace;min-width:32px">0.0</span>
+        </div>
+      </div>
+
+      <h3>สูตรตรีโกณมิติที่สำคัญ</h3>
+      <div class="grid2">
+        <div class="def-box"><div class="lbl">Pythagorean Identities</div>
+          <div class="formula">sin²x + cos²x = 1</div>
+          <div class="formula">1 + tan²x = sec²x</div>
+          <div class="formula">1 + cot²x = csc²x</div>
+        </div>
+        <div class="def-box"><div class="lbl">Double Angle</div>
+          <div class="formula">sin(2x) = 2 sin x cos x</div>
+          <div class="formula">cos(2x) = cos²x − sin²x</div>
+          <div class="formula">cos(2x) = 2cos²x − 1 = 1 − 2sin²x</div>
+        </div>
+      </div>
+      <div class="grid2" style="margin-top:.8rem">
+        <div class="def-box"><div class="lbl">Sum / Difference</div>
+          <div class="formula">sin(A±B) = sinA cosB ± cosA sinB</div>
+          <div class="formula">cos(A±B) = cosA cosB ∓ sinA sinB</div>
+        </div>
+        <div class="def-box"><div class="lbl">Half-Angle (Power Reduction)</div>
+          <div class="formula">sin²x = (1 − cos 2x) / 2</div>
+          <div class="formula">cos²x = (1 + cos 2x) / 2</div>
+        </div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('combining')">← Combining Functions</button>
+      <span class="page-nav-ctr">5 / 8</span>
+      <button class="page-nav-btn" onclick="showSec('types')">ประเภทฟังก์ชัน →</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ TYPES ══ -->
+  <div id="page-types" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>1.3 ประเภทของฟังก์ชัน</h2>
+
+      <h3>1. Linear Function</h3>
+      <div class="def-box"><div class="lbl">รูปแบบ</div><p class="mth">f(x) = mx + b &nbsp;&nbsp; (m = slope, b = y-intercept)</p></div>
+      <div class="canvas-wrap">
+        <canvas id="linearCanvas" width="760" height="210"></canvas>
+        <div class="controls">
+          <span class="ctrl-label">slope m =</span>
+          <input type="range" id="slopeSlider" min="-30" max="30" value="10" oninput="drawLinear()">
+          <span id="slopeVal" style="color:var(--yellow);font-family:monospace;min-width:32px">1.0</span>
+          <span class="ctrl-label">intercept b =</span>
+          <input type="range" id="interceptSlider" min="-30" max="30" value="0" oninput="drawLinear()">
+          <span id="interceptVal" style="color:var(--yellow);font-family:monospace;min-width:32px">0.0</span>
+        </div>
+      </div>
+
+      <h3>2. Polynomial Function</h3>
+      <div class="def-box"><div class="lbl">รูปแบบทั่วไป</div><p class="mth">p(x) = aₙxⁿ + aₙ₋₁xⁿ⁻¹ + … + a₁x + a₀</p></div>
+      <div class="canvas-wrap">
+        <canvas id="polyCanvas" width="760" height="230"></canvas>
+        <div class="controls">
+          <button class="btn on" id="bPoly0" onclick="showPoly(0)">x</button>
+          <button class="btn"    id="bPoly1" onclick="showPoly(1)">x²</button>
+          <button class="btn"    id="bPoly2" onclick="showPoly(2)">x³</button>
+          <button class="btn"    id="bPoly3" onclick="showPoly(3)">x⁴−4x²</button>
+          <button class="btn"    id="bPoly4" onclick="showPoly(4)">x³−3x</button>
+        </div>
+      </div>
+
+      <h3>3. Rational Function</h3>
+      <p>อัตราส่วนของ polynomial สองตัว — มักมี Asymptote</p>
+      <div class="canvas-wrap">
+        <canvas id="rationalCanvas" width="760" height="240"></canvas>
+        <div class="controls">
+          <button class="btn on" id="bRat0" onclick="showRational(0)">1/x</button>
+          <button class="btn"    id="bRat1" onclick="showRational(1)">1/x²</button>
+          <button class="btn"    id="bRat2" onclick="showRational(2)">x/(x−1)</button>
+        </div>
+      </div>
+
+      <h3>4. Trigonometric Functions</h3>
+      <div class="canvas-wrap">
+        <canvas id="trigCanvas" width="760" height="230"></canvas>
+        <div class="controls">
+          <button class="btn on" id="bTrig0" onclick="showTrig(0)">sin(x)</button>
+          <button class="btn"    id="bTrig1" onclick="showTrig(1)">cos(x)</button>
+          <button class="btn"    id="bTrig2" onclick="showTrig(2)">tan(x)</button>
+          <button class="btn"    id="bTrig3" onclick="showTrig(3)">sin & cos</button>
+          <span class="ctrl-label">Amplitude A =</span>
+          <input type="range" id="ampSlider" min="5" max="30" value="10" oninput="redrawTrig()">
+          <span id="ampVal" style="color:var(--yellow);font-family:monospace">1.0</span>
+        </div>
+      </div>
+
+      <h3>5. Exponential & Logarithmic</h3>
+      <div class="grid2">
+        <div class="def-box"><div class="lbl">Exponential</div><p class="mth">f(x) = aˣ, a > 0, a ≠ 1 &nbsp; (e ≈ 2.718)</p></div>
+        <div class="def-box"><div class="lbl">Logarithmic</div><p class="mth">f(x) = logₐ(x) &nbsp; ln = log_e</p></div>
+      </div>
+      <div class="canvas-wrap">
+        <canvas id="explogCanvas" width="760" height="250"></canvas>
+        <div class="controls">
+          <button class="btn on" id="bEL0" onclick="showExpLog(0)">eˣ</button>
+          <button class="btn"    id="bEL1" onclick="showExpLog(1)">2ˣ</button>
+          <button class="btn"    id="bEL2" onclick="showExpLog(2)">ln(x)</button>
+          <button class="btn"    id="bEL3" onclick="showExpLog(3)">log₂(x)</button>
+          <button class="btn"    id="bEL4" onclick="showExpLog(4)">eˣ & ln(x) — inverse</button>
+        </div>
+      </div>
+
+      <h3>สรุป</h3>
+      <table>
+        <tr><th>ประเภท</th><th>รูปแบบ</th><th>Domain</th><th>ลักษณะ</th></tr>
+        <tr><td>Linear</td><td>mx+b</td><td>ℝ</td><td><span class="badge b-g">เส้นตรง</span></td></tr>
+        <tr><td>Polynomial</td><td>aₙxⁿ+…</td><td>ℝ</td><td><span class="badge b-b">smooth curve</span></td></tr>
+        <tr><td>Rational</td><td>p(x)/q(x)</td><td>q≠0</td><td><span class="badge b-y">มี Asymptote</span></td></tr>
+        <tr><td>sin, cos</td><td>sin(x), cos(x)</td><td>ℝ</td><td><span class="badge b-g">Period 2π</span></td></tr>
+        <tr><td>Exponential</td><td>aˣ</td><td>ℝ</td><td><span class="badge b-y">เพิ่มเร็วมาก</span></td></tr>
+        <tr><td>Logarithmic</td><td>logₐ(x)</td><td>(0,∞)</td><td><span class="badge b-b">Inverse ของ exp</span></td></tr>
+      </table>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('trig')">← Trigonometric Functions</button>
+      <span class="page-nav-ctr">6 / 8</span>
+      <button class="page-nav-btn" onclick="showSec('plotter')">Plotter →</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ PLOTTER ══ -->
+  <div id="page-plotter" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>Function Plotter</h2>
+      <div class="canvas-wrap">
+        <h4>พิมพ์สมการ แล้วกด Enter หรือปุ่ม Plot</h4>
+        <div style="display:flex;gap:.5rem;margin-bottom:.65rem;align-items:center;flex-wrap:wrap">
+          <input type="text" id="funcInput" value="x*x" placeholder="f(x) = ..." oninput="plotCustom()">
+          <button class="btn on" onclick="plotCustom()">Plot</button>
+          <span id="funcError" style="color:var(--red);font-size:.76rem"></span>
+        </div>
+        <canvas id="plotterCanvas" width="760" height="360"></canvas>
+        <div class="controls">
+          <span class="ctrl-label">Zoom x ±</span>
+          <input type="range" id="zoomSlider" min="1" max="50" value="5" oninput="plotCustom()">
+          <span id="zoomVal" style="color:var(--yellow);font-family:monospace">5</span>
+        </div>
+      </div>
+      <h3>ตัวอย่าง</h3>
+      <div style="display:flex;flex-wrap:wrap;gap:.4rem">
+        <button class="btn" onclick="setFunc('x*x')">x²</button>
+        <button class="btn" onclick="setFunc('x*x*x')">x³</button>
+        <button class="btn" onclick="setFunc('1/x')">1/x</button>
+        <button class="btn" onclick="setFunc('Math.sqrt(Math.abs(x))')">√|x|</button>
+        <button class="btn" onclick="setFunc('Math.sin(x)')">sin(x)</button>
+        <button class="btn" onclick="setFunc('Math.cos(x)')">cos(x)</button>
+        <button class="btn" onclick="setFunc('Math.tan(x)')">tan(x)</button>
+        <button class="btn" onclick="setFunc('Math.exp(x)')">eˣ</button>
+        <button class="btn" onclick="setFunc('Math.log(Math.abs(x))')">ln|x|</button>
+        <button class="btn" onclick="setFunc('x*x - 4')">x²−4</button>
+        <button class="btn" onclick="setFunc('x*x*x - 3*x')">x³−3x</button>
+        <button class="btn" onclick="setFunc('Math.sin(x)/x')">sin(x)/x</button>
+        <button class="btn" onclick="setFunc('Math.abs(x)')">|x|</button>
+        <button class="btn" onclick="setFunc('x*Math.sin(x)')">x·sin(x)</button>
+      </div>
+      <h3 style="margin-top:1.1rem">วิธีเขียนสมการ</h3>
+      <table>
+        <tr><th>ต้องการ</th><th>พิมพ์</th></tr>
+        <tr><td>x²</td><td><code style="color:var(--yellow)">x*x</code></td></tr>
+        <tr><td>sin(x)</td><td><code style="color:var(--yellow)">Math.sin(x)</code></td></tr>
+        <tr><td>√x</td><td><code style="color:var(--yellow)">Math.sqrt(x)</code></td></tr>
+        <tr><td>eˣ</td><td><code style="color:var(--yellow)">Math.exp(x)</code></td></tr>
+        <tr><td>ln(x)</td><td><code style="color:var(--yellow)">Math.log(x)</code></td></tr>
+        <tr><td>|x|</td><td><code style="color:var(--yellow)">Math.abs(x)</code></td></tr>
+      </table>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('types')">← ประเภทฟังก์ชัน</button>
+      <span class="page-nav-ctr">7 / 8</span>
+      <button class="page-nav-btn" onclick="showSec('quiz')">แบบฝึกหัด →</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ QUIZ ══ -->
+  <div id="page-quiz" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>แบบฝึกหัด Chapter I</h2>
+      <div id="quizContainer"></div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('plotter')">← Plotter</button>
+      <span class="page-nav-ctr">8 / 8</span>
+      <a class="page-nav-btn" href="ch2.html">Chapter II: Limits →</a>
+    </div>
+  </div>
+  </div>
+</main>
+
+<script src="sidebar.js"></script>
+<script>
+// ══ CANVAS HELPERS ══
+// Palette is theme-aware (see theme.js). let + applyCanvasTheme() so the colors
+// can change when the user toggles light/dark; draw functions read live bindings.
+let BG,GRID,AXIS,BLUE,GREEN,YELLOW,RED,PURPLE,MUTED,SURFACE,ON_SURFACE,LIGHT;
+function applyCanvasTheme(){ const t=window.CanvasTheme.get(); LIGHT=window.CanvasTheme.isLight();
+  BG=t.BG;GRID=t.GRID;AXIS=t.AXIS;BLUE=t.BLUE;GREEN=t.GREEN;YELLOW=t.YELLOW;
+  RED=t.RED;PURPLE=t.PURPLE;MUTED=t.MUTED;SURFACE=t.SURFACE;ON_SURFACE=t.ON_SURFACE; }
+applyCanvasTheme();
+window._redrawCanvases=function(){ applyCanvasTheme(); initSec(window.CURRENT_SEC||'overview'); };
+
+function setupCanvas(id,W,H){
+  const cv=document.getElementById(id); if(!cv)return null;
+  const dpr=Math.min(window.devicePixelRatio||1,2);
+  cv.width=W*dpr; cv.height=H*dpr; cv.style.width=W+'px'; cv.style.height=H+'px';
+  const ctx=cv.getContext('2d'); ctx.scale(dpr,dpr); return{ctx,W,H};
+}
+function drawGrid(ctx,W,H,xMin,xMax,yMin,yMax){
+  ctx.fillStyle=BG; ctx.fillRect(0,0,W,H);
+  const toX=x=>(x-xMin)/(xMax-xMin)*W, toY=y=>H-(y-yMin)/(yMax-yMin)*H;
+  ctx.strokeStyle=GRID; ctx.lineWidth=.5;
+  for(let x=Math.ceil(xMin);x<=xMax;x++){ctx.beginPath();ctx.moveTo(toX(x),0);ctx.lineTo(toX(x),H);ctx.stroke();}
+  for(let y=Math.ceil(yMin);y<=yMax;y++){ctx.beginPath();ctx.moveTo(0,toY(y));ctx.lineTo(W,toY(y));ctx.stroke();}
+  ctx.strokeStyle=AXIS; ctx.lineWidth=1.5;
+  if(yMin<=0&&yMax>=0){ctx.beginPath();ctx.moveTo(0,toY(0));ctx.lineTo(W,toY(0));ctx.stroke();}
+  if(xMin<=0&&xMax>=0){ctx.beginPath();ctx.moveTo(toX(0),0);ctx.lineTo(toX(0),H);ctx.stroke();}
+  ctx.fillStyle=MUTED; ctx.font='10px monospace'; ctx.textAlign='center';
+  for(let x=Math.ceil(xMin);x<=xMax;x++) if(x!==0)ctx.fillText(x,toX(x),toY(0)+13);
+  ctx.textAlign='right';
+  for(let y=Math.ceil(yMin);y<=yMax;y++) if(y!==0)ctx.fillText(y,toX(0)-3,toY(y)+4);
+  return{toX,toY};
+}
+function plotFn(ctx,fn,xMin,xMax,W,H,yMin,yMax,col,lw=2){
+  const toX=x=>(x-xMin)/(xMax-xMin)*W, toY=y=>H-(y-yMin)/(yMax-yMin)*H;
+  ctx.strokeStyle=col; ctx.lineWidth=lw; ctx.beginPath();
+  let ok=false;
+  for(let i=0;i<=W*2;i++){
+    const x=xMin+i/(W*2)*(xMax-xMin);
+    let y; try{y=fn(x);}catch(e){ok=false;continue;}
+    if(!isFinite(y)||Math.abs(y)>1e6){ok=false;continue;}
+    const px=toX(x),py=toY(y);
+    if(!ok){ctx.moveTo(px,py);ok=true;}else ctx.lineTo(px,py);
+  }
+  ctx.stroke();
+}
+function arrow(ctx,x1,y1,x2,y2){
+  const a=Math.atan2(y2-y1,x2-x1);
+  ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(x2,y2);
+  ctx.lineTo(x2-10*Math.cos(a-.4),y2-10*Math.sin(a-.4));
+  ctx.lineTo(x2-10*Math.cos(a+.4),y2-10*Math.sin(a+.4));
+  ctx.closePath();ctx.fill();
+}
+function oval(ctx,x,y,rx,ry,col){
+  ctx.strokeStyle=col; ctx.lineWidth=1.5; ctx.fillStyle=col+'18';
+  ctx.beginPath(); ctx.ellipse(x,y,rx,ry,0,0,2*Math.PI); ctx.fill(); ctx.stroke();
+}
+function dot(ctx,x,y,r,col){ctx.beginPath();ctx.arc(x,y,r,0,2*Math.PI);ctx.fillStyle=col;ctx.fill();}
+function rrect(ctx,x,y,w,h,r,fill,stroke){
+  ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.arcTo(x+w,y,x+w,y+r,r);
+  ctx.lineTo(x+w,y+h-r);ctx.arcTo(x+w,y+h,x+w-r,y+h,r);ctx.lineTo(x+r,y+h);
+  ctx.arcTo(x,y+h,x,y+h-r,r);ctx.lineTo(x,y+r);ctx.arcTo(x,y,x+r,y,r);ctx.closePath();
+  if(fill)ctx.fill(); if(stroke)ctx.stroke();
+}
+
+// ══ SECTION NAVIGATION ══
+const CRUMBS={overview:'Functions and Their Graphs',definition:'1.1 นิยามของฟังก์ชัน',graphs:'1.2 กราฟของฟังก์ชัน',combining:'1.2 Combining Functions & Transformations',trig:'1.3 Trigonometric Functions',types:'ประเภทของฟังก์ชัน',plotter:'Function Plotter',quiz:'แบบฝึกหัด'};
+window.showSec=function(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.getElementById('crumbSec').textContent=CRUMBS[id]||id;
+  window.CURRENT_SEC=id;
+  if(window.setSidebarSec) setSidebarSec(id);
+  document.getElementById('main').scrollTop=0;
+  setTimeout(()=>initSec(id),60);
+};
+function initSec(id){
+  if(id==='overview')   drawOverview();
+  if(id==='definition'){drawFunctionTest(true);showDomainEx(0);showPiecewise(0);}
+  if(id==='graphs')     {drawVLT(50);showSymmetry(0);drawMonotonic();}
+  if(id==='combining')  {setCombBase(0);setCombMode(0);redrawTransform();}
+  if(id==='trig')       {redrawUnitCircle();setTrig6('sin');redrawSinTrans();}
+  if(id==='types')      {drawLinear();showPoly(0);showRational(0);showTrig(0);showExpLog(0);}
+  if(id==='plotter')    plotCustom();
+  if(id==='quiz')       initQuiz();
+}
+
+// ══ OVERVIEW ══
+function drawOverview(){
+  const c=setupCanvas('overviewCanvas',760,240);if(!c)return;
+  const{ctx,W,H}=c;
+  ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);
+
+  // ── layout (all derived from W/H so it's always centered) ──
+  const cy=H/2;                          // vertical center = 120
+  const ORX=56, ORY=76;                  // oval radii
+  const BW=178, BH=62;                   // machine box size
+  const GAP=46;                          // arrow gap between oval edge and box
+  // total span = 2*ORX (domain) + GAP + BW + GAP + 2*ORX (range)
+  const SPAN=ORX*4+GAP*2+BW;            // = 224+92+178 = 494
+  const LM=(W-SPAN)/2;                   // left margin = 133
+  const DCX=LM+ORX;                      // domain oval center x  = 189
+  const BX=LM+ORX*2+GAP;                // box left x            = 291
+  const BCX=BX+BW/2;                    // box center x          = 380 = W/2
+  const RCX=BX+BW+GAP+ORX;             // range oval center x   = 571
+
+  // sample values: x=1,2,3 → f(x)=1,4,9
+  const dVals=[1,2,3], rVals=[1,4,9];
+  const COLS=[RED,GREEN,PURPLE];
+  const STEP=40;
+  const dYs=[cy-STEP, cy, cy+STEP];    // [80, 120, 160]
+
+  // ── Domain oval ──
+  oval(ctx,DCX,cy,ORX,ORY,BLUE);
+  ctx.fillStyle=BLUE;ctx.font='bold 10px monospace';ctx.textAlign='center';
+  ctx.fillText('Domain D',DCX,cy-ORY+14);
+
+  dYs.forEach((y,i)=>{
+    dot(ctx,DCX,y,4,BLUE);
+    ctx.fillStyle=LIGHT?ON_SURFACE:'#b8cce0';ctx.font='11px monospace';ctx.textAlign='center';
+    ctx.fillText('x = '+dVals[i],DCX,y+13);
+  });
+
+  // ── Machine box ──
+  ctx.fillStyle=LIGHT?SURFACE:'#0b1e0b';ctx.strokeStyle=GREEN;ctx.lineWidth=1.8;
+  rrect(ctx,BX,cy-BH/2,BW,BH,11,true,true);
+  ctx.fillStyle=GREEN;ctx.font='bold 14px monospace';ctx.textAlign='center';
+  ctx.fillText('f (x) = x²',BCX,cy+5);
+  ctx.fillStyle=MUTED;ctx.font='10px sans-serif';
+  ctx.fillText('Function Machine',BCX,cy+21);
+
+  // ── Range oval ──
+  oval(ctx,RCX,cy,ORX,ORY,YELLOW);
+  ctx.fillStyle=YELLOW;ctx.font='bold 10px monospace';ctx.textAlign='center';
+  ctx.fillText('Range R',RCX,cy-ORY+14);
+
+  dYs.forEach((y,i)=>{
+    dot(ctx,RCX,y,4,YELLOW);
+    ctx.fillStyle=LIGHT?ON_SURFACE:'#e0d090';ctx.font='11px monospace';ctx.textAlign='center';
+    ctx.fillText('f(x) = '+rVals[i],RCX,y+13);
+  });
+
+  // ── Mapping arrows (bezier fan-in / fan-out) ──
+  const LX=DCX+ORX, RX=RCX-ORX;
+  dYs.forEach((y,i)=>{
+    ctx.strokeStyle=COLS[i];ctx.lineWidth=1.5;ctx.globalAlpha=0.8;
+    // fan-in: domain dot → machine left center
+    ctx.beginPath();
+    ctx.moveTo(LX,y);
+    ctx.bezierCurveTo(LX+GAP*0.6,y, LX+GAP*0.6,cy, BX,cy);
+    ctx.stroke();
+    // fan-out: machine right center → range dot
+    ctx.beginPath();
+    ctx.moveTo(BX+BW,cy);
+    ctx.bezierCurveTo(RX-GAP*0.6,cy, RX-GAP*0.6,y, RX,y);
+    ctx.stroke();
+    // arrowhead at range oval entry
+    ctx.globalAlpha=1;
+    ctx.fillStyle=COLS[i];
+    ctx.beginPath();ctx.moveTo(RX,y);ctx.lineTo(RX-7,y-3.5);ctx.lineTo(RX-7,y+3.5);ctx.closePath();ctx.fill();
+  });
+  ctx.globalAlpha=1;
+
+  // ── bottom labels ──
+  ctx.fillStyle=MUTED;ctx.font='10px sans-serif';ctx.textAlign='center';
+  ctx.fillText('input x',DCX,cy+ORY+14);
+  ctx.fillText('output f(x)',RCX,cy+ORY+14);
+}
+
+// ══ FUNCTION TEST ══
+function drawFunctionTest(isFunc){
+  const c=setupCanvas('functionTestCanvas',640,190);if(!c)return;
+  const{ctx,W,H}=c; ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);
+  [[80,BLUE,'Domain'],[280,YELLOW,'Range']].forEach(([x,col,lbl])=>{
+    oval(ctx,x,110,45,80,col);
+    ctx.fillStyle=col;ctx.font='bold 11px monospace';ctx.textAlign='center';ctx.fillText(lbl,x,20);
+    [60,100,140].forEach(py=>{dot(ctx,x,py,5,col);});
+  });
+  if(isFunc){
+    [[60,60],[100,100],[140,140]].forEach(([y1,y2])=>{
+      ctx.strokeStyle=GREEN;ctx.lineWidth=1.8;
+      ctx.beginPath();ctx.moveTo(125,y1);ctx.bezierCurveTo(175,y1,175,y2,235,y2);ctx.stroke();
+      ctx.fillStyle=GREEN;ctx.beginPath();ctx.moveTo(235,y2);ctx.lineTo(227,y2-4);ctx.lineTo(227,y2+4);ctx.closePath();ctx.fill();
+    });
+    ctx.fillStyle=GREEN;ctx.font='bold 12px sans-serif';ctx.textAlign='center';
+    ctx.fillText('✓ Function — ทุก x ได้ f(x) เดียว',W/2+90,174);
+  }else{
+    [[60,[60,100]],[100,[140]],[140,[180]]].forEach(([y1,ys],i)=>{
+      ys.forEach(y2=>{
+        ctx.strokeStyle=i===0?RED:BLUE;ctx.lineWidth=1.8;
+        ctx.beginPath();ctx.moveTo(125,y1);ctx.bezierCurveTo(175,y1,175,y2,235,y2);ctx.stroke();
+        ctx.fillStyle=i===0?RED:BLUE;ctx.beginPath();ctx.moveTo(235,y2);ctx.lineTo(227,y2-4);ctx.lineTo(227,y2+4);ctx.closePath();ctx.fill();
+      });
+    });
+    ctx.fillStyle=RED;ctx.font='bold 12px sans-serif';ctx.textAlign='center';
+    ctx.fillText('✗ ไม่ใช่ฟังก์ชัน — 1 input → 2 outputs',W/2+90,174);
+  }
+}
+
+// ══ DOMAIN EXAMPLES ══
+const domExs=[
+  {fn:x=>x*x,       lbl:'f(x) = x²',      dom:'(-∞, +∞)',col:BLUE,  xMin:-4,xMax:4,yMin:-1,yMax:16},
+  {fn:x=>Math.sqrt(x),lbl:'f(x) = √x',    dom:'[0, +∞)', col:GREEN, xMin:-1,xMax:9,yMin:-1,yMax:4},
+  {fn:x=>1/x,       lbl:'f(x) = 1/x',     dom:'x ≠ 0',   col:YELLOW,xMin:-4,xMax:4,yMin:-5,yMax:5},
+  {fn:x=>Math.sqrt(4-x*x),lbl:'f(x)=√(4−x²)',dom:'[−2,2]',col:PURPLE,xMin:-4,xMax:4,yMin:-1,yMax:4},
+];
+function showDomainEx(i){
+  document.querySelectorAll('[id^=bD]').forEach((b,j)=>b.classList.toggle('on',j===i));
+  const ex=domExs[i];
+  const c=setupCanvas('domainCanvas',760,270);if(!c)return;
+  const{ctx,W,H}=c;
+  const{toX,toY}=drawGrid(ctx,W,H,ex.xMin,ex.xMax,ex.yMin,ex.yMax);
+  plotFn(ctx,ex.fn,ex.xMin,ex.xMax,W,H,ex.yMin,ex.yMax,ex.col,2.5);
+  ctx.strokeStyle=ex.col;ctx.lineWidth=3;
+  if(i===0){ctx.beginPath();ctx.moveTo(0,toY(0));ctx.lineTo(W,toY(0));ctx.stroke();}
+  else if(i===1){ctx.beginPath();ctx.moveTo(toX(0),toY(0));ctx.lineTo(W,toY(0));ctx.stroke();}
+  else if(i===2){ctx.beginPath();ctx.moveTo(0,toY(0));ctx.lineTo(toX(-.12),toY(0));ctx.stroke();ctx.beginPath();ctx.moveTo(toX(.12),toY(0));ctx.lineTo(W,toY(0));ctx.stroke();}
+  else{ctx.beginPath();ctx.moveTo(toX(-2),toY(0));ctx.lineTo(toX(2),toY(0));ctx.stroke();[-2,2].forEach(px=>{dot(ctx,toX(px),toY(0),5,ex.col);});}
+  ctx.fillStyle=ex.col;ctx.font='bold 13px monospace';ctx.textAlign='left';ctx.fillText(ex.lbl,10,20);
+  ctx.fillStyle=MUTED;ctx.font='12px monospace';ctx.fillText('Domain: '+ex.dom,10,37);
+}
+
+// ══ PIECEWISE ══
+const pwExs=[
+  {lbl:'Absolute Value |x|',fn:x=>Math.abs(x),col:BLUE,  xMin:-5,xMax:5,yMin:-1,yMax:5},
+  {lbl:'Floor ⌊x⌋',        fn:x=>Math.floor(x),col:YELLOW,xMin:-5,xMax:5,yMin:-5,yMax:5},
+  {lbl:'Sign sgn(x)',       fn:x=>x>0?1:x<0?-1:0,col:GREEN,xMin:-5,xMax:5,yMin:-2,yMax:2},
+];
+function showPiecewise(i){
+  document.querySelectorAll('[id^=bPW]').forEach((b,j)=>b.classList.toggle('on',j===i));
+  const ex=pwExs[i];
+  const c=setupCanvas('piecewiseCanvas',760,250);if(!c)return;
+  const{ctx,W,H}=c;const{toX,toY}=drawGrid(ctx,W,H,ex.xMin,ex.xMax,ex.yMin,ex.yMax);
+  if(i===1){
+    ctx.strokeStyle=ex.col;ctx.lineWidth=2.5;
+    for(let x=ex.xMin;x<ex.xMax;x++){
+      const fx=Math.floor(x);
+      ctx.beginPath();ctx.moveTo(toX(x),toY(fx));ctx.lineTo(toX(x+1),toY(fx));ctx.stroke();
+      ctx.beginPath();ctx.arc(toX(x+1),toY(fx),4,0,2*Math.PI);ctx.fillStyle=BG;ctx.fill();ctx.strokeStyle=ex.col;ctx.lineWidth=1.5;ctx.stroke();
+      dot(ctx,toX(x),toY(fx),4,ex.col);
+    }
+  }else{
+    plotFn(ctx,ex.fn,ex.xMin,ex.xMax,W,H,ex.yMin,ex.yMax,ex.col,2.5);
+    if(i===2){
+      [[0,-1,'o'],[0,1,'o'],[0,0,'c']].forEach(([x,y,t])=>{
+        ctx.beginPath();ctx.arc(toX(x),toY(y),5,0,2*Math.PI);
+        if(t==='c'){ctx.fillStyle=ex.col;ctx.fill();}
+        else{ctx.fillStyle=BG;ctx.fill();ctx.strokeStyle=ex.col;ctx.lineWidth=2;ctx.stroke();}
+      });
+    }
+  }
+  ctx.fillStyle=ex.col;ctx.font='bold 13px monospace';ctx.textAlign='left';ctx.fillText(ex.lbl,10,20);
+}
+
+// ══ VLT ══
+let vltMode=0;
+function setVLTMode(m){
+  vltMode=m;
+  document.querySelectorAll('[id^=bVLT]').forEach((b,j)=>b.classList.toggle('on',j===m));
+  drawVLT(document.getElementById('vltSlider').value);
+}
+function drawVLT(val){
+  const c=setupCanvas('vltCanvas',760,290);if(!c)return;
+  const{ctx,W,H}=c;const{toX,toY}=drawGrid(ctx,W,H,-5,5,-5,5);
+  const x=-5+val/100*10;
+  document.getElementById('vltVal').textContent='x = '+x.toFixed(2);
+  if(vltMode===0){
+    plotFn(ctx,x=>x*x,-5,5,W,H,-5,5,BLUE,2.5);
+    const y=x*x;
+    if(y<=5){
+      ctx.strokeStyle=GREEN;ctx.lineWidth=1.5;ctx.setLineDash([5,4]);
+      ctx.beginPath();ctx.moveTo(toX(x),0);ctx.lineTo(toX(x),H);ctx.stroke();ctx.setLineDash([]);
+      dot(ctx,toX(x),toY(y),7,RED);
+      ctx.fillStyle=GREEN;ctx.font='bold 12px monospace';ctx.textAlign='center';
+      ctx.fillText('✓ ตัดกัน 1 จุด → เป็นฟังก์ชัน',W/2,22);
+    }
+  }else{
+    const r=3;ctx.strokeStyle=YELLOW;ctx.lineWidth=2.5;
+    const rx=toX(r)-toX(0), ry=toY(0)-toY(r);
+    ctx.beginPath();ctx.ellipse(toX(0),toY(0),rx,ry,0,0,2*Math.PI);ctx.stroke();
+    if(Math.abs(x)<=r){
+      const y1=Math.sqrt(r*r-x*x);
+      ctx.strokeStyle=RED;ctx.lineWidth=1.5;ctx.setLineDash([5,4]);
+      ctx.beginPath();ctx.moveTo(toX(x),0);ctx.lineTo(toX(x),H);ctx.stroke();ctx.setLineDash([]);
+      [[y1,RED],[-y1,PURPLE]].forEach(([y,col])=>dot(ctx,toX(x),toY(y),7,col));
+      ctx.fillStyle=RED;ctx.font='bold 12px monospace';ctx.textAlign='center';
+      ctx.fillText('✗ ตัดกัน 2 จุด → ไม่ใช่ฟังก์ชัน',W/2,22);
+    }
+  }
+}
+
+// ══ SYMMETRY ══
+const symExs=[
+  {fn:x=>x*x,        lbl:'f(x) = x²',    type:'Even',   col:BLUE},
+  {fn:x=>x*x*x,      lbl:'f(x) = x³',    type:'Odd',    col:YELLOW},
+  {fn:x=>x*x+x,      lbl:'f(x) = x²+x',  type:'Neither',col:PURPLE},
+  {fn:x=>Math.abs(x),lbl:'f(x) = |x|',   type:'Even',   col:GREEN},
+  {fn:x=>Math.sin(x),lbl:'f(x) = sin(x)',type:'Odd',    col:RED},
+];
+const typeCol={Even:GREEN,Odd:YELLOW,Neither:PURPLE};
+function showSymmetry(i){
+  document.querySelectorAll('[id^=bSym]').forEach((b,j)=>b.classList.toggle('on',j===i));
+  const ex=symExs[i];
+  const c=setupCanvas('symmetryCanvas',760,270);if(!c)return;
+  const{ctx,W,H}=c;const{toX,toY}=drawGrid(ctx,W,H,-4,4,-5,5);
+  if(ex.type==='Even'){ctx.strokeStyle=GREEN+'30';ctx.lineWidth=16;ctx.beginPath();ctx.moveTo(toX(0),0);ctx.lineTo(toX(0),H);ctx.stroke();}
+  else if(ex.type==='Odd'){ctx.beginPath();ctx.arc(toX(0),toY(0),13,0,2*Math.PI);ctx.fillStyle=YELLOW+'30';ctx.fill();}
+  plotFn(ctx,ex.fn,-4,4,W,H,-5,5,ex.col,2.5);
+  const x0=1.5,y0=ex.fn(x0),ym=ex.fn(-x0);
+  [[x0,y0,BLUE],[-x0,ym,RED]].forEach(([x,y,col])=>{
+    dot(ctx,toX(x),toY(y),5,col);
+    ctx.fillStyle=ON_SURFACE;ctx.font='11px monospace';ctx.textAlign=x>0?'left':'right';
+    ctx.fillText('('+x.toFixed(1)+','+y.toFixed(1)+')',toX(x)+(x>0?8:-8),toY(y)-8);
+  });
+  ctx.fillStyle=typeCol[ex.type];ctx.font='bold 13px monospace';ctx.textAlign='left';
+  const desc={Even:' : f(−x)=f(x)',Odd:' : f(−x)=−f(x)',Neither:''};
+  ctx.fillText(ex.lbl+' — '+ex.type+desc[ex.type],10,22);
+}
+
+// ══ MONOTONIC ══
+function drawMonotonic(){
+  const c=setupCanvas('monotonicCanvas',760,270);if(!c)return;
+  const{ctx,W,H}=c;const{toX,toY}=drawGrid(ctx,W,H,-3,3,-5,5);
+  const fn=x=>x*x*x-3*x;
+  [{a:-3,b:-1,inc:true},{a:-1,b:1,inc:false},{a:1,b:3,inc:true}].forEach(({a,b,inc})=>{
+    ctx.fillStyle=inc?GREEN+'20':RED+'20';ctx.beginPath();ctx.moveTo(toX(a),toY(0));
+    for(let i=0;i<=60;i++){const x=a+i/60*(b-a);ctx.lineTo(toX(x),toY(fn(x)));}
+    ctx.lineTo(toX(b),toY(0));ctx.closePath();ctx.fill();
+    const mid=(a+b)/2;ctx.fillStyle=inc?GREEN:RED;ctx.font='bold 12px sans-serif';ctx.textAlign='center';
+    ctx.fillText(inc?'↑ Inc':'↓ Dec',toX(mid),toY(fn(mid))+(inc?-14:14));
+  });
+  plotFn(ctx,fn,-3,3,W,H,-5,5,BLUE,2.5);
+  [[-1,2],[1,-2]].forEach(([x,y])=>{
+    dot(ctx,toX(x),toY(y),6,YELLOW);
+    ctx.fillStyle=YELLOW;ctx.font='11px monospace';ctx.textAlign='center';ctx.fillText('('+x+','+y+')',toX(x),toY(y)-12);
+  });
+  ctx.fillStyle=MUTED;ctx.font='12px monospace';ctx.textAlign='left';ctx.fillText('f(x) = x³ − 3x',10,20);
+}
+
+// ══ LINEAR ══
+function drawLinear(){
+  const m=document.getElementById('slopeSlider').value/10;
+  const b=document.getElementById('interceptSlider').value/10;
+  document.getElementById('slopeVal').textContent=m.toFixed(1);
+  document.getElementById('interceptVal').textContent=b.toFixed(1);
+  const c=setupCanvas('linearCanvas',760,210);if(!c)return;
+  const{ctx,W,H}=c;const{toX,toY}=drawGrid(ctx,W,H,-5,5,-5,5);
+  plotFn(ctx,x=>m*x+b,-5,5,W,H,-5,5,BLUE,2.5);
+  ctx.fillStyle=BLUE;ctx.font='bold 13px monospace';ctx.textAlign='left';
+  ctx.fillText('f(x) = '+m.toFixed(1)+'x + '+b.toFixed(1),10,20);
+  const y0=b,y1=m+b;
+  ctx.strokeStyle=YELLOW;ctx.lineWidth=1.5;ctx.setLineDash([4,3]);
+  ctx.beginPath();ctx.moveTo(toX(0),toY(y0));ctx.lineTo(toX(1),toY(y0));ctx.lineTo(toX(1),toY(y1));ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle=YELLOW;ctx.font='11px monospace';ctx.textAlign='center';ctx.fillText('run=1',toX(.5),toY(y0)+13);
+  ctx.textAlign='left';ctx.fillText('rise='+m.toFixed(1),toX(1)+4,toY((y0+y1)/2));
+}
+
+// ══ POLYNOMIAL ══
+const polyFns=[
+  {fn:x=>x,        lbl:'f(x) = x',        r:[-4,4,-5,5]},
+  {fn:x=>x*x,      lbl:'f(x) = x²',       r:[-4,4,-1,16]},
+  {fn:x=>x*x*x,    lbl:'f(x) = x³',       r:[-3,3,-27,27]},
+  {fn:x=>x*x*x*x-4*x*x,lbl:'f(x) = x⁴−4x²',r:[-3,3,-5,5]},
+  {fn:x=>x*x*x-3*x,lbl:'f(x) = x³−3x',   r:[-3,3,-5,5]},
+];
+function showPoly(i){
+  document.querySelectorAll('[id^=bPoly]').forEach((b,j)=>b.classList.toggle('on',j===i));
+  const ex=polyFns[i];const[xMin,xMax,yMin,yMax]=ex.r;
+  const c=setupCanvas('polyCanvas',760,230);if(!c)return;
+  const{ctx,W,H}=c;drawGrid(ctx,W,H,xMin,xMax,yMin,yMax);
+  plotFn(ctx,ex.fn,xMin,xMax,W,H,yMin,yMax,BLUE,2.5);
+  ctx.fillStyle=BLUE;ctx.font='bold 13px monospace';ctx.textAlign='left';ctx.fillText(ex.lbl,10,20);
+}
+
+// ══ RATIONAL ══
+const ratFns=[
+  {fn:x=>1/x,     lbl:'f(x) = 1/x',     xMin:-4,xMax:4,yMin:-6,yMax:6,va:0,ha:0},
+  {fn:x=>1/(x*x), lbl:'f(x) = 1/x²',    xMin:-4,xMax:4,yMin:-1,yMax:8,va:0,ha:0},
+  {fn:x=>x/(x-1), lbl:'f(x) = x/(x−1)', xMin:-4,xMax:5,yMin:-6,yMax:8,va:1,ha:1},
+];
+function showRational(i){
+  document.querySelectorAll('[id^=bRat]').forEach((b,j)=>b.classList.toggle('on',j===i));
+  const ex=ratFns[i];
+  const c=setupCanvas('rationalCanvas',760,240);if(!c)return;
+  const{ctx,W,H}=c;const{toX,toY}=drawGrid(ctx,W,H,ex.xMin,ex.xMax,ex.yMin,ex.yMax);
+  ctx.strokeStyle=RED+'66';ctx.lineWidth=1.5;ctx.setLineDash([6,4]);
+  ctx.beginPath();ctx.moveTo(toX(ex.va),0);ctx.lineTo(toX(ex.va),H);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(0,toY(ex.ha));ctx.lineTo(W,toY(ex.ha));ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle=RED;ctx.font='11px monospace';ctx.textAlign='left';ctx.fillText('VA: x='+ex.va,toX(ex.va)+4,14);
+  ctx.textAlign='right';ctx.fillText('HA: y='+ex.ha,W-4,toY(ex.ha)-4);
+  plotFn(ctx,ex.fn,ex.xMin,ex.xMax,W,H,ex.yMin,ex.yMax,YELLOW,2.5);
+  ctx.fillStyle=YELLOW;ctx.font='bold 13px monospace';ctx.textAlign='left';ctx.fillText(ex.lbl,10,20);
+}
+
+// ══ TRIG ══
+let trigIdx=0;
+function showTrig(i){trigIdx=i;document.querySelectorAll('[id^=bTrig]').forEach((b,j)=>b.classList.toggle('on',j===i));redrawTrig();}
+function redrawTrig(){
+  const amp=document.getElementById('ampSlider').value/10;
+  document.getElementById('ampVal').textContent=amp.toFixed(1);
+  const c=setupCanvas('trigCanvas',760,230);if(!c)return;
+  const{ctx,W,H}=c;drawGrid(ctx,W,H,-7,7,-4,4);
+  if(trigIdx===3){
+    plotFn(ctx,x=>amp*Math.sin(x),-7,7,W,H,-4,4,BLUE,2.5);
+    plotFn(ctx,x=>amp*Math.cos(x),-7,7,W,H,-4,4,GREEN,2.5);
+    ctx.fillStyle=BLUE;ctx.font='12px monospace';ctx.textAlign='left';ctx.fillText('A·sin(x)',10,20);
+    ctx.fillStyle=GREEN;ctx.fillText('A·cos(x)',10,36);
+  }else{
+    const fns=[x=>amp*Math.sin(x),x=>amp*Math.cos(x),x=>Math.tan(x)];
+    const cols=[BLUE,GREEN,YELLOW];const lbls=['A·sin(x)','A·cos(x)','tan(x)'];
+    plotFn(ctx,fns[trigIdx],-7,7,W,H,-4,4,cols[trigIdx],2.5);
+    ctx.fillStyle=cols[trigIdx];ctx.font='bold 13px monospace';ctx.textAlign='left';
+    ctx.fillText(lbls[trigIdx]+(trigIdx<2?' (A='+amp.toFixed(1)+')':''),10,20);
+  }
+}
+
+// ══ EXP/LOG ══
+const elExs=[
+  {fns:[{fn:x=>Math.exp(x),  c:BLUE,  l:'eˣ'}],           xMin:-3,xMax:3,yMin:-1,yMax:10},
+  {fns:[{fn:x=>Math.pow(2,x),c:GREEN, l:'2ˣ'}],           xMin:-3,xMax:3,yMin:-1,yMax:10},
+  {fns:[{fn:x=>Math.log(x),  c:YELLOW,l:'ln(x)'}],        xMin:-.5,xMax:8,yMin:-4,yMax:4},
+  {fns:[{fn:x=>Math.log2(x), c:PURPLE,l:'log₂(x)'}],      xMin:-.5,xMax:8,yMin:-4,yMax:4},
+  {fns:[{fn:x=>Math.exp(x),c:BLUE,l:'eˣ'},{fn:x=>Math.log(x),c:YELLOW,l:'ln(x)'}],xMin:-1,xMax:4,yMin:-2,yMax:6},
+];
+function showExpLog(i){
+  document.querySelectorAll('[id^=bEL]').forEach((b,j)=>b.classList.toggle('on',j===i));
+  const ex=elExs[i];
+  const c=setupCanvas('explogCanvas',760,250);if(!c)return;
+  const{ctx,W,H}=c;const{toX,toY}=drawGrid(ctx,W,H,ex.xMin,ex.xMax,ex.yMin,ex.yMax);
+  if(i===4){
+    ctx.strokeStyle=MUTED+'44';ctx.lineWidth=1;ctx.setLineDash([4,4]);
+    const lim=Math.min(ex.xMax,ex.yMax);
+    const s=ex.xMin>ex.yMin?ex.xMin:ex.yMin;
+    ctx.beginPath();ctx.moveTo(toX(s),toY(s));ctx.lineTo(toX(lim),toY(lim));ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle=MUTED;ctx.font='11px monospace';ctx.textAlign='left';ctx.fillText('y=x (mirror)',toX(2),toY(2)-10);
+  }
+  ex.fns.forEach(({fn,c:col})=>plotFn(ctx,fn,ex.xMin,ex.xMax,W,H,ex.yMin,ex.yMax,col,2.5));
+  ex.fns.forEach(({c:col,l},j)=>{ctx.fillStyle=col;ctx.font='bold 13px monospace';ctx.textAlign='left';ctx.fillText(l,10,20+j*18);});
+}
+
+// ══ PLOTTER ══
+function setFunc(expr){document.getElementById('funcInput').value=expr;plotCustom();}
+function plotCustom(){
+  const expr=document.getElementById('funcInput').value;
+  const zoom=parseInt(document.getElementById('zoomSlider').value);
+  document.getElementById('zoomVal').textContent=zoom;
+  const errEl=document.getElementById('funcError');errEl.textContent='';
+  let fn;
+  try{
+    fn=new Function('x','const {sin,cos,tan,abs,sqrt,exp,log,log2,pow,PI,E,floor,ceil,round,sign}=Math;return '+expr);
+    fn(1);
+  }catch(e){errEl.textContent='⚠ '+e.message;return;}
+  const c=setupCanvas('plotterCanvas',760,360);if(!c)return;
+  const{ctx,W,H}=c;const yr=zoom*1.2;
+  drawGrid(ctx,W,H,-zoom,zoom,-yr,yr);
+  try{plotFn(ctx,fn,-zoom,zoom,W,H,-yr,yr,BLUE,2.5);}catch(e){errEl.textContent='⚠ '+e.message;}
+  ctx.fillStyle=BLUE;ctx.font='bold 13px monospace';ctx.textAlign='left';ctx.fillText('f(x) = '+expr,10,20);
+}
+
+// ══ QUIZ ══
+const quizData=[
+  {q:'f(x) = √(x − 3) มี Domain คืออะไร?',opts:['(-∞,∞)','[3,∞)','(3,∞)','(-∞,3]'],ans:1,exp:'x−3 ≥ 0 → x ≥ 3 ดังนั้น Domain = [3,∞)'},
+  {q:'f(x) = x⁴ เป็นฟังก์ชันประเภทใด?',opts:['Odd','Even','Neither','Periodic'],ans:1,exp:'f(−x)=(−x)⁴=x⁴=f(x) → Even Function'},
+  {q:'Vertical Line Test ใช้ทดสอบอะไร?',opts:['Even หรือ Odd','Increasing/Decreasing','กราฟเป็นฟังก์ชันหรือไม่','มี Asymptote หรือไม่'],ans:2,exp:'VLT: เส้นตั้งตัดกราฟ ≤1 จุด → เป็นฟังก์ชัน'},
+  {q:'f(x) = 1/x มี Range คืออะไร?',opts:['[0,∞)','(-∞,0)∪(0,∞)','(-∞,∞)','[1,∞)'],ans:1,exp:'1/x ≠ 0 เสมอ แต่รับค่าได้ทุกค่าใน ℝ∖{0}'},
+  {q:'f(x) = sin(x) เป็นฟังก์ชันประเภทใด?',opts:['Even','Odd','Neither','Constant'],ans:1,exp:'sin(−x)=−sin(x) → Odd Function'},
+  {q:'f(x) = |x| + x มี Range คืออะไร?',opts:['(-∞,∞)','[0,∞)','(-∞,0]','{0}'],ans:1,exp:'x≥0: f=2x≥0 ; x<0: f=0 → Range=[0,∞)'},
+  {q:'ข้อใดต่อไปนี้คือ Rational Function?',opts:['√x','x²+3','(x²−1)/(x+2)','eˣ'],ans:2,exp:'Rational = ratio ของ polynomial สองตัว'},
+  {q:'x²+y²=25 เป็นฟังก์ชัน y=f(x) หรือไม่?',opts:['ใช่','ไม่ใช่ เพราะ 1 x → 2 y','ใช่ ถ้า x>0','ขึ้นกับ Domain'],ans:1,exp:'x=3 → y=±4 (สองค่า) ไม่ผ่าน VLT'},
+];
+function initQuiz(){
+  const cont=document.getElementById('quizContainer');cont.innerHTML='';
+  quizData.forEach((q,qi)=>{
+    const d=document.createElement('div');
+    d.style.cssText='background:var(--card);border:1px solid var(--border);border-radius:10px;padding:.95rem 1.2rem;margin-bottom:.8rem';
+    d.innerHTML=`<div style="font-size:.65rem;color:var(--muted);font-weight:700;letter-spacing:1px;margin-bottom:.3rem">ข้อ ${qi+1}/${quizData.length}</div>
+<div style="font-size:.93rem;margin-bottom:.65rem">${q.q}</div>
+${q.opts.map((o,oi)=>`<div class="quiz-opt" id="qo-${qi}-${oi}" onclick="checkAns(${qi},${oi})">${String.fromCharCode(65+oi)}) ${o}</div>`).join('')}
+<div id="qf-${qi}" class="quiz-fb" style="display:none"></div>`;
+    cont.appendChild(d);
+  });
+}
+function checkAns(qi,oi){
+  const q=quizData[qi];
+  for(let i=0;i<q.opts.length;i++){
+    const el=document.getElementById('qo-'+qi+'-'+i);el.onclick=null;
+    if(i===q.ans)el.classList.add('correct');else if(i===oi)el.classList.add('wrong');
+  }
+  const fb=document.getElementById('qf-'+qi);fb.style.display='block';
+  if(oi===q.ans){fb.style.background='#001a10';fb.style.color='var(--green)';fb.textContent='✓ ถูกต้อง! '+q.exp;}
+  else{fb.style.background='#1a0008';fb.style.color='var(--red)';fb.textContent='✗ ไม่ถูกต้อง — '+q.exp;}
+}
+
+// ══ COMBINING FUNCTIONS ══
+let combMode=0, combBase=0;
+const combBases=[
+  {fn:x=>x*x,                   lbl:'f(x) = x²'},
+  {fn:x=>Math.sin(x),           lbl:'f(x) = sin(x)'},
+  {fn:x=>Math.abs(x),           lbl:'f(x) = |x|'},
+  {fn:x=>Math.sqrt(Math.abs(x)),lbl:'f(x) = √|x|'},
+];
+const combG=x=>x+1;
+function setCombBase(i){combBase=i;document.querySelectorAll('[id^=bCB]').forEach((b,j)=>b.classList.toggle('on',j===i));redrawCombine();}
+function setCombMode(i){combMode=i;document.querySelectorAll('[id^=bCM]').forEach((b,j)=>b.classList.toggle('on',j===i));redrawCombine();}
+function redrawCombine(){
+  const ex=combBases[combBase],f=ex.fn,g=combG;
+  const ops=[
+    {fn:x=>f(x)+g(x),lbl:'(f+g)(x) = f(x) + g(x)',col:YELLOW},
+    {fn:x=>f(x)-g(x),lbl:'(f−g)(x) = f(x) − g(x)',col:RED},
+    {fn:x=>f(x)*g(x),lbl:'(f·g)(x) = f(x) · g(x)',col:PURPLE},
+    {fn:x=>f(g(x)),  lbl:'(f∘g)(x) = f(g(x))',     col:GREEN},
+  ];
+  const op=ops[combMode];
+  const c=setupCanvas('combineCanvas',760,240);if(!c)return;
+  const{ctx,W,H}=c;
+  drawGrid(ctx,W,H,-4,4,-6,6);
+  ctx.setLineDash([5,4]);
+  plotFn(ctx,f,-4,4,W,H,-6,6,BLUE,1.8);
+  plotFn(ctx,g,-4,4,W,H,-6,6,GREEN,1.8);
+  ctx.setLineDash([]);
+  plotFn(ctx,op.fn,-4,4,W,H,-6,6,op.col,2.5);
+  ctx.fillStyle=BLUE;ctx.font='12px monospace';ctx.textAlign='left';ctx.fillText(ex.lbl+' (เส้นประ น้ำเงิน)',10,18);
+  ctx.fillStyle=GREEN;ctx.fillText('g(x) = x+1 (เส้นประ เขียว)',10,34);
+  ctx.fillStyle=op.col;ctx.font='bold 13px monospace';ctx.fillText(op.lbl,10,52);
+}
+
+// ══ TRANSFORMATIONS ══
+function redrawTransform(){
+  const baseIdx=parseInt(document.getElementById('tranBase').value);
+  const h=parseFloat(document.getElementById('tranH').value)/10;
+  const k=parseFloat(document.getElementById('tranK').value)/10;
+  const a=parseFloat(document.getElementById('tranA').value)/10;
+  const bv=parseFloat(document.getElementById('tranB').value)/10;
+  document.getElementById('tranHV').textContent=h.toFixed(1);
+  document.getElementById('tranKV').textContent=k.toFixed(1);
+  document.getElementById('tranAV').textContent=a.toFixed(1);
+  document.getElementById('tranBV').textContent=bv.toFixed(1);
+  const bases=[x=>x*x,x=>Math.sin(x),x=>Math.sqrt(Math.abs(x)),x=>Math.abs(x)];
+  const fOrig=bases[baseIdx];
+  const fTran=x=>a*fOrig(bv*(x-h))+k;
+  const c=setupCanvas('transformCanvas',760,270);if(!c)return;
+  const{ctx,W,H}=c;
+  drawGrid(ctx,W,H,-5,5,-5,5);
+  ctx.setLineDash([6,4]);
+  plotFn(ctx,fOrig,-5,5,W,H,-5,5,MUTED,1.8);
+  ctx.setLineDash([]);
+  plotFn(ctx,fTran,-5,5,W,H,-5,5,YELLOW,2.5);
+  const lbls=['f(x)=x²','f(x)=sin(x)','f(x)=√|x|','f(x)=|x|'];
+  ctx.fillStyle=MUTED;ctx.font='12px monospace';ctx.textAlign='left';ctx.fillText(lbls[baseIdx]+' (เส้นประ)',10,20);
+  const hs=h>=0?'−':'+',ha=Math.abs(h).toFixed(1),ks=k>=0?'+':'-',ka=Math.abs(k).toFixed(1);
+  ctx.fillStyle=YELLOW;ctx.font='bold 12px monospace';
+  ctx.fillText('y = '+a.toFixed(1)+'·f('+bv.toFixed(1)+'(x '+hs+ha+')) '+ks+ka,10,38);
+  if(baseIdx===1&&bv!==0){
+    ctx.fillStyle=MUTED;ctx.font='11px monospace';
+    ctx.fillText('Period = 2π/'+bv.toFixed(1)+' ≈ '+(2*Math.PI/Math.abs(bv)).toFixed(2),10,55);
+  }
+}
+
+// ══ UNIT CIRCLE ══
+function redrawUnitCircle(){
+  const deg=parseInt(document.getElementById('ucAngle').value);
+  const rad=deg*Math.PI/180;
+  document.getElementById('ucDegVal').textContent=deg+'°';
+  const c=setupCanvas('unitCircleCanvas',760,300);if(!c)return;
+  const{ctx,W,H}=c;
+  ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);
+  const cx=205,cy=H/2,R=120;
+  // axes
+  ctx.strokeStyle=AXIS;ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.moveTo(cx-R-30,cy);ctx.lineTo(cx+R+30,cy);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(cx,cy-R-30);ctx.lineTo(cx,cy+R+30);ctx.stroke();
+  // unit circle
+  ctx.strokeStyle=AXIS+'cc';ctx.lineWidth=1.8;
+  ctx.beginPath();ctx.arc(cx,cy,R,0,2*Math.PI);ctx.stroke();
+  // tick labels
+  ctx.fillStyle=MUTED;ctx.font='10px monospace';ctx.textAlign='center';
+  ctx.fillText('1',cx+R+10,cy+4);ctx.fillText('-1',cx-R-16,cy+4);
+  ctx.fillText('1',cx+4,cy-R-6);ctx.fillText('-1',cx+5,cy+R+12);
+  // angle arc
+  ctx.strokeStyle=PURPLE;ctx.lineWidth=2;
+  ctx.beginPath();ctx.arc(cx,cy,28,0,-rad,true);ctx.stroke();
+  ctx.fillStyle=PURPLE;ctx.font='11px monospace';ctx.textAlign='left';
+  ctx.fillText(deg+'°',cx+34,cy-12);
+  // point on circle
+  const px=cx+R*Math.cos(rad),py=cy-R*Math.sin(rad);
+  // cos line (horizontal, blue)
+  ctx.strokeStyle=BLUE;ctx.lineWidth=2.5;
+  ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(px,cy);ctx.stroke();
+  // sin line (vertical, red)
+  ctx.strokeStyle=RED;ctx.lineWidth=2.5;
+  ctx.beginPath();ctx.moveTo(px,cy);ctx.lineTo(px,py);ctx.stroke();
+  // radius (yellow)
+  ctx.strokeStyle=YELLOW;ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(px,py);ctx.stroke();
+  dot(ctx,px,py,6,GREEN);
+  // labels
+  ctx.fillStyle=ON_SURFACE;ctx.font='bold 11px monospace';ctx.textAlign='center';
+  ctx.fillText('(cos θ, sin θ)',px,py+(py<cy?-14:16));
+  ctx.fillStyle=BLUE;ctx.font='11px monospace';ctx.textAlign='center';
+  ctx.fillText('cos θ',cx+(px-cx)/2,cy+16);
+  ctx.fillStyle=RED;ctx.textAlign=px>cx?'left':'right';
+  ctx.fillText('sin θ',px+(px>cx?6:-6),(cy+py)/2+4);
+  // right panel
+  const rx=360,ry=25,rw=375,rh=250;
+  ctx.fillStyle=LIGHT?SURFACE:'#0b1a2a';ctx.strokeStyle=AXIS;ctx.lineWidth=1;
+  rrect(ctx,rx,ry,rw,rh,8,true,true);
+  const sinV=Math.sin(rad),cosV=Math.cos(rad),tanV=cosV!==0?sinV/cosV:Infinity;
+  ctx.fillStyle=YELLOW;ctx.font='bold 13px monospace';ctx.textAlign='left';
+  ctx.fillText('θ = '+deg+'° = '+(rad/Math.PI).toFixed(3)+'π rad',rx+14,ry+26);
+  const rows=[
+    ['sin θ',sinV,RED],
+    ['cos θ',cosV,BLUE],
+    ['tan θ',tanV,YELLOW],
+    ['csc θ',Math.abs(sinV)<1e-9?Infinity:1/sinV,PURPLE],
+    ['sec θ',Math.abs(cosV)<1e-9?Infinity:1/cosV,RED],
+    ['cot θ',Math.abs(sinV)<1e-9?Infinity:cosV/sinV,GREEN],
+  ];
+  rows.forEach(([lbl,val,col],i)=>{
+    ctx.fillStyle=col;ctx.font='13px monospace';
+    const vs=!isFinite(val)?'— (ไม่นิยาม)':val.toFixed(4);
+    ctx.fillText(lbl+' = '+vs,rx+14,ry+58+i*31);
+    if(isFinite(val)&&Math.abs(val)<=1.001){
+      const bx=rx+188,bw=160,bh=9,by=ry+50+i*31;
+      ctx.fillStyle=LIGHT?SURFACE:'#162030';ctx.fillRect(bx,by,bw,bh);
+      const fill=Math.max(0,Math.min(1,(val+1)/2))*bw;
+      ctx.fillStyle=col+'70';ctx.fillRect(bx,by,fill,bh);
+      ctx.fillStyle=col;ctx.fillRect(bx+fill-1,by,2,bh);
+    }
+  });
+}
+
+// ══ TRIG 6 ══
+let trig6Mode='sin';
+function setTrig6(m){
+  trig6Mode=m;
+  ['s','c','t','sc','se','ct'].forEach(k=>document.getElementById('bT6'+k).classList.remove('on'));
+  const map={sin:'s',cos:'c',tan:'t',csc:'sc',sec:'se',cot:'ct'};
+  document.getElementById('bT6'+map[m]).classList.add('on');
+  redrawTrig6();
+}
+function redrawTrig6(){
+  const c=setupCanvas('trig6Canvas',760,250);if(!c)return;
+  const{ctx,W,H}=c;
+  const{toX,toY}=drawGrid(ctx,W,H,-7,7,-4,4);
+  const fns={
+    sin:{fn:x=>Math.sin(x),          col:BLUE,  lbl:'sin(x)  — Domain: ℝ, Range: [−1,1], Period: 2π'},
+    cos:{fn:x=>Math.cos(x),          col:GREEN, lbl:'cos(x)  — Domain: ℝ, Range: [−1,1], Period: 2π'},
+    tan:{fn:x=>Math.tan(x),          col:YELLOW,lbl:'tan(x)  — Domain: x≠π/2+nπ, Range: ℝ, Period: π'},
+    csc:{fn:x=>1/Math.sin(x),        col:PURPLE,lbl:'csc(x)  — Domain: x≠nπ, Range: (−∞,−1]∪[1,∞)'},
+    sec:{fn:x=>1/Math.cos(x),        col:RED,   lbl:'sec(x)  — Domain: x≠π/2+nπ, Range: (−∞,−1]∪[1,∞)'},
+    cot:{fn:x=>Math.cos(x)/Math.sin(x),col:MUTED+'dd',lbl:'cot(x)  — Domain: x≠nπ, Range: ℝ, Period: π'},
+  };
+  const ex=fns[trig6Mode];
+  // asymptotes
+  if(['tan','sec'].includes(trig6Mode)){
+    ctx.strokeStyle=RED+'44';ctx.lineWidth=1;ctx.setLineDash([4,4]);
+    for(let k=-3;k<=3;k++){const xa=Math.PI/2+k*Math.PI;ctx.beginPath();ctx.moveTo(toX(xa),0);ctx.lineTo(toX(xa),H);ctx.stroke();}
+    ctx.setLineDash([]);
+  }
+  if(['csc','cot'].includes(trig6Mode)){
+    ctx.strokeStyle=RED+'44';ctx.lineWidth=1;ctx.setLineDash([4,4]);
+    for(let k=-2;k<=2;k++){const xa=k*Math.PI;ctx.beginPath();ctx.moveTo(toX(xa),0);ctx.lineTo(toX(xa),H);ctx.stroke();}
+    ctx.setLineDash([]);
+  }
+  plotFn(ctx,ex.fn,-7,7,W,H,-4,4,ex.col,2.5);
+  ctx.fillStyle=ex.col;ctx.font='bold 12px monospace';ctx.textAlign='left';ctx.fillText(ex.lbl,10,20);
+  if(['tan','sec','csc','cot'].includes(trig6Mode)){
+    ctx.fillStyle=RED+'aa';ctx.font='10px monospace';ctx.fillText('เส้นประแดง = Vertical Asymptote',10,36);
+  }
+}
+
+// ══ SIN TRANSFORM ══
+function redrawSinTrans(){
+  const A=parseFloat(document.getElementById('stA').value)/10;
+  const B=parseFloat(document.getElementById('stB').value)/10;
+  const C=parseFloat(document.getElementById('stC').value)/10;
+  const D=parseFloat(document.getElementById('stD').value)/10;
+  document.getElementById('stAV').textContent=A.toFixed(1);
+  document.getElementById('stBV').textContent=B.toFixed(1);
+  document.getElementById('stCV').textContent=C.toFixed(2);
+  document.getElementById('stDV').textContent=D.toFixed(1);
+  const c=setupCanvas('sinTransCanvas',760,260);if(!c)return;
+  const{ctx,W,H}=c;
+  const yR=Math.max(3.5,Math.abs(A)+Math.abs(D)+.5);
+  const{toX,toY}=drawGrid(ctx,W,H,-7,7,-yR,yR);
+  // amplitude band
+  ctx.fillStyle=YELLOW+'12';
+  const y1=toY(D+A),y2=toY(D-A);
+  ctx.fillRect(0,Math.min(y1,y2),W,Math.abs(y2-y1));
+  // midline
+  ctx.strokeStyle=YELLOW+'44';ctx.lineWidth=1;ctx.setLineDash([4,4]);
+  ctx.beginPath();ctx.moveTo(0,toY(D));ctx.lineTo(W,toY(D));ctx.stroke();ctx.setLineDash([]);
+  // reference sin(x)
+  ctx.setLineDash([5,4]);
+  plotFn(ctx,x=>Math.sin(x),-7,7,W,H,-yR,yR,MUTED,1.5);
+  ctx.setLineDash([]);
+  plotFn(ctx,x=>A*Math.sin(B*x+C)+D,-7,7,W,H,-yR,yR,YELLOW,2.5);
+  ctx.fillStyle=MUTED;ctx.font='12px monospace';ctx.textAlign='left';ctx.fillText('sin(x) (เส้นประ)',10,18);
+  ctx.fillStyle=YELLOW;ctx.font='bold 12px monospace';
+  ctx.fillText('y = '+A.toFixed(1)+'·sin('+B.toFixed(1)+'x + '+C.toFixed(2)+') + '+D.toFixed(1),10,36);
+  ctx.fillStyle='#94a3b8';ctx.font='11px monospace';
+  ctx.fillText('Amplitude = '+A.toFixed(1)+'   Period = 2π/'+B.toFixed(1)+' ≈ '+(2*Math.PI/Math.abs(B)).toFixed(2)+'   Phase shift = '+(-C/B).toFixed(3),10,53);
+}
+
+// ══ INIT ══
+window.addEventListener('load',()=>{ drawOverview(); });
+</script>
+</body>
+</html>

@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter II — Limits and Continuity · Thomas Calculus</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script>
+  window.CURRENT_CH  = 2;
+  window.CURRENT_SEC = 'overview';
+  window._ch2Sections = ['overview','rates','limit','laws','onesided','continuity','infinity','quiz'];
+</script>
+</head>
+<body class="sb-open">
+<aside id="sidebar"></aside>
+<button id="toggleBtn" onclick="toggleSidebar()" title="Toggle sidebar (S)">☰</button>
+<main id="main">
+
+  <div class="topbar">
+    <div class="topbar-crumb">Chapter II &nbsp;›&nbsp; <span id="crumbSec">Limits and Continuity</span></div>
+    <div class="topbar-right">
+      <span class="kb-hint">S sidebar</span>
+      <span class="kb-hint">← → navigate</span>
+      <span class="kb-hint">F fullscreen</span>
+    </div>
+  </div>
+
+  <!-- ══ OVERVIEW ══ -->
+  <div id="page-overview" class="page active">
+  <div class="container">
+    <div class="hero">
+      <div class="badge">Thomas Calculus · Chapter II</div>
+      <h1><span class="hl">Limits</span> and Continuity</h1>
+      <p>แนวคิดหัวใจของ Calculus — อธิบายพฤติกรรมของฟังก์ชันเมื่อ x เข้าใกล้ค่าหนึ่ง</p>
+    </div>
+    <div class="section-grid">
+      <div class="section-card" onclick="showSec('rates')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 16 Q6 14 10 10"/><path d="M10 10 L17 5" stroke-dasharray="2 1.5" opacity=".6"/><circle cx="10" cy="10" r="1.6" fill="currentColor" stroke="none"/></svg></div>
+        <h3>2.1 อัตราการเปลี่ยนแปลง</h3><p>Secant Line → Tangent Line</p>
+      </div>
+      <div class="section-card" onclick="showSec('limit')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 12 L8 12 L8 6"/><path d="M17 12 L12 12 L12 6"/><circle cx="10" cy="6" r="2" stroke-dasharray="2 1.5"/></svg></div>
+        <h3>2.2 Limit ของฟังก์ชัน</h3><p>นิยาม Limit และ Epsilon-Delta</p>
+      </div>
+      <div class="section-card" onclick="showSec('laws')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 10 H16M10 4 V16"/><circle cx="10" cy="10" r="7" opacity=".4"/></svg></div>
+        <h3>2.3 กฎของ Limit</h3><p>Sum · Product · Quotient Laws</p>
+      </div>
+      <div class="section-card" onclick="showSec('onesided')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 10 L9 10"/><path d="M11 10 L17 10"/><circle cx="10" cy="10" r="1.5" fill="none" stroke="currentColor"/></svg></div>
+        <h3>2.4 One-Sided Limits</h3><p>lim⁻ และ lim⁺</p>
+      </div>
+      <div class="section-card" onclick="showSec('continuity')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 14 Q6 6 10 6 Q14 6 18 14"/><circle cx="10" cy="6" r="1.5" fill="currentColor" stroke="none"/></svg></div>
+        <h3>2.5 ความต่อเนื่อง</h3><p>Continuity · Discontinuity Types · IVT</p>
+      </div>
+      <div class="section-card" onclick="showSec('infinity')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 15 Q4 15 6 12 Q8 9 10 9 Q14 9 18 9" opacity=".5"/><path d="M2 15 Q6 15 10 12 Q14 9 18 9"/></svg></div>
+        <h3>2.6 Limits at Infinity</h3><p>Asymptotes · Squeeze Theorem</p>
+      </div>
+      <div class="section-card" onclick="showSec('quiz')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="10" cy="10" r="8" opacity=".35"/><path d="M8 8 Q8 5.5 10 5.5 Q12 5.5 12 7.5 Q12 9.5 10 10 L10 11.5"/><circle cx="10" cy="14" r=".8" fill="currentColor" stroke="none"/></svg></div>
+        <h3>แบบฝึกหัด</h3><p>ทดสอบความเข้าใจ 8 ข้อ</p>
+      </div>
+    </div>
+
+    <div class="cs" style="margin-top:1.8rem">
+      <h2>Limit คืออะไร?</h2>
+      <p>Limit บอกว่า f(x) <em>เข้าใกล้</em>ค่าอะไร เมื่อ x เข้าใกล้ c — <strong style="color:var(--yellow)">โดยไม่สนว่า f(c) มีค่าหรือไม่</strong></p>
+      <div class="grid2" style="margin-top:.9rem">
+        <div class="def-box">
+          <div class="lbl">แนวคิดหลัก Chapter II</div>
+          <ul class="info-list">
+            <li>Average Rate → Instantaneous Rate</li>
+            <li>Limit: lim<sub>x→c</sub> f(x) = L</li>
+            <li>Limit Laws — คำนวณ Limit ได้ง่ายขึ้น</li>
+            <li>One-Sided Limits: lim⁻ และ lim⁺</li>
+            <li>Continuity และ IVT</li>
+            <li>Limits at Infinity → Asymptotes</li>
+          </ul>
+        </div>
+        <div class="def-box">
+          <div class="lbl">ทำไม Limit ถึงสำคัญ?</div>
+          <ul class="info-list">
+            <li>Derivative = lim_{h→0} (f(a+h)−f(a))/h</li>
+            <li>Integral = lim ของ Riemann Sum</li>
+            <li>Taylor Series ต้องใช้ Limit</li>
+            <li>ทุกอย่างใน Calculus สร้างจาก Limit</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs">
+      <h2>ภาพรวม — x เข้าใกล้ c</h2>
+      <div class="canvas-wrap"><canvas id="overviewCanvas" width="760" height="220"></canvas></div>
+    </div>
+
+    <div class="page-nav">
+      <a class="page-nav-btn" href="ch1.html">← Chapter I: Functions</a>
+      <span class="page-nav-ctr">1 / 8</span>
+      <button class="page-nav-btn" onclick="showSec('rates')">2.1 Rates of Change →</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ RATES ══ -->
+  <div id="page-rates" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>2.1 Rates of Change &amp; Tangent Lines</h2>
+      <div class="def-box">
+        <div class="lbl">Average Rate of Change</div>
+        <p><strong style="color:var(--yellow)">อัตราการเปลี่ยนแปลงเฉลี่ย</strong> ของ f บนช่วง [a, a+h] คือ slope ของ <em>Secant Line</em></p>
+        <div class="formula">Δf/Δx = (f(a+h) − f(a)) / h</div>
+      </div>
+
+      <h3>Secant Line → Tangent Line</h3>
+      <p style="color:#94a3b8;font-size:.88rem;margin-bottom:.75rem">เมื่อ h → 0 Secant Line จะกลายเป็น <strong style="color:var(--yellow)">Tangent Line</strong> ที่จุด (a, f(a)) — นี่คือที่มาของ <strong style="color:var(--green)">Derivative</strong></p>
+      <div class="canvas-wrap">
+        <h4>เลื่อน h เพื่อดู Secant → Tangent (f(x) = x², a = 1)</h4>
+        <canvas id="secantCanvas" width="760" height="290"></canvas>
+        <div class="controls">
+          <span class="ctrl-label">h =</span>
+          <input type="range" id="hSlider" min="1" max="40" value="25" oninput="drawSecant()">
+          <span id="hVal" style="color:var(--yellow);font-family:monospace;min-width:40px">2.50</span>
+          <span id="slopeVal" style="color:var(--green);font-family:monospace;margin-left:.8rem"></span>
+        </div>
+      </div>
+
+      <h3>ตารางอัตราการเปลี่ยนแปลง — f(x) = x², a = 1</h3>
+      <table>
+        <tr><th>h</th><th>(f(1+h) − f(1)) / h</th><th>ค่าที่ได้</th></tr>
+        <tr><td>1.0</td><td>(4 − 1) / 1</td><td><span class="badge b-b">3.000</span></td></tr>
+        <tr><td>0.5</td><td>(2.25 − 1) / 0.5</td><td><span class="badge b-b">2.500</span></td></tr>
+        <tr><td>0.1</td><td>(1.21 − 1) / 0.1</td><td><span class="badge b-b">2.100</span></td></tr>
+        <tr><td>0.01</td><td>(1.0201 − 1) / 0.01</td><td><span class="badge b-y">2.010</span></td></tr>
+        <tr><td>0.001</td><td>(1.002001 − 1) / 0.001</td><td><span class="badge b-y">2.001</span></td></tr>
+        <tr><td>→ 0</td><td>lim_{h→0} (2 + h)</td><td><span class="badge b-g">→ 2</span></td></tr>
+      </table>
+
+      <div class="thm-box" style="margin-top:.9rem">
+        <div class="lbl">Slope ของ Tangent Line</div>
+        <p>m<sub>tan</sub> = lim<sub>h→0</sub> (f(a+h) − f(a)) / h &nbsp;=&nbsp; <strong style="color:var(--green)">f'(a)</strong> &nbsp;(Derivative)</p>
+        <p style="margin-top:.4rem;font-size:.84rem;color:#94a3b8">สำหรับ f(x) = x², a = 1: &nbsp; m<sub>tan</sub> = lim<sub>h→0</sub>(2+h) = <strong style="color:var(--yellow)">2</strong></p>
+      </div>
+
+      <h3>ความหมายทางฟิสิกส์</h3>
+      <div class="grid2">
+        <div class="ex-box">
+          <div class="lbl">Average Velocity</div>
+          <p>ถ้า s(t) = ระยะทาง &nbsp;→&nbsp; <span style="color:var(--yellow)">v_avg = Δs/Δt</span></p>
+        </div>
+        <div class="ex-box">
+          <div class="lbl">Instantaneous Velocity</div>
+          <p>v(t) = lim<sub>Δt→0</sub> Δs/Δt = <span style="color:var(--green)">s'(t)</span></p>
+        </div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('overview')">← ภาพรวม</button>
+      <span class="page-nav-ctr">2 / 8</span>
+      <button class="page-nav-btn" onclick="showSec('limit')">2.2 Limit →</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ LIMIT ══ -->
+  <div id="page-limit" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>2.2 Limit of a Function</h2>
+      <div class="def-box">
+        <div class="lbl">Definition — Informal</div>
+        <p>ถ้า f(x) เข้าใกล้ค่า <strong style="color:var(--yellow)">L</strong> เมื่อ x เข้าใกล้ <strong style="color:var(--yellow)">c</strong> (แต่ x ≠ c) เราเขียนว่า:</p>
+        <div class="formula">lim<sub>x→c</sub> f(x) = L</div>
+        <p style="font-size:.84rem;color:#94a3b8;margin-top:.4rem">f(c) ไม่จำเป็นต้องมีค่า — Limit สนใจเฉพาะพฤติกรรม <em>ใกล้</em> c เท่านั้น</p>
+      </div>
+
+      <h3>การเข้าใกล้จากทั้งสองฝั่ง</h3>
+      <div class="canvas-wrap">
+        <h4>เลื่อน x เพื่อดูการเข้าใกล้ — f(x) = (x²−1)/(x−1)</h4>
+        <canvas id="limitCanvas" width="760" height="270"></canvas>
+        <div class="controls">
+          <button class="btn on" id="bLim0" onclick="setLimMode(0)">f(x) = (x²−1)/(x−1)</button>
+          <button class="btn"    id="bLim1" onclick="setLimMode(1)">f(x) = sin(πx/2)/x</button>
+          <button class="btn"    id="bLim2" onclick="setLimMode(2)">f(x) = |x|/x</button>
+          <span class="ctrl-label" style="margin-left:.5rem">x =</span>
+          <input type="range" id="limSlider" min="0" max="100" value="50" oninput="redrawLimit()">
+          <span id="limXVal" style="color:var(--yellow);font-family:monospace;min-width:55px"></span>
+          <span id="limFVal" style="color:var(--green);font-family:monospace;margin-left:.4rem"></span>
+        </div>
+      </div>
+
+      <h3>Epsilon-Delta Definition</h3>
+      <div class="def-box">
+        <div class="lbl">Definition — Formal (ε-δ)</div>
+        <p>lim<sub>x→c</sub> f(x) = L &nbsp; ก็ต่อเมื่อ &nbsp; สำหรับทุก ε > 0 มี δ > 0 ที่ทำให้:</p>
+        <div class="formula">0 &lt; |x − c| &lt; δ &nbsp; ⟹ &nbsp; |f(x) − L| &lt; ε</div>
+      </div>
+      <div class="canvas-wrap">
+        <h4>Epsilon-Delta: f(x) = 2x, c = 1, L = 2 &nbsp;—&nbsp; ลอง δ เพื่อดู ε</h4>
+        <canvas id="epsilonCanvas" width="760" height="260"></canvas>
+        <div class="controls">
+          <span class="ctrl-label">δ =</span>
+          <input type="range" id="deltaSlider" min="1" max="30" value="10" oninput="drawEpsilon()">
+          <span id="deltaVal" style="color:var(--blue);font-family:monospace;min-width:40px"></span>
+          <span id="epsilonResult" style="color:var(--green);font-family:monospace;margin-left:.8rem"></span>
+        </div>
+      </div>
+
+      <h3>Limits ที่ไม่มีค่า (DNE — Does Not Exist)</h3>
+      <div class="grid2">
+        <div class="thm-box"><div class="lbl">กรณีที่ Limit DNE</div>
+          <ul class="info-list">
+            <li>lim⁻ ≠ lim⁺ (jump)</li>
+            <li>f(x) → ±∞ (vertical asymptote)</li>
+            <li>f(x) สั่นไม่หยุด เช่น sin(1/x) ที่ x→0</li>
+          </ul>
+        </div>
+        <div class="ex-box"><div class="lbl">ตัวอย่าง</div>
+          <p>lim<sub>x→0</sub> |x|/x &nbsp; = &nbsp;<span style="color:var(--red)">DNE</span></p>
+          <p style="margin-top:.4rem;font-size:.84rem;color:#94a3b8">lim⁻ = −1, lim⁺ = +1 → ไม่เท่ากัน</p>
+        </div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('rates')">← 2.1 Rates of Change</button>
+      <span class="page-nav-ctr">3 / 8</span>
+      <button class="page-nav-btn" onclick="showSec('laws')">2.3 Limit Laws →</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ LAWS ══ -->
+  <div id="page-laws" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>2.3 Limit Laws</h2>
+      <p style="color:#94a3b8;font-size:.88rem;margin-bottom:.85rem">ถ้า lim<sub>x→c</sub> f(x) = L และ lim<sub>x→c</sub> g(x) = M แล้ว:</p>
+
+      <table>
+        <tr><th>กฎ</th><th>สูตร</th><th>ตัวอย่าง (f→3, g→2, c=1)</th></tr>
+        <tr><td><span class="badge b-b">Sum</span></td><td style="font-family:monospace;color:var(--yellow)">lim(f+g) = L + M</td><td>3 + 2 = <strong style="color:var(--green)">5</strong></td></tr>
+        <tr><td><span class="badge b-b">Difference</span></td><td style="font-family:monospace;color:var(--yellow)">lim(f−g) = L − M</td><td>3 − 2 = <strong style="color:var(--green)">1</strong></td></tr>
+        <tr><td><span class="badge b-b">Constant Multiple</span></td><td style="font-family:monospace;color:var(--yellow)">lim(k·f) = k·L</td><td>4·3 = <strong style="color:var(--green)">12</strong></td></tr>
+        <tr><td><span class="badge b-b">Product</span></td><td style="font-family:monospace;color:var(--yellow)">lim(f·g) = L · M</td><td>3 · 2 = <strong style="color:var(--green)">6</strong></td></tr>
+        <tr><td><span class="badge b-b">Quotient</span></td><td style="font-family:monospace;color:var(--yellow)">lim(f/g) = L/M &nbsp; (M≠0)</td><td>3 / 2 = <strong style="color:var(--green)">1.5</strong></td></tr>
+        <tr><td><span class="badge b-b">Power</span></td><td style="font-family:monospace;color:var(--yellow)">lim(fⁿ) = Lⁿ</td><td>3² = <strong style="color:var(--green)">9</strong></td></tr>
+        <tr><td><span class="badge b-b">Root</span></td><td style="font-family:monospace;color:var(--yellow)">lim(√f) = √L &nbsp; (L≥0)</td><td>√9 = <strong style="color:var(--green)">3</strong></td></tr>
+      </table>
+
+      <h3>Direct Substitution Property</h3>
+      <div class="thm-box">
+        <div class="lbl">Theorem</div>
+        <p>ถ้า f เป็น <strong style="color:var(--green)">polynomial</strong> หรือ <strong style="color:var(--green)">rational function</strong> และ c อยู่ใน domain แล้ว:</p>
+        <div class="formula">lim<sub>x→c</sub> f(x) = f(c)</div>
+      </div>
+
+      <h3>การคำนวณ Limit แบบ 0/0</h3>
+      <p style="color:#94a3b8;font-size:.88rem;margin-bottom:.6rem">เมื่อ Direct Substitution ให้ 0/0 ต้อง <strong style="color:var(--yellow)">แยกตัวประกอบ / ตัดออก</strong> ก่อน</p>
+      <div class="canvas-wrap">
+        <h4>เลือกตัวอย่างการคำนวณ Limit</h4>
+        <canvas id="lawsCanvas" width="760" height="270"></canvas>
+        <div class="controls">
+          <button class="btn on" id="bLaw0" onclick="showLaw(0)">(x²−1)/(x−1) → x=1</button>
+          <button class="btn"    id="bLaw1" onclick="showLaw(1)">(x²−4)/(x−2) → x=2</button>
+          <button class="btn"    id="bLaw2" onclick="showLaw(2)">(√x−1)/(x−1) → x=1</button>
+        </div>
+      </div>
+
+      <h3>Squeeze Theorem (เบื้องต้น)</h3>
+      <div class="thm-box">
+        <div class="lbl">Squeeze / Sandwich Theorem</div>
+        <p>ถ้า g(x) ≤ f(x) ≤ h(x) ใกล้ c และ lim g = lim h = L แล้ว lim f = L ด้วย</p>
+        <p style="margin-top:.4rem;font-size:.84rem;color:#94a3b8">ตัวอย่างคลาสสิก: &nbsp; lim<sub>x→0</sub> sin(x)/x = 1 &nbsp;—&nbsp; พิสูจน์ใน §2.6</p>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('limit')">← 2.2 Limit</button>
+      <span class="page-nav-ctr">4 / 8</span>
+      <button class="page-nav-btn" onclick="showSec('onesided')">2.4 One-Sided →</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ ONE-SIDED ══ -->
+  <div id="page-onesided" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>2.4 One-Sided Limits</h2>
+      <div class="grid2">
+        <div class="def-box">
+          <div class="lbl">Left-Hand Limit</div>
+          <p>lim<sub>x→c⁻</sub> f(x) = L</p>
+          <p style="font-size:.84rem;color:#94a3b8;margin-top:.3rem">x เข้าใกล้ c <em>จากซ้าย</em> (x &lt; c)</p>
+        </div>
+        <div class="def-box">
+          <div class="lbl">Right-Hand Limit</div>
+          <p>lim<sub>x→c⁺</sub> f(x) = L</p>
+          <p style="font-size:.84rem;color:#94a3b8;margin-top:.3rem">x เข้าใกล้ c <em>จากขวา</em> (x &gt; c)</p>
+        </div>
+      </div>
+      <div class="thm-box" style="margin-top:.6rem">
+        <div class="lbl">Theorem — Existence of Limit</div>
+        <p>lim<sub>x→c</sub> f(x) = L &nbsp; <strong style="color:var(--green)">ก็ต่อเมื่อ</strong> &nbsp; lim<sub>x→c⁻</sub> f(x) = L <strong style="color:var(--green)"> และ </strong> lim<sub>x→c⁺</sub> f(x) = L</p>
+      </div>
+
+      <h3>ภาพ: Jump Discontinuity — lim⁻ ≠ lim⁺</h3>
+      <div class="canvas-wrap">
+        <h4>เลื่อน slider เพื่อดูการเข้าใกล้ c = 1 จากทั้งสองฝั่ง</h4>
+        <canvas id="onesidedCanvas" width="760" height="280"></canvas>
+        <div class="controls">
+          <button class="btn on" id="bOS0" onclick="setOSMode(0)">f(x) = ⌊x⌋+1 เมื่อ x&lt;1 / x²+1 เมื่อ x≥1 &nbsp;(Jump)</button>
+          <button class="btn"    id="bOS1" onclick="setOSMode(1)">f(x) = √(1−x²) &nbsp;(Half-circle)</button>
+        </div>
+        <div class="controls" style="margin-top:.35rem">
+          <span class="ctrl-label">← จากซ้าย</span>
+          <input type="range" id="osLeftSlider" min="0" max="49" value="0" oninput="redrawOnesided()">
+          <span id="osLeftVal" style="color:var(--blue);font-family:monospace;min-width:60px"></span>
+          <span style="width:1.5rem"></span>
+          <span id="osRightVal" style="color:var(--red);font-family:monospace;min-width:60px"></span>
+          <input type="range" id="osRightSlider" min="51" max="100" value="100" oninput="redrawOnesided()" style="direction:rtl">
+          <span class="ctrl-label">จากขวา →</span>
+        </div>
+      </div>
+
+      <h3>ตัวอย่าง One-Sided Limits</h3>
+      <table>
+        <tr><th>ฟังก์ชัน</th><th>lim⁻</th><th>lim⁺</th><th>lim (two-sided)</th></tr>
+        <tr>
+          <td>f(x) = |x|/x, c = 0</td>
+          <td><span class="badge b-b">−1</span></td>
+          <td><span class="badge b-b">+1</span></td>
+          <td><span class="badge b-r">DNE</span></td>
+        </tr>
+        <tr>
+          <td>f(x) = ⌊x⌋, c = 2</td>
+          <td><span class="badge b-b">1</span></td>
+          <td><span class="badge b-b">2</span></td>
+          <td><span class="badge b-r">DNE</span></td>
+        </tr>
+        <tr>
+          <td>f(x) = √x, c = 0</td>
+          <td><span class="badge b-r">N/A</span></td>
+          <td><span class="badge b-b">0</span></td>
+          <td><span class="badge b-g">0 (one-sided)</span></td>
+        </tr>
+        <tr>
+          <td>f(x) = x², c = 3</td>
+          <td><span class="badge b-g">9</span></td>
+          <td><span class="badge b-g">9</span></td>
+          <td><span class="badge b-g">9</span></td>
+        </tr>
+      </table>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('laws')">← 2.3 Limit Laws</button>
+      <span class="page-nav-ctr">5 / 8</span>
+      <button class="page-nav-btn" onclick="showSec('continuity')">2.5 Continuity →</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ CONTINUITY ══ -->
+  <div id="page-continuity" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>2.5 Continuity</h2>
+      <div class="def-box">
+        <div class="lbl">Definition — Continuous at c</div>
+        <p>f ต่อเนื่องที่ c ก็ต่อเมื่อ <strong style="color:var(--green)">ทั้ง 3 เงื่อนไข</strong> เป็นจริง:</p>
+        <ol style="margin-top:.5rem;padding-left:1.2rem;font-size:.88rem;color:var(--text);line-height:2">
+          <li>f(c) มีค่า (defined)</li>
+          <li>lim<sub>x→c</sub> f(x) มีค่า (exists)</li>
+          <li>lim<sub>x→c</sub> f(x) = f(c)</li>
+        </ol>
+      </div>
+
+      <h3>ประเภทของ Discontinuity</h3>
+      <div class="canvas-wrap">
+        <h4>คลิกเพื่อดูแต่ละประเภท</h4>
+        <canvas id="continuityCanvas" width="760" height="280"></canvas>
+        <div class="controls">
+          <button class="btn on" id="bCon0" onclick="showContinuity(0)">Continuous ✓</button>
+          <button class="btn"    id="bCon1" onclick="showContinuity(1)">Removable (Hole)</button>
+          <button class="btn"    id="bCon2" onclick="showContinuity(2)">Jump</button>
+          <button class="btn"    id="bCon3" onclick="showContinuity(3)">Infinite</button>
+        </div>
+      </div>
+
+      <div class="grid2" style="margin-top:.7rem">
+        <div class="thm-box"><div class="lbl">Removable Discontinuity</div>
+          <p>Limit มีค่า แต่ f(c) ไม่มีค่า หรือ f(c) ≠ Limit</p>
+          <p style="font-size:.82rem;color:#94a3b8;margin-top:.3rem">แก้ได้ด้วยการ <em>นิยามใหม่</em> ที่จุด c</p>
+        </div>
+        <div class="thm-box"><div class="lbl">Jump Discontinuity</div>
+          <p>lim⁻ ≠ lim⁺ → กราฟ "กระโดด" ที่จุด c</p>
+          <p style="font-size:.82rem;color:#94a3b8;margin-top:.3rem">พบบ่อยใน Piecewise Functions</p>
+        </div>
+      </div>
+
+      <h3>Intermediate Value Theorem (IVT)</h3>
+      <div class="thm-box">
+        <div class="lbl">IVT — Intermediate Value Theorem</div>
+        <p>ถ้า f ต่อเนื่องบน [a, b] และ N อยู่ระหว่าง f(a) กับ f(b) แล้ว <strong style="color:var(--yellow)">มี c ∈ (a,b)</strong> ที่ f(c) = N</p>
+      </div>
+      <div class="canvas-wrap">
+        <h4>IVT: f(x) = x³ − x − 1 บน [0, 2] — มี root อยู่ที่ไหน?</h4>
+        <canvas id="ivtCanvas" width="760" height="250"></canvas>
+        <div class="controls">
+          <span class="ctrl-label">ค่า N =</span>
+          <input type="range" id="ivtSlider" min="-10" max="50" value="0" oninput="drawIVT()">
+          <span id="ivtNVal" style="color:var(--yellow);font-family:monospace;min-width:40px"></span>
+          <span id="ivtResult" style="color:var(--green);font-family:monospace;margin-left:.6rem"></span>
+        </div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('onesided')">← 2.4 One-Sided</button>
+      <span class="page-nav-ctr">6 / 8</span>
+      <button class="page-nav-btn" onclick="showSec('infinity')">2.6 Infinity →</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ INFINITY ══ -->
+  <div id="page-infinity" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>2.6 Limits Involving Infinity &amp; Asymptotes</h2>
+
+      <div class="grid2">
+        <div class="def-box">
+          <div class="lbl">Limit at Infinity</div>
+          <p>lim<sub>x→+∞</sub> f(x) = L หมายความว่า f(x) เข้าใกล้ L เมื่อ x ใหญ่มาก</p>
+          <p style="font-size:.84rem;color:#94a3b8;margin-top:.3rem">→ <strong style="color:var(--yellow)">Horizontal Asymptote</strong> y = L</p>
+        </div>
+        <div class="def-box">
+          <div class="lbl">Infinite Limit</div>
+          <p>lim<sub>x→c</sub> f(x) = ∞ หมายความว่า f(x) ไม่มีขอบเขตเมื่อ x→c</p>
+          <p style="font-size:.84rem;color:#94a3b8;margin-top:.3rem">→ <strong style="color:var(--yellow)">Vertical Asymptote</strong> x = c</p>
+        </div>
+      </div>
+
+      <h3>Horizontal &amp; Vertical Asymptotes</h3>
+      <div class="canvas-wrap">
+        <h4>คลิกเพื่อดู Asymptote ของแต่ละฟังก์ชัน</h4>
+        <canvas id="infinityCanvas" width="760" height="280"></canvas>
+        <div class="controls">
+          <button class="btn on" id="bInf0" onclick="showInfinity(0)">1/x</button>
+          <button class="btn"    id="bInf1" onclick="showInfinity(1)">1/(1+x²)</button>
+          <button class="btn"    id="bInf2" onclick="showInfinity(2)">x/(x+1)</button>
+          <button class="btn"    id="bInf3" onclick="showInfinity(3)">eˣ/(1+eˣ)</button>
+        </div>
+      </div>
+
+      <h3>กฎการคำนวณ Limits at Infinity</h3>
+      <table>
+        <tr><th>Limit</th><th>ค่า</th><th>หมายเหตุ</th></tr>
+        <tr><td>lim<sub>x→∞</sub> 1/xⁿ</td><td><span class="badge b-g">0</span></td><td>n &gt; 0</td></tr>
+        <tr><td>lim<sub>x→∞</sub> xⁿ</td><td><span class="badge b-y">+∞</span></td><td>n &gt; 0</td></tr>
+        <tr><td>lim<sub>x→∞</sub> eˣ</td><td><span class="badge b-y">+∞</span></td><td></td></tr>
+        <tr><td>lim<sub>x→∞</sub> e⁻ˣ</td><td><span class="badge b-g">0</span></td><td></td></tr>
+        <tr><td>lim<sub>x→∞</sub> ln(x)</td><td><span class="badge b-y">+∞</span></td><td>ช้ามาก</td></tr>
+        <tr><td>lim<sub>x→∞</sub> aₙxⁿ/bₘxᵐ</td><td><span class="badge b-b">ดูที่ degree</span></td><td>n&lt;m → 0, n&gt;m → ±∞, n=m → aₙ/bₘ</td></tr>
+      </table>
+
+      <h3>Squeeze Theorem — sin(x)/x</h3>
+      <div class="canvas-wrap">
+        <h4>Squeeze Theorem: −1 ≤ sin(x) ≤ 1 → −1/|x| ≤ sin(x)/x ≤ 1/|x| → 0</h4>
+        <canvas id="squeezeCanvas" width="760" height="250"></canvas>
+        <div class="controls">
+          <button class="btn on" id="bSq0" onclick="showSqueeze(0)">sin(x)/x → 1 (x→0)</button>
+          <button class="btn"    id="bSq1" onclick="showSqueeze(1)">x²·cos(1/x) → 0 (x→0)</button>
+        </div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('continuity')">← 2.5 Continuity</button>
+      <span class="page-nav-ctr">7 / 8</span>
+      <button class="page-nav-btn" onclick="showSec('quiz')">แบบฝึกหัด →</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ QUIZ ══ -->
+  <div id="page-quiz" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>แบบฝึกหัด Chapter II</h2>
+      <div id="quizContainer"></div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('infinity')">← 2.6 Infinity</button>
+      <span class="page-nav-ctr">8 / 8</span>
+      <a class="page-nav-btn" href="ch3.html">Chapter III: Derivatives →</a>
+    </div>
+  </div>
+  </div>
+
+</main>
+<script src="sidebar.js"></script>
+<script>
+// ══ CANVAS HELPERS ══
+// Theme-aware palette (see theme.js) — let + applyCanvasTheme() so colors follow
+// the light/dark toggle; draw functions read the live bindings.
+let BG,GRID,AXIS,BLUE,GREEN,YELLOW,RED,PURPLE,MUTED,SURFACE,ON_SURFACE;
+function applyCanvasTheme(){ const t=window.CanvasTheme.get();
+  BG=t.BG;GRID=t.GRID;AXIS=t.AXIS;BLUE=t.BLUE;GREEN=t.GREEN;YELLOW=t.YELLOW;
+  RED=t.RED;PURPLE=t.PURPLE;MUTED=t.MUTED;SURFACE=t.SURFACE;ON_SURFACE=t.ON_SURFACE; }
+applyCanvasTheme();
+window._redrawCanvases=function(){ applyCanvasTheme(); initSec(window.CURRENT_SEC||'overview'); };
+
+function setupCanvas(id,W,H){
+  const cv=document.getElementById(id);if(!cv)return null;
+  const dpr=Math.min(window.devicePixelRatio||1,2);
+  cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+'px';cv.style.height=H+'px';
+  const ctx=cv.getContext('2d');ctx.scale(dpr,dpr);return{ctx,W,H};
+}
+function drawGrid(ctx,W,H,xMin,xMax,yMin,yMax){
+  ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);
+  const toX=x=>(x-xMin)/(xMax-xMin)*W, toY=y=>H-(y-yMin)/(yMax-yMin)*H;
+  const xs=Math.ceil(xMax-xMin)>20?5:Math.ceil(xMax-xMin)>10?2:1;
+  const ys=Math.ceil(yMax-yMin)>20?5:Math.ceil(yMax-yMin)>10?2:1;
+  ctx.strokeStyle=GRID;ctx.lineWidth=.5;
+  for(let x=Math.ceil(xMin/xs)*xs;x<=xMax;x+=xs){ctx.beginPath();ctx.moveTo(toX(x),0);ctx.lineTo(toX(x),H);ctx.stroke();}
+  for(let y=Math.ceil(yMin/ys)*ys;y<=yMax;y+=ys){ctx.beginPath();ctx.moveTo(0,toY(y));ctx.lineTo(W,toY(y));ctx.stroke();}
+  ctx.strokeStyle=AXIS;ctx.lineWidth=1.5;
+  if(yMin<=0&&yMax>=0){ctx.beginPath();ctx.moveTo(0,toY(0));ctx.lineTo(W,toY(0));ctx.stroke();}
+  if(xMin<=0&&xMax>=0){ctx.beginPath();ctx.moveTo(toX(0),0);ctx.lineTo(toX(0),H);ctx.stroke();}
+  ctx.fillStyle=MUTED;ctx.font='10px monospace';ctx.textAlign='center';
+  for(let x=Math.ceil(xMin/xs)*xs;x<=xMax;x+=xs)if(x!==0&&Math.abs(toX(x))>5&&Math.abs(toX(x)-W)<W-5)ctx.fillText(x,toX(x),toY(0)+13);
+  ctx.textAlign='right';
+  for(let y=Math.ceil(yMin/ys)*ys;y<=yMax;y+=ys)if(y!==0)ctx.fillText(y,toX(0)-3,toY(y)+4);
+  return{toX,toY};
+}
+function plotFn(ctx,fn,xMin,xMax,W,H,yMin,yMax,col,lw=2){
+  const toX=x=>(x-xMin)/(xMax-xMin)*W, toY=y=>H-(y-yMin)/(yMax-yMin)*H;
+  ctx.strokeStyle=col;ctx.lineWidth=lw;ctx.beginPath();
+  let ok=false;
+  for(let i=0;i<=W*2;i++){
+    const x=xMin+i/(W*2)*(xMax-xMin);
+    let y;try{y=fn(x);}catch(e){ok=false;continue;}
+    if(!isFinite(y)||Math.abs(y)>1e6){ok=false;continue;}
+    const px=toX(x),py=toY(y);
+    if(!ok){ctx.moveTo(px,py);ok=true;}else ctx.lineTo(px,py);
+  }
+  ctx.stroke();
+}
+function dot(ctx,x,y,r,col,fill=true){
+  ctx.beginPath();ctx.arc(x,y,r,0,2*Math.PI);
+  if(fill){ctx.fillStyle=col;ctx.fill();}
+  else{ctx.strokeStyle=col;ctx.lineWidth=2;ctx.fillStyle=BG;ctx.fill();ctx.stroke();}
+}
+function label(ctx,text,x,y,col,align='center',size=11){
+  ctx.fillStyle=col;ctx.font=size+'px monospace';ctx.textAlign=align;ctx.fillText(text,x,y);
+}
+function dashedLine(ctx,x1,y1,x2,y2,col,dash=[5,4]){
+  ctx.strokeStyle=col;ctx.lineWidth=1.3;ctx.setLineDash(dash);
+  ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();ctx.setLineDash([]);
+}
+
+// ══ SECTION NAVIGATION ══
+const CRUMBS={
+  overview:'Limits and Continuity',rates:'2.1 อัตราการเปลี่ยนแปลง',
+  limit:'2.2 Limit ของฟังก์ชัน',laws:'2.3 กฎของ Limit',
+  onesided:'2.4 One-Sided Limits',continuity:'2.5 ความต่อเนื่อง',
+  infinity:'2.6 Limits at Infinity',quiz:'แบบฝึกหัด'
+};
+window.showSec=function(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.getElementById('crumbSec').textContent=CRUMBS[id]||id;
+  window.CURRENT_SEC=id;
+  if(window.setSidebarSec)setSidebarSec(id);
+  document.getElementById('main').scrollTop=0;
+  setTimeout(()=>initSec(id),60);
+};
+function initSec(id){
+  if(id==='overview')   drawOverview();
+  if(id==='rates')      drawSecant();
+  if(id==='limit')      {redrawLimit();drawEpsilon();}
+  if(id==='laws')       showLaw(0);
+  if(id==='onesided')   redrawOnesided();
+  if(id==='continuity') {showContinuity(0);drawIVT();}
+  if(id==='infinity')   {showInfinity(0);showSqueeze(0);}
+  if(id==='quiz')       initQuiz();
+}
+
+// ══ OVERVIEW ══
+function drawOverview(){
+  const c=setupCanvas('overviewCanvas',760,220);if(!c)return;
+  const{ctx,W,H}=c;
+  ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);
+  const cy=H/2;
+
+  // Draw a curve f(x) with a hole
+  ctx.strokeStyle=BLUE;ctx.lineWidth=2.5;ctx.beginPath();
+  let first=true;
+  for(let px=0;px<=W;px++){
+    const x=(px/W)*12-6; // x in [-6,6]
+    const fx=Math.sin(x)*2+x*.3;
+    const py=cy-fx*25;
+    if(first){ctx.moveTo(px,py);first=false;}else ctx.lineTo(px,py);
+  }
+  ctx.stroke();
+
+  // Mark c and L
+  const cx_=W*0.5; // x=0 maps to middle
+  const cVal=0; const lVal=0;
+  const cPx=cx_;
+  const lPy=cy-lVal*25;
+
+  // Hole at c
+  dot(ctx,cPx,lPy,7,YELLOW,false);
+
+  // Arrows from left
+  const arrY=H-30;
+  ctx.strokeStyle=GREEN;ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(cPx-150,arrY);ctx.lineTo(cPx-18,arrY);ctx.stroke();
+  ctx.fillStyle=GREEN;ctx.beginPath();ctx.moveTo(cPx-18,arrY);ctx.lineTo(cPx-28,arrY-5);ctx.lineTo(cPx-28,arrY+5);ctx.closePath();ctx.fill();
+  label(ctx,'x → c⁻',cPx-85,arrY-10,GREEN);
+
+  // Arrows from right
+  ctx.strokeStyle=RED;ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(cPx+150,arrY);ctx.lineTo(cPx+18,arrY);ctx.stroke();
+  ctx.fillStyle=RED;ctx.beginPath();ctx.moveTo(cPx+18,arrY);ctx.lineTo(cPx+28,arrY-5);ctx.lineTo(cPx+28,arrY+5);ctx.closePath();ctx.fill();
+  label(ctx,'x → c⁺',cPx+85,arrY-10,RED);
+
+  // lim label
+  ctx.fillStyle='#0f3460';
+  const bx=cPx-105,by=12,bw=210,bh=36,br=8;
+  ctx.beginPath();ctx.moveTo(bx+br,by);ctx.lineTo(bx+bw-br,by);ctx.arcTo(bx+bw,by,bx+bw,by+br,br);
+  ctx.lineTo(bx+bw,by+bh-br);ctx.arcTo(bx+bw,by+bh,bx+bw-br,by+bh,br);
+  ctx.lineTo(bx+br,by+bh);ctx.arcTo(bx,by+bh,bx,by+bh-br,br);ctx.lineTo(bx,by+br);ctx.arcTo(bx,by,bx+br,by,br);
+  ctx.closePath();ctx.fill();
+  ctx.strokeStyle=YELLOW;ctx.lineWidth=1.5;ctx.stroke();
+  label(ctx,'lim f(x) = L',cPx,36,YELLOW,'center',14);
+
+  // dashed line from limit box to hole
+  dashedLine(ctx,cPx,48,cPx,lPy-8,YELLOW+'99',[4,3]);
+
+  // Labels
+  label(ctx,'c',cPx,arrY+15,MUTED);
+  label(ctx,'L',cPx-22,lPy+4,YELLOW,'right',11);
+  dashedLine(ctx,10,lPy,cPx-10,lPy,YELLOW+'55',[3,3]);
+}
+
+// ══ RATES / SECANT ══
+function drawSecant(){
+  const h=document.getElementById('hSlider').value/10;
+  document.getElementById('hVal').textContent=h.toFixed(2);
+  const a=1;
+  const fa=a*a;
+  const fah=((a+h)*(a+h));
+  const slope=(fah-fa)/h;
+  document.getElementById('slopeVal').textContent='slope = '+slope.toFixed(4)+(h<0.15?' ≈ 2 ✓':'');
+
+  const c=setupCanvas('secantCanvas',760,290);if(!c)return;
+  const{ctx,W,H}=c;
+  const xMin=-1,xMax=4,yMin=-1,yMax=10;
+  const{toX,toY}=drawGrid(ctx,W,H,xMin,xMax,yMin,yMax);
+
+  // parabola
+  plotFn(ctx,x=>x*x,xMin,xMax,W,H,yMin,yMax,BLUE,2.5);
+
+  // secant line — extend it
+  const secFn=x=>fa+slope*(x-a);
+  ctx.strokeStyle=h<0.15?GREEN:YELLOW;ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(toX(xMin),toY(secFn(xMin)));ctx.lineTo(toX(xMax),toY(secFn(xMax)));ctx.stroke();
+
+  // tangent at a (slope = 2a = 2)
+  if(h<0.5){
+    const tanFn=x=>fa+2*(x-a);
+    ctx.strokeStyle=GREEN+'88';ctx.lineWidth=1.5;ctx.setLineDash([6,4]);
+    ctx.beginPath();ctx.moveTo(toX(xMin),toY(tanFn(xMin)));ctx.lineTo(toX(xMax),toY(tanFn(xMax)));ctx.stroke();ctx.setLineDash([]);
+    label(ctx,'Tangent (slope=2)',toX(3.5),toY(tanFn(3.5))-10,GREEN+'cc','center',11);
+  }
+
+  // Points
+  dot(ctx,toX(a),toY(fa),6,BLUE);
+  dot(ctx,toX(a+h),toY(fah),6,YELLOW);
+
+  // Rise/run triangle
+  if(h>0.3){
+    dashedLine(ctx,toX(a),toY(fa),toX(a+h),toY(fa),MUTED);
+    dashedLine(ctx,toX(a+h),toY(fa),toX(a+h),toY(fah),MUTED);
+    label(ctx,'run = h',toX(a+h/2),toY(fa)+13,MUTED);
+    label(ctx,'rise = Δf',toX(a+h)+28,toY((fa+fah)/2),MUTED);
+  }
+
+  // Labels
+  label(ctx,'(a, f(a))',toX(a),toY(fa)-12,BLUE,'center',11);
+  label(ctx,'(a+h, f(a+h))',toX(a+h),toY(fah)-12,YELLOW,'center',11);
+
+  // slope indicator
+  const col=h<0.15?GREEN:YELLOW;
+  label(ctx,'slope = (f(a+h)−f(a))/h = '+slope.toFixed(3),W/2,H-10,col,'center',11);
+}
+
+// ══ LIMIT APPROACH ══
+let limMode=0;
+const limCfg=[
+  {fn:x=>Math.abs(x-1)<1e-9?null:(x*x-1)/(x-1), lbl:'f(x) = (x²−1)/(x−1)', hole:1, L:2, xMin:-1,xMax:4,yMin:-1,yMax:6, cx:1},
+  {fn:x=>Math.abs(x)<1e-9?null:Math.sin(Math.PI*x/2)/x, lbl:'f(x) = sin(πx/2)/x', hole:0, L:Math.PI/2, xMin:-3,xMax:3,yMin:-1,yMax:3, cx:0},
+  {fn:x=>Math.abs(x)<1e-9?null:(x>0?1:-1), lbl:'f(x) = |x|/x', hole:0, L:null, xMin:-3,xMax:3,yMin:-2,yMax:2, cx:0},
+];
+function setLimMode(m){
+  limMode=m;
+  document.querySelectorAll('[id^=bLim]').forEach((b,j)=>b.classList.toggle('on',j===m));
+  document.getElementById('limSlider').value=50;
+  redrawLimit();
+}
+function redrawLimit(){
+  const cfg=limCfg[limMode];
+  const val=parseInt(document.getElementById('limSlider').value);
+  // map 0-49 to cx-2→cx-0.01, 51-100 to cx+0.01→cx+2
+  let x;
+  if(val<=49) x=cfg.cx-2+val/49*1.99;
+  else        x=cfg.cx+0.01+(val-51)/49*1.99;
+
+  const rawFx=cfg.fn(x);
+  const fx=rawFx==null?undefined:rawFx;
+
+  document.getElementById('limXVal').textContent='x = '+(x>=0?' ':'')+x.toFixed(4);
+  if(fx!==undefined&&isFinite(fx))document.getElementById('limFVal').textContent='f(x) = '+fx.toFixed(5);
+  else document.getElementById('limFVal').textContent='f(x) = ?';
+
+  const{xMin,xMax,yMin,yMax}=cfg;
+  const c=setupCanvas('limitCanvas',760,270);if(!c)return;
+  const{ctx,W,H}=c;
+  const{toX,toY}=drawGrid(ctx,W,H,xMin,xMax,yMin,yMax);
+
+  // plot with gap at hole
+  plotFn(ctx,t=>{
+    if(Math.abs(t-cfg.cx)<0.04)return undefined;
+    return cfg.fn(t);
+  },xMin,xMax,W,H,yMin,yMax,BLUE,2.5);
+
+  // hole circle
+  if(cfg.L!==null&&isFinite(cfg.L))dot(ctx,toX(cfg.cx),toY(cfg.L),6,BLUE,false);
+  else{dot(ctx,toX(cfg.cx),toY(1),6,RED,false);}
+
+  // current point
+  if(fx!==undefined&&isFinite(fx)){
+    dot(ctx,toX(x),toY(fx),7,val<=49?GREEN:RED);
+    dashedLine(ctx,toX(x),toY(fx),toX(x),toY(0)>0?toY(0):H,MUTED+'66',[4,3]);
+    dashedLine(ctx,toX(xMin),toY(fx),toX(x),toY(fx),MUTED+'66',[4,3]);
+  }
+
+  // L line
+  if(cfg.L!==null&&isFinite(cfg.L)){
+    dashedLine(ctx,0,toY(cfg.L),W,toY(cfg.L),YELLOW+'55',[6,4]);
+    label(ctx,'L = '+cfg.L.toFixed(4),W-4,toY(cfg.L)-5,YELLOW,'right',10);
+  }
+
+  label(ctx,cfg.lbl,10,18,BLUE,'left',12);
+  if(cfg.L===null)label(ctx,'Limit DNE',10,35,RED,'left',11);
+}
+
+// ══ EPSILON-DELTA ══
+function drawEpsilon(){
+  const delta=document.getElementById('deltaSlider').value/20;
+  document.getElementById('deltaVal').textContent=delta.toFixed(2);
+  const epsilon=2*delta; // for f(x)=2x, c=1, L=2 => |f(x)-L|=2|x-1|=2δ
+  document.getElementById('epsilonResult').textContent='→ ε = '+epsilon.toFixed(2);
+
+  const c=setupCanvas('epsilonCanvas',760,260);if(!c)return;
+  const{ctx,W,H}=c;
+  const xMin=-0.5,xMax=2.5,yMin=-0.5,yMax=5;
+  const{toX,toY}=drawGrid(ctx,W,H,xMin,xMax,yMin,yMax);
+  const cx=1,L=2;
+
+  // ε band (y)
+  ctx.fillStyle=GREEN+'18';
+  ctx.fillRect(0,toY(L+epsilon),W,toY(L-epsilon)-toY(L+epsilon));
+  ctx.strokeStyle=GREEN+'66';ctx.lineWidth=1;ctx.setLineDash([6,4]);
+  ctx.beginPath();ctx.moveTo(0,toY(L+epsilon));ctx.lineTo(W,toY(L+epsilon));ctx.stroke();
+  ctx.beginPath();ctx.moveTo(0,toY(L-epsilon));ctx.lineTo(W,toY(L-epsilon));ctx.stroke();
+  ctx.setLineDash([]);
+
+  // δ band (x)
+  ctx.fillStyle=BLUE+'18';
+  ctx.fillRect(toX(cx-delta),0,toX(cx+delta)-toX(cx-delta),H);
+  ctx.strokeStyle=BLUE+'66';ctx.lineWidth=1;ctx.setLineDash([6,4]);
+  ctx.beginPath();ctx.moveTo(toX(cx-delta),0);ctx.lineTo(toX(cx-delta),H);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(toX(cx+delta),0);ctx.lineTo(toX(cx+delta),H);ctx.stroke();
+  ctx.setLineDash([]);
+
+  // f(x) = 2x
+  plotFn(ctx,x=>2*x,xMin,xMax,W,H,yMin,yMax,YELLOW,2.5);
+
+  // center point
+  dot(ctx,toX(cx),toY(L),7,YELLOW);
+
+  // labels
+  label(ctx,'c = '+cx,toX(cx),H-6,BLUE,'center',10);
+  label(ctx,'δ',toX(cx-delta/2),H-6,BLUE,'center',10);
+  label(ctx,'δ',toX(cx+delta/2),H-6,BLUE,'center',10);
+  label(ctx,'L = '+L,4,toY(L)+4,YELLOW,'left',10);
+  label(ctx,'ε',4,toY(L+epsilon/2)+4,GREEN,'left',10);
+  label(ctx,'ε',4,toY(L-epsilon/2)+4,GREEN,'left',10);
+  label(ctx,'f(x) = 2x',toX(2.2),toY(4.4)-8,YELLOW,'left',12);
+  label(ctx,'|x−c| < δ = '+delta.toFixed(2)+' ⟹ |f(x)−L| < ε = '+epsilon.toFixed(2),W/2,18,GREEN+'cc','center',11);
+}
+
+// ══ LIMIT LAWS ══
+const lawData=[
+  {fn:x=>Math.abs(x-1)<1e-9?null:(x*x-1)/(x-1),
+   lbl:'lim(x→1) (x²−1)/(x−1)', cx:1, L:2,
+   steps:['= lim(x→1) (x−1)(x+1)/(x−1)','= lim(x→1) (x+1)','= 1+1','= 2'],
+   xMin:-1,xMax:4,yMin:-1,yMax:5},
+  {fn:x=>Math.abs(x-2)<1e-9?null:(x*x-4)/(x-2),
+   lbl:'lim(x→2) (x²−4)/(x−2)', cx:2, L:4,
+   steps:['= lim(x→2) (x−2)(x+2)/(x−2)','= lim(x→2) (x+2)','= 2+2','= 4'],
+   xMin:-1,xMax:5,yMin:-1,yMax:7},
+  {fn:x=>Math.abs(x-1)<1e-9?null:(Math.sqrt(x)-1)/(x-1),
+   lbl:'lim(x→1) (√x−1)/(x−1)', cx:1, L:0.5,
+   steps:['= lim(x→1) (√x−1)/((√x−1)(√x+1))','= lim(x→1) 1/(√x+1)','= 1/(1+1)','= 1/2 = 0.5'],
+   xMin:-0.5,xMax:4,yMin:-0.5,yMax:2},
+];
+function showLaw(i){
+  document.querySelectorAll('[id^=bLaw]').forEach((b,j)=>b.classList.toggle('on',j===i));
+  const d=lawData[i];
+  const{xMin,xMax,yMin,yMax}=d;
+  const c=setupCanvas('lawsCanvas',760,270);if(!c)return;
+  const{ctx,W,H}=c;
+  const{toX,toY}=drawGrid(ctx,W,H,xMin,xMax,yMin,yMax);
+
+  plotFn(ctx,t=>{if(Math.abs(t-d.cx)<0.05)return undefined;return d.fn(t);},xMin,xMax,W,H,yMin,yMax,YELLOW,2.5);
+  dot(ctx,toX(d.cx),toY(d.L),7,YELLOW,false);
+  dot(ctx,toX(d.cx),toY(d.L),4,YELLOW);
+
+  dashedLine(ctx,toX(d.cx),0,toX(d.cx),H,MUTED+'55');
+  dashedLine(ctx,0,toY(d.L),W,toY(d.L),MUTED+'55');
+
+  label(ctx,d.lbl,10,18,YELLOW,'left',12);
+  d.steps.forEach((s,j)=>label(ctx,s,10,36+j*16,j===d.steps.length-1?GREEN:MUTED,'left',11));
+  label(ctx,'Limit = '+d.L,toX(d.cx)+8,toY(d.L)-8,GREEN,'left',11);
+}
+
+// ══ ONE-SIDED ══
+let osMode=0;
+const osCfg=[
+  {
+    fn:x=>x<1?x+2:x*x+1,
+    fnL:x=>x+2,fnR:x=>x*x+1,
+    cx:1,lL:3,lR:2,
+    xMin:-1,xMax:3,yMin:-0.5,yMax:6,
+    lbl:'f(x) = x+2 (x<1) / x²+1 (x≥1)',
+    note:'lim⁻ = 3 ≠ lim⁺ = 2 → Limit DNE'
+  },
+  {
+    fn:x=>{const v=1-x*x;return v<0?NaN:Math.sqrt(v);},
+    fnL:x=>{const v=1-x*x;return v<0?NaN:Math.sqrt(v);},
+    fnR:x=>{const v=1-x*x;return v<0?NaN:Math.sqrt(v);},
+    cx:0,lL:1,lR:1,
+    xMin:-1.5,xMax:1.5,yMin:-0.5,yMax:1.5,
+    lbl:'f(x) = √(1−x²)',
+    note:'lim⁻ = lim⁺ = 1 → Limit = 1 ✓'
+  }
+];
+function setOSMode(m){
+  osMode=m;
+  document.querySelectorAll('[id^=bOS]').forEach((b,j)=>b.classList.toggle('on',j===m));
+  redrawOnesided();
+}
+function redrawOnesided(){
+  const cfg=osCfg[osMode];
+  const lv=parseInt(document.getElementById('osLeftSlider').value);
+  const rv=parseInt(document.getElementById('osRightSlider').value);
+  const{xMin,xMax,yMin,yMax,cx}=cfg;
+
+  // left x: maps 0-49 to (cx-1.5) → (cx-0.01)
+  const xL=cx-1.5+lv/49*1.49;
+  const xR=cx+0.01+(rv-51)/49*1.49;
+  const fL=cfg.fn(xL);
+  const fR=cfg.fn(xR);
+
+  document.getElementById('osLeftVal').textContent='x = '+xL.toFixed(3);
+  document.getElementById('osRightVal').textContent='x = '+xR.toFixed(3);
+
+  const c=setupCanvas('onesidedCanvas',760,280);if(!c)return;
+  const{ctx,W,H}=c;
+  const{toX,toY}=drawGrid(ctx,W,H,xMin,xMax,yMin,yMax);
+
+  // plot each branch
+  plotFn(ctx,t=>{if(t>=cfg.cx-0.02)return undefined;return cfg.fnL(t);},xMin,xMax,W,H,yMin,yMax,BLUE,2.5);
+  plotFn(ctx,t=>{if(t<=cfg.cx+0.02)return undefined;return cfg.fnR(t);},xMin,xMax,W,H,yMin,yMax,RED,2.5);
+
+  // endpoints
+  dot(ctx,toX(cfg.cx),toY(cfg.lL),6,BLUE,false);
+  dot(ctx,toX(cfg.cx),toY(cfg.lR),5,RED);
+
+  // lim lines
+  dashedLine(ctx,0,toY(cfg.lL),toX(cfg.cx),toY(cfg.lL),BLUE+'77',[5,4]);
+  dashedLine(ctx,0,toY(cfg.lR),toX(cfg.cx),toY(cfg.lR),RED+'77',[5,4]);
+
+  // moving points
+  if(isFinite(fL)){dot(ctx,toX(xL),toY(fL),7,BLUE);dashedLine(ctx,toX(xL),toY(fL),toX(xL),H,MUTED+'44');}
+  if(isFinite(fR)){dot(ctx,toX(xR),toY(fR),7,RED);dashedLine(ctx,toX(xR),toY(fR),toX(xR),H,MUTED+'44');}
+
+  // vertical at c
+  dashedLine(ctx,toX(cfg.cx),0,toX(cfg.cx),H,MUTED+'44');
+
+  label(ctx,cfg.lbl,10,18,MUTED,'left',11);
+  label(ctx,cfg.note,10,32,cfg.lL===cfg.lR?GREEN:RED,'left',11);
+  label(ctx,'lim⁻ = '+cfg.lL,8,toY(cfg.lL)-6,BLUE,'left',11);
+  label(ctx,'lim⁺ = '+cfg.lR,8,toY(cfg.lR)-6,RED,'left',11);
+  label(ctx,'c = '+cfg.cx,toX(cfg.cx),H-6,MUTED,'center',10);
+}
+
+// ══ CONTINUITY ══
+const conData=[
+  {type:'Continuous',col:GREEN,
+   fn:x=>x*x-x+1,
+   xMin:-2,xMax:3,yMin:-1,yMax:7,
+   note:'f(1) = 1, lim = 1, f(c) = lim ✓ ต่อเนื่อง',
+   cx:1,fc:1,L:1},
+  {type:'Removable Discontinuity',col:YELLOW,
+   fn:x=>Math.abs(x-1)<1e-9?3:(x*x-1)/(x-1), // f(1) wrong = 3, limit = 2
+   xMin:-1,xMax:4,yMin:-1,yMax:5,
+   note:'lim(x→1) = 2 แต่ f(1) = 3 ≠ 2 → Removable',
+   cx:1,fc:3,L:2},
+  {type:'Jump Discontinuity',col:RED,
+   fn:x=>x<1?x+2:x*x+1,
+   xMin:-1,xMax:3,yMin:-0.5,yMax:6,
+   note:'lim⁻(x→1) = 3, lim⁺(x→1) = 2 → Jump',
+   cx:1,fc:2,L:null,lL:3,lR:2},
+  {type:'Infinite Discontinuity',col:RED,
+   fn:x=>1/x,
+   xMin:-3,xMax:3,yMin:-6,yMax:6,
+   note:'lim(x→0) 1/x = ±∞ → Infinite Discontinuity',
+   cx:0,fc:null,L:null},
+];
+function showContinuity(i){
+  document.querySelectorAll('[id^=bCon]').forEach((b,j)=>b.classList.toggle('on',j===i));
+  const d=conData[i];
+  const{xMin,xMax,yMin,yMax}=d;
+  const c=setupCanvas('continuityCanvas',760,280);if(!c)return;
+  const{ctx,W,H}=c;
+  const{toX,toY}=drawGrid(ctx,W,H,xMin,xMax,yMin,yMax);
+
+  if(i===2){
+    // Jump: two branches
+    plotFn(ctx,t=>{if(t>=d.cx-0.02)return undefined;return t+2;},xMin,xMax,W,H,yMin,yMax,BLUE,2.5);
+    plotFn(ctx,t=>{if(t<=d.cx+0.02)return undefined;return t*t+1;},xMin,xMax,W,H,yMin,yMax,RED,2.5);
+    dot(ctx,toX(d.cx),toY(d.lL),6,BLUE,false);
+    dot(ctx,toX(d.cx),toY(d.fc),5,RED);
+  }else{
+    plotFn(ctx,t=>{
+      if(i===1&&Math.abs(t-d.cx)<0.04)return undefined;
+      if(i===3&&Math.abs(t)<0.04)return undefined;
+      return d.fn(t);
+    },xMin,xMax,W,H,yMin,yMax,d.col,2.5);
+
+    if(i===1){
+      dot(ctx,toX(d.cx),toY(d.L),6,BLUE,false);   // hole at limit value
+      dot(ctx,toX(d.cx),toY(d.fc),5,RED);           // wrong point
+    }else if(i===0){
+      dot(ctx,toX(d.cx),toY(d.fc),6,GREEN);
+    }
+  }
+
+  if(d.cx!==null&&d.cx!==undefined)dashedLine(ctx,toX(d.cx),0,toX(d.cx),H,MUTED+'44');
+
+  label(ctx,d.type,10,18,d.col,'left',13);
+  label(ctx,d.note,10,34,MUTED,'left',11);
+
+  // continuity checklist
+  const checks=[
+    ['① f(c) defined', i===3?'✗':'✓', i===3?RED:GREEN],
+    ['② lim exists',   (i===2||i===3)?'✗':'✓', (i===2||i===3)?RED:GREEN],
+    ['③ lim = f(c)',   (i===1||i===2||i===3)?'✗':'✓', (i===1||i===2||i===3)?RED:GREEN],
+  ];
+  checks.forEach(([txt,mark,col],j)=>{
+    label(ctx,mark+' '+txt,W-10,18+j*18,col,'right',11);
+  });
+}
+
+// ══ IVT ══
+function drawIVT(){
+  const nVal=parseInt(document.getElementById('ivtSlider').value)/10;
+  document.getElementById('ivtNVal').textContent=nVal.toFixed(1);
+  const fn=x=>x*x*x-x-1;
+  const a=0.5,b=1.5;
+  const fa=fn(a),fb=fn(b);
+  const between=nVal>=Math.min(fa,fb)&&nVal<=Math.max(fa,fb);
+  if(between){
+    // find approximate c by bisection
+    let lo=a,hi=b;
+    for(let k=0;k<40;k++){const m=(lo+hi)/2;if((fn(m)-nVal)*(fn(lo)-nVal)<=0)hi=m;else lo=m;}
+    const cApprox=(lo+hi)/2;
+    document.getElementById('ivtResult').textContent='∃ c ≈ '+cApprox.toFixed(4)+' ∈ ('+a+','+b+')';
+  }else{
+    document.getElementById('ivtResult').textContent='N ไม่อยู่ระหว่าง f(a) และ f(b)';
+  }
+
+  const c=setupCanvas('ivtCanvas',760,250);if(!c)return;
+  const{ctx,W,H}=c;
+  const{toX,toY}=drawGrid(ctx,W,H,0,2,-3,6);
+
+  // shaded interval
+  ctx.fillStyle=BLUE+'18';ctx.fillRect(toX(a),0,toX(b)-toX(a),H);
+
+  plotFn(ctx,fn,0,2,W,H,-3,6,BLUE,2.5);
+
+  // N line
+  ctx.strokeStyle=YELLOW+'88';ctx.lineWidth=1.5;ctx.setLineDash([6,4]);
+  ctx.beginPath();ctx.moveTo(0,toY(nVal));ctx.lineTo(W,toY(nVal));ctx.stroke();ctx.setLineDash([]);
+
+  // Endpoints
+  dot(ctx,toX(a),toY(fa),6,GREEN);
+  dot(ctx,toX(b),toY(fb),6,RED);
+  label(ctx,'('+a+', '+fa.toFixed(2)+')',toX(a)+6,toY(fa)-8,GREEN,'left',10);
+  label(ctx,'('+b+', '+fb.toFixed(2)+')',toX(b)+6,toY(fb)-8,RED,'left',10);
+
+  // Guaranteed crossing
+  if(between){
+    let lo=a,hi=b;
+    for(let k=0;k<40;k++){const m=(lo+hi)/2;if((fn(m)-nVal)*(fn(lo)-nVal)<=0)hi=m;else lo=m;}
+    const cp=(lo+hi)/2;
+    dot(ctx,toX(cp),toY(nVal),7,YELLOW);
+    dashedLine(ctx,toX(cp),0,toX(cp),toY(nVal),YELLOW+'66');
+    label(ctx,'c ≈ '+cp.toFixed(3),toX(cp),toY(nVal)-10,YELLOW,'center',11);
+  }
+
+  label(ctx,'N = '+nVal.toFixed(1),W-6,toY(nVal)-5,YELLOW,'right',11);
+  label(ctx,'f(x) = x³−x−1',10,18,BLUE,'left',12);
+  label(ctx,'[a='+a+', b='+b+']',toX((a+b)/2),H-6,BLUE+'aa','center',10);
+}
+
+// ══ INFINITY ══
+const infData=[
+  {fn:x=>1/x, lbl:'f(x) = 1/x', VA:0, HA:0, xMin:-5,xMax:5,yMin:-5,yMax:5, note:'VA: x=0 · HA: y=0'},
+  {fn:x=>1/(1+x*x), lbl:'f(x) = 1/(1+x²)', VA:null, HA:0, xMin:-5,xMax:5,yMin:-0.5,yMax:1.5, note:'HA: y=0 ทั้งสองทิศ'},
+  {fn:x=>x/(x+1), lbl:'f(x) = x/(x+1)', VA:-1, HA:1, xMin:-5,xMax:5,yMin:-5,yMax:5, note:'VA: x=−1 · HA: y=1'},
+  {fn:x=>Math.exp(x)/(1+Math.exp(x)), lbl:'f(x) = eˣ/(1+eˣ)', VA:null, HA0:0, HA1:1, xMin:-6,xMax:6,yMin:-0.2,yMax:1.2, note:'HA: y=0 (x→−∞), y=1 (x→+∞) — Sigmoid'},
+];
+function showInfinity(i){
+  document.querySelectorAll('[id^=bInf]').forEach((b,j)=>b.classList.toggle('on',j===i));
+  const d=infData[i];
+  const{xMin,xMax,yMin,yMax}=d;
+  const c=setupCanvas('infinityCanvas',760,280);if(!c)return;
+  const{ctx,W,H}=c;
+  const{toX,toY}=drawGrid(ctx,W,H,xMin,xMax,yMin,yMax);
+
+  // VA
+  if(d.VA!=null){
+    dashedLine(ctx,toX(d.VA),0,toX(d.VA),H,RED+'77',[6,4]);
+    label(ctx,'VA: x='+d.VA,toX(d.VA)+4,14,RED,'left',10);
+  }
+  // HA
+  if(d.HA!=null){
+    dashedLine(ctx,0,toY(d.HA),W,toY(d.HA),GREEN+'77',[6,4]);
+    label(ctx,'HA: y='+d.HA,W-4,toY(d.HA)-5,GREEN,'right',10);
+  }
+  if(d.HA0!=null){
+    dashedLine(ctx,0,toY(d.HA0),W,toY(d.HA0),GREEN+'77',[6,4]);
+    label(ctx,'HA: y=0 (x→−∞)',W/4,toY(d.HA0)-5,GREEN,'center',10);
+  }
+  if(d.HA1!=null){
+    dashedLine(ctx,0,toY(d.HA1),W,toY(d.HA1),YELLOW+'77',[6,4]);
+    label(ctx,'HA: y=1 (x→+∞)',3*W/4,toY(d.HA1)-5,YELLOW,'center',10);
+  }
+
+  plotFn(ctx,t=>{
+    if(d.VA!=null&&Math.abs(t-d.VA)<0.04)return undefined;
+    return d.fn(t);
+  },xMin,xMax,W,H,yMin,yMax,BLUE,2.5);
+
+  label(ctx,d.lbl,10,18,BLUE,'left',12);
+  label(ctx,d.note,10,34,MUTED,'left',11);
+}
+
+// ══ SQUEEZE ══
+const sqData=[
+  {
+    f:x=>Math.abs(x)<1e-9?1:Math.sin(Math.PI*x)/( Math.PI*x),
+    g:x=>-Math.abs(x)/(Math.PI*Math.abs(x)+0.01)+1,  // crude lower bound for display
+    h:x=>1,
+    fl:x=>Math.abs(x)<1e-9?null:Math.sin(Math.PI*x)/(Math.PI*x),
+    gl:x=>x===0?null:1/Math.abs(x)*Math.sin(x)*Math.sign(x),
+    fCol:BLUE,gCol:GREEN,hCol:RED,
+    fLbl:'sin(πx)/(πx)',gLbl:'lower bound',hLbl:'upper = 1',
+    xMin:-4,xMax:4,yMin:-0.5,yMax:1.5,
+    cx:0,L:1,note:'lim(x→0) sin(πx)/(πx) = 1 — Squeeze'
+  },
+  {
+    f:x=>x*x*(Math.abs(x)<1e-9?0:Math.cos(1/x)),
+    g:x=>-x*x,
+    h:x=>x*x,
+    fCol:BLUE,gCol:GREEN,hCol:RED,
+    fLbl:'x²·cos(1/x)',gLbl:'−x²',hLbl:'x²',
+    xMin:-1,xMax:1,yMin:-0.5,yMax:0.5,
+    cx:0,L:0,note:'lim(x→0) x²·cos(1/x) = 0 — Squeeze'
+  }
+];
+function showSqueeze(i){
+  document.querySelectorAll('[id^=bSq]').forEach((b,j)=>b.classList.toggle('on',j===i));
+  const d=sqData[i];
+  const{xMin,xMax,yMin,yMax}=d;
+  const c=setupCanvas('squeezeCanvas',760,250);if(!c)return;
+  const{ctx,W,H}=c;
+  const{toX,toY}=drawGrid(ctx,W,H,xMin,xMax,yMin,yMax);
+
+  // draw g ≤ f ≤ h
+  plotFn(ctx,d.g,xMin,xMax,W,H,yMin,yMax,d.gCol,1.8);
+  plotFn(ctx,d.h,xMin,xMax,W,H,yMin,yMax,d.hCol,1.8);
+  plotFn(ctx,t=>{
+    if(Math.abs(t-d.cx)<0.02)return undefined;
+    return d.f(t);
+  },xMin,xMax,W,H,yMin,yMax,d.fCol,2.5);
+
+  // point at limit
+  dot(ctx,toX(d.cx),toY(d.L),8,YELLOW);
+
+  label(ctx,d.note,10,18,YELLOW,'left',12);
+  label(ctx,d.gLbl,10,34,d.gCol,'left',10);
+  label(ctx,d.fLbl,10,46,d.fCol,'left',10);
+  label(ctx,d.hLbl,10,58,d.hCol,'left',10);
+  label(ctx,'→ lim = '+d.L,10,70,YELLOW,'left',11);
+}
+
+// ══ QUIZ ══
+const quizData=[
+  {q:'lim(x→3) (x²−9)/(x−3) = ?',opts:['0','3','6','∞'],ans:2,
+   exp:'แยก: (x−3)(x+3)/(x−3) = x+3 → 3+3 = 6'},
+  {q:'lim(x→0) sin(x)/x = ?',opts:['0','1','∞','ไม่มีค่า'],ans:1,
+   exp:'Squeeze Theorem: lim(x→0) sin(x)/x = 1 (classic result)'},
+  {q:'ฟังก์ชัน f ต่อเนื่องที่ c ต้องมีกี่เงื่อนไข?',opts:['1','2','3','4'],ans:2,
+   exp:'3 เงื่อนไข: f(c) defined, lim exists, lim = f(c)'},
+  {q:'lim(x→2⁻) ⌊x⌋ = ?',opts:['1','2','3','ไม่มีค่า'],ans:0,
+   exp:'⌊x⌋ = 1 สำหรับ 1 ≤ x < 2 ดังนั้น lim⁻ = 1'},
+  {q:'ถ้า lim(x→c⁻) f(x) = 3 และ lim(x→c⁺) f(x) = 3 แล้ว lim(x→c) f(x) = ?',opts:['0','3','6','ไม่แน่ใจ'],ans:1,
+   exp:'two-sided limit exists = 3 เพราะ lim⁻ = lim⁺ = 3'},
+  {q:'f(x) = (x²−4)/(x−2) ไม่ต่อเนื่องที่ x=2 แบบใด?',opts:['Jump','Infinite','Removable','ต่อเนื่อง'],ans:2,
+   exp:'Limit = 4 มีค่า แต่ f(2) undefined → Removable Discontinuity'},
+  {q:'lim(x→∞) (3x²+1)/(x²−2) = ?',opts:['0','1','3','∞'],ans:2,
+   exp:'degree เท่ากัน → ดูที่ leading coefficient: 3/1 = 3'},
+  {q:'IVT รับประกันอะไร?',opts:['Limit ต้องมีค่า','มี root ในช่วง','Derivative เป็น 0','f ต้องเพิ่มขึ้น'],ans:1,
+   exp:'IVT: f ต่อเนื่อง, N อยู่ระหว่าง f(a) กับ f(b) → มี c ที่ f(c)=N'},
+];
+function initQuiz(){
+  const cont=document.getElementById('quizContainer');cont.innerHTML='';
+  quizData.forEach((q,qi)=>{
+    const d=document.createElement('div');
+    d.style.cssText='background:var(--card);border:1px solid var(--border);border-radius:10px;padding:.95rem 1.2rem;margin-bottom:.8rem';
+    d.innerHTML=`<div style="font-size:.65rem;color:var(--muted);font-weight:700;letter-spacing:1px;margin-bottom:.3rem">ข้อ ${qi+1}/${quizData.length}</div>
+<div style="font-size:.93rem;margin-bottom:.65rem">${q.q}</div>
+${q.opts.map((o,oi)=>`<div class="quiz-opt" id="qo-${qi}-${oi}" onclick="checkAns(${qi},${oi})">${String.fromCharCode(65+oi)}) ${o}</div>`).join('')}
+<div id="qf-${qi}" class="quiz-fb" style="display:none"></div>`;
+    cont.appendChild(d);
+  });
+}
+function checkAns(qi,oi){
+  const q=quizData[qi];
+  for(let i=0;i<q.opts.length;i++){
+    const el=document.getElementById('qo-'+qi+'-'+i);el.onclick=null;
+    if(i===q.ans)el.classList.add('correct');else if(i===oi)el.classList.add('wrong');
+  }
+  const fb=document.getElementById('qf-'+qi);fb.style.display='block';
+  if(oi===q.ans){fb.style.background='#001a10';fb.style.color='var(--green)';fb.textContent='✓ ถูกต้อง! '+q.exp;}
+  else{fb.style.background='#1a0008';fb.style.color='var(--red)';fb.textContent='✗ ไม่ถูกต้อง — '+q.exp;}
+}
+
+// ══ INIT ══
+window.addEventListener('load',()=>{ drawOverview(); });
+</script>
+</body>
+</html>

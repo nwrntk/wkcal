@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter V — Integrals · Thomas Calculus</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script>
+  window.CURRENT_CH  = 5;
+  window.CURRENT_SEC = 'overview';
+  window._ch5Sections = ['overview','antiderivative','riemann','definite','ftc','substitution','calculator','quiz'];
+</script>
+</head>
+<body class="sb-open">
+<aside id="sidebar"></aside>
+<button id="toggleBtn" onclick="toggleSidebar()" title="Toggle sidebar (S)">☰</button>
+<main id="main">
+
+  <div class="topbar">
+    <div class="topbar-crumb">Chapter V &nbsp;›&nbsp; <span id="crumbSec">Integrals</span></div>
+    <div class="topbar-right">
+      <span class="kb-hint">S sidebar</span>
+      <span class="kb-hint">← → navigate</span>
+      <span class="kb-hint">F fullscreen</span>
+    </div>
+  </div>
+
+  <!-- ══ OVERVIEW ══ -->
+  <div id="page-overview" class="page active">
+  <div class="container">
+    <div class="hero">
+      <div class="badge">Thomas Calculus · Chapter V</div>
+      <h1><span class="hl">Integrals</span></h1>
+      <p>การอินทิเกรต — หาพื้นที่ใต้กราฟ, Antiderivative, Riemann Sum และ Fundamental Theorem of Calculus</p>
+    </div>
+    <div class="section-grid">
+      <div class="section-card" onclick="showSec('antiderivative')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 16 Q7 4 10 4 Q13 4 16 16"/><path d="M3 10 H17" stroke-dasharray="2 1.5" opacity=".4"/></svg></div>
+        <h3>5.1 Antiderivatives</h3><p>นิยามและกฎพื้นฐานของ Indefinite Integral</p>
+      </div>
+      <div class="section-card" onclick="showSec('riemann')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="8" width="3" height="8" opacity=".6"/><rect x="6" y="5" width="3" height="11" opacity=".7"/><rect x="10" y="7" width="3" height="9" opacity=".8"/><rect x="14" y="4" width="3" height="12" opacity=".9"/></svg></div>
+        <h3>5.2 Riemann Sums</h3><p>ประมาณพื้นที่ด้วยสี่เหลี่ยม Left/Right/Midpoint</p>
+      </div>
+      <div class="section-card" onclick="showSec('definite')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 16 Q7 4 10 4 Q13 4 16 16"/><path d="M6 16 L6 8"/><path d="M14 16 L14 8" opacity=".5"/></svg></div>
+        <h3>5.3 Definite Integrals</h3><p>พื้นที่สุทธิและคุณสมบัติของ Definite Integral</p>
+      </div>
+      <div class="section-card" onclick="showSec('ftc')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 12 Q7 4 10 6 Q13 8 17 4"/><path d="M3 16 Q7 10 10 10 Q13 10 17 7" stroke-dasharray="3 1.5"/></svg></div>
+        <h3>5.4 Fundamental Theorem</h3><p>สะพานเชื่อม Derivative กับ Integral</p>
+      </div>
+      <div class="section-card" onclick="showSec('substitution')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 10 Q8 4 10 10 Q12 16 16 10"/><path d="M8 6 L12 6" stroke-width="2"/><path d="M8 14 L12 14" stroke-width="2" opacity=".4"/></svg></div>
+        <h3>5.5 U-Substitution</h3><p>Chain Rule ย้อนกลับสำหรับการ Integrate</p>
+      </div>
+      <div class="section-card" onclick="showSec('calculator')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="3" width="14" height="14" rx="2"/><path d="M7 10 H13"/><path d="M10 7 V13"/></svg></div>
+        <h3>Integral Calculator</h3><p>คำนวณ Definite Integral เชิงตัวเลข</p>
+      </div>
+      <div class="section-card" onclick="showSec('quiz')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="10" cy="10" r="8" opacity=".35"/><path d="M8 8 Q8 5.5 10 5.5 Q12 5.5 12 7.5 Q12 9.5 10 10 L10 11.5"/><circle cx="10" cy="14" r=".8" fill="currentColor" stroke="none"/></svg></div>
+        <h3>แบบฝึกหัด</h3><p>ทดสอบความเข้าใจ 8 ข้อ</p>
+      </div>
+    </div>
+
+    <div class="cs" style="margin-top:1.8rem">
+      <h2>Integral คืออะไร?</h2>
+      <div class="grid2">
+        <div class="def-box"><div class="lbl">Indefinite Integral (Antiderivative)</div>
+          <div class="formula">&#x222B; f(x) dx = F(x) + C</div>
+          <p style="font-size:.84rem;color:#94a3b8">F'(x) = f(x) — ฟังก์ชันที่ Derivative เท่ากับ f</p>
+        </div>
+        <div class="def-box"><div class="lbl">Definite Integral (พื้นที่)</div>
+          <div class="formula">&#x222B;<sub>a</sub><sup>b</sup> f(x) dx = F(b) &#x2212; F(a)</div>
+          <p style="font-size:.84rem;color:#94a3b8">พื้นที่สุทธิใต้กราฟ f จาก a ถึง b</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs">
+      <h2>ภาพรวม — พื้นที่ใต้กราฟและ Riemann Approximation</h2>
+      <div class="canvas-wrap"><canvas id="overviewCanvas" width="760" height="220"></canvas></div>
+    </div>
+
+    <div class="page-nav">
+      <a class="page-nav-btn" href="ch4.html">&#x2190; Chapter IV: Applications of Derivatives</a>
+      <span class="page-nav-ctr">1 / 8</span>
+      <button class="page-nav-btn" onclick="showSec('antiderivative')">5.1 Antiderivatives &#x2192;</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ 5.1 ANTIDERIVATIVES ══ -->
+  <div id="page-antiderivative" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>5.1 Antiderivatives and Indefinite Integrals</h2>
+      <div class="def-box">
+        <div class="lbl">นิยาม — Antiderivative</div>
+        <p>F เป็น <strong style="color:var(--yellow)">Antiderivative</strong> ของ f บน interval I ถ้า <strong style="color:var(--green)">F'(x) = f(x)</strong> สำหรับทุก x ใน I</p>
+        <p style="font-size:.84rem;color:#94a3b8;margin-top:.3rem">ถ้า F เป็น Antiderivative ของ f แล้ว F + C ก็เป็นด้วย (C คือ arbitrary constant)</p>
+      </div>
+
+      <h3 style="margin-top:1rem">กฎพื้นฐาน (Basic Integration Rules)</h3>
+      <div class="grid2">
+        <div class="ex-box">
+          <div class="lbl">Power Rule</div>
+          <div class="formula" style="font-size:1rem">&#x222B; x&#x207F; dx = x&#x207F;&#x207A;&#xB9;/(n+1) + C &nbsp;(n &ne; &minus;1)</div>
+          <p style="font-size:.82rem;color:#94a3b8;margin-top:.4rem">&#x222B; x&#xB2; dx = x&#xB3;/3 + C<br>&#x222B; x&#x207B;&#xB2; dx = &minus;x&#x207B;&#xB9; + C</p>
+        </div>
+        <div class="ex-box">
+          <div class="lbl">Trig &amp; Exponential</div>
+          <p style="font-size:.83rem;line-height:1.9;color:var(--text)">
+            &#x222B; cos x dx = sin x + C<br>
+            &#x222B; sin x dx = &minus;cos x + C<br>
+            &#x222B; e&#x02E3; dx = e&#x02E3; + C<br>
+            &#x222B; 1/x dx = ln|x| + C
+          </p>
+        </div>
+        <div class="ex-box">
+          <div class="lbl">Constant Multiple &amp; Sum</div>
+          <p style="font-size:.83rem;line-height:1.9;color:var(--text)">
+            &#x222B; k&middot;f(x) dx = k &middot; &#x222B; f(x) dx<br>
+            &#x222B; [f(x) &plusmn; g(x)] dx = &#x222B;f dx &plusmn; &#x222B;g dx
+          </p>
+        </div>
+        <div class="ex-box">
+          <div class="lbl">ตัวอย่าง</div>
+          <p style="font-size:.83rem;line-height:1.9;color:var(--text)">
+            &#x222B; (3x&#xB2; + 2x) dx = x&#xB3; + x&#xB2; + C<br>
+            &#x222B; (sin x &minus; 5) dx = &minus;cos x &minus; 5x + C<br>
+            &#x222B; &radic;x dx = (2/3)x^(3/2) + C
+          </p>
+        </div>
+      </div>
+
+      <div class="canvas-wrap" style="margin-top:1rem">
+        <h4>f(x) และ Antiderivative F(x) — เลือกฟังก์ชัน</h4>
+        <canvas id="antiCanvas" width="760" height="300"></canvas>
+        <div class="controls">
+          <button class="btn on" id="bAnti0" onclick="showAnti(0)">f(x) = 2x</button>
+          <button class="btn"    id="bAnti1" onclick="showAnti(1)">f(x) = 3x&sup2;</button>
+          <button class="btn"    id="bAnti2" onclick="showAnti(2)">f(x) = cos(x)</button>
+          <button class="btn"    id="bAnti3" onclick="showAnti(3)">f(x) = e&#x02E3;</button>
+        </div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('overview')">&#x2190; ภาพรวม</button>
+      <span class="page-nav-ctr">2 / 8</span>
+      <button class="page-nav-btn" onclick="showSec('riemann')">5.2 Riemann Sums &#x2192;</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ 5.2 RIEMANN SUMS ══ -->
+  <div id="page-riemann" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>5.2 Riemann Sums</h2>
+      <div class="thm-box">
+        <div class="lbl">นิยาม — Riemann Sum</div>
+        <p>แบ่ง [a, b] เป็น n ช่วงย่อย แต่ละช่วงกว้าง <strong style="color:var(--yellow)">&Delta;x = (b&minus;a)/n</strong></p>
+        <div class="formula">S&#x2099; = &Sigma;&#x1D62; f(x&#x1D62;*) &middot; &Delta;x</div>
+        <p style="font-size:.84rem;color:#94a3b8;margin-top:.3rem">x&#x1D62;* คือจุดตัวแทนในแต่ละช่วง (ซ้าย, ขวา, หรือกลาง)</p>
+      </div>
+
+      <div class="grid2" style="margin-top:.7rem">
+        <div class="def-box"><div class="lbl">Left Riemann Sum (LRS)</div>
+          <p style="font-size:.84rem">ใช้ซ้ายสุดของแต่ละช่วง: x&#x1D62;* = a + (i&minus;1)&Delta;x</p>
+        </div>
+        <div class="def-box"><div class="lbl">Right Riemann Sum (RRS)</div>
+          <p style="font-size:.84rem">ใช้ขวาสุดของแต่ละช่วง: x&#x1D62;* = a + i&middot;&Delta;x</p>
+        </div>
+        <div class="def-box"><div class="lbl">Midpoint Rule</div>
+          <p style="font-size:.84rem">ใช้กึ่งกลางของแต่ละช่วง: x&#x1D62;* = a + (i&minus;&frac12;)&Delta;x</p>
+        </div>
+        <div class="def-box"><div class="lbl">Limit &rarr; Definite Integral</div>
+          <p style="font-size:.84rem">&#x222B;<sub>a</sub><sup>b</sup> f(x) dx = <strong style="color:var(--green)">lim</strong><sub>n&rarr;&infin;</sub> &Sigma; f(x&#x1D62;*)&Delta;x</p>
+        </div>
+      </div>
+
+      <div class="canvas-wrap" style="margin-top:1rem">
+        <h4>Riemann Sum Visualizer</h4>
+        <canvas id="riemannCanvas" width="760" height="290"></canvas>
+        <div class="controls">
+          <button class="btn on" id="bRL" onclick="setRMethod('left')">Left</button>
+          <button class="btn"    id="bRR" onclick="setRMethod('right')">Right</button>
+          <button class="btn"    id="bRM" onclick="setRMethod('mid')">Midpoint</button>
+          <span class="ctrl-label">n =</span>
+          <input type="range" id="riemannN" min="2" max="40" value="6" oninput="redrawRiemann()">
+          <span id="riemannNVal" style="color:var(--yellow);font-family:monospace;min-width:30px"></span>
+          <span class="ctrl-label" style="margin-left:.5rem">f =</span>
+          <button class="btn" id="bRFn0" onclick="setRFn(0)" style="margin-left:.3rem">x&sup2;</button>
+          <button class="btn" id="bRFn1" onclick="setRFn(1)">sin(x)</button>
+          <button class="btn" id="bRFn2" onclick="setRFn(2)">&radic;x</button>
+        </div>
+        <div id="riemannInfo" style="text-align:center;font-family:monospace;font-size:.82rem;color:var(--green);margin-top:.4rem"></div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('antiderivative')">&#x2190; 5.1 Antiderivatives</button>
+      <span class="page-nav-ctr">3 / 8</span>
+      <button class="page-nav-btn" onclick="showSec('definite')">5.3 Definite Integrals &#x2192;</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ 5.3 DEFINITE INTEGRALS ══ -->
+  <div id="page-definite" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>5.3 The Definite Integral</h2>
+      <div class="thm-box">
+        <div class="lbl">นิยาม — Definite Integral</div>
+        <div class="formula">&#x222B;<sub>a</sub><sup>b</sup> f(x) dx = lim<sub>n&rarr;&infin;</sub> &Sigma;<sub>i=1</sub><sup>n</sup> f(x&#x1D62;*)&middot;&Delta;x</div>
+        <p style="font-size:.84rem;color:#94a3b8;margin-top:.3rem">ค่านี้คือ <strong style="color:var(--green)">พื้นที่สุทธิ</strong> — ส่วนที่ f &gt; 0 บวก, ส่วนที่ f &lt; 0 ลบ</p>
+      </div>
+
+      <h3 style="margin-top:1rem">คุณสมบัติของ Definite Integral</h3>
+      <div class="grid2">
+        <div class="ex-box">
+          <div class="lbl">Linearity</div>
+          <p style="font-size:.83rem;line-height:2">&#x222B;<sub>a</sub><sup>b</sup> [f+g] dx = &#x222B;f dx + &#x222B;g dx<br>&#x222B;<sub>a</sub><sup>b</sup> c&middot;f dx = c &middot; &#x222B;<sub>a</sub><sup>b</sup> f dx</p>
+        </div>
+        <div class="ex-box">
+          <div class="lbl">Interval Properties</div>
+          <p style="font-size:.83rem;line-height:2">&#x222B;<sub>a</sub><sup>a</sup> f dx = 0<br>&#x222B;<sub>a</sub><sup>b</sup> f dx = &minus;&#x222B;<sub>b</sub><sup>a</sup> f dx<br>&#x222B;<sub>a</sub><sup>b</sup> + &#x222B;<sub>b</sub><sup>c</sup> = &#x222B;<sub>a</sub><sup>c</sup> f dx</p>
+        </div>
+        <div class="ex-box">
+          <div class="lbl">Comparison</div>
+          <p style="font-size:.83rem;line-height:2">f &ge; 0 บน [a,b] &rarr; &#x222B;<sub>a</sub><sup>b</sup> f dx &ge; 0<br>f &ge; g &rarr; &#x222B;<sub>a</sub><sup>b</sup> f dx &ge; &#x222B;<sub>a</sub><sup>b</sup> g dx</p>
+        </div>
+        <div class="ex-box">
+          <div class="lbl">Mean Value (Integral)</div>
+          <p style="font-size:.83rem;line-height:2">ค่าเฉลี่ยของ f บน [a,b]:<br><strong style="color:var(--yellow)">f<sub>avg</sub> = (1/(b&minus;a)) &#x222B;<sub>a</sub><sup>b</sup> f dx</strong></p>
+        </div>
+      </div>
+
+      <div class="canvas-wrap" style="margin-top:1rem">
+        <h4>พื้นที่สุทธิ — เลื่อน a, b และเลือกฟังก์ชัน</h4>
+        <canvas id="definiteCanvas" width="760" height="290"></canvas>
+        <div class="controls">
+          <button class="btn on" id="bDef0" onclick="setDefFn(0)">x&sup2;&minus;2</button>
+          <button class="btn"    id="bDef1" onclick="setDefFn(1)">sin(x)</button>
+          <button class="btn"    id="bDef2" onclick="setDefFn(2)">x&sup3;&minus;3x</button>
+          <span class="ctrl-label" style="margin-left:.5rem">a =</span>
+          <input type="range" id="defA" min="0" max="45" value="5" oninput="redrawDefinite()">
+          <span id="defAVal" style="color:var(--blue);font-family:monospace;min-width:40px"></span>
+          <span class="ctrl-label">b =</span>
+          <input type="range" id="defB" min="5" max="50" value="35" oninput="redrawDefinite()">
+          <span id="defBVal" style="color:var(--blue);font-family:monospace;min-width:40px"></span>
+        </div>
+        <div id="definiteInfo" style="text-align:center;font-family:monospace;font-size:.84rem;color:var(--green);margin-top:.4rem"></div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('riemann')">&#x2190; 5.2 Riemann Sums</button>
+      <span class="page-nav-ctr">4 / 8</span>
+      <button class="page-nav-btn" onclick="showSec('ftc')">5.4 FTC &#x2192;</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ 5.4 FTC ══ -->
+  <div id="page-ftc" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>5.4 The Fundamental Theorem of Calculus</h2>
+
+      <div class="thm-box">
+        <div class="lbl">FTC Part 1 — Derivative ของ Integral</div>
+        <p>ถ้า f ต่อเนื่องบน [a, b] และ <strong style="color:var(--yellow)">G(x) = &#x222B;<sub>a</sub><sup>x</sup> f(t) dt</strong> แล้ว</p>
+        <div class="formula">G'(x) = f(x)</div>
+        <p style="font-size:.84rem;color:#94a3b8;margin-top:.3rem">G คือ Antiderivative ของ f — หา Integral แล้ว Differentiate ได้ f กลับมา</p>
+      </div>
+
+      <div class="thm-box" style="margin-top:.7rem">
+        <div class="lbl">FTC Part 2 — การคำนวณ Definite Integral</div>
+        <p>ถ้า F เป็น Antiderivative ของ f (F' = f) แล้ว</p>
+        <div class="formula">&#x222B;<sub>a</sub><sup>b</sup> f(x) dx = F(b) &minus; F(a) = [F(x)]<sub>a</sub><sup>b</sup></div>
+        <p style="font-size:.84rem;color:#94a3b8;margin-top:.3rem">สะพานเชื่อมระหว่าง Differential Calculus และ Integral Calculus</p>
+      </div>
+
+      <h3 style="margin-top:1rem">ตัวอย่างการใช้ FTC Part 2</h3>
+      <div class="grid2">
+        <div class="ex-box">
+          <div class="lbl">&#x222B;<sub>0</sub><sup>2</sup> x&sup2; dx</div>
+          <p style="font-size:.84rem;line-height:1.9">F(x) = x&sup3;/3<br>= [x&sup3;/3]<sub>0</sub><sup>2</sup> = 8/3 &minus; 0 = <strong style="color:var(--green)">8/3 &asymp; 2.667</strong></p>
+        </div>
+        <div class="ex-box">
+          <div class="lbl">&#x222B;<sub>0</sub><sup>&pi;</sup> sin(x) dx</div>
+          <p style="font-size:.84rem;line-height:1.9">F(x) = &minus;cos(x)<br>= [&minus;cos(x)]<sub>0</sub><sup>&pi;</sup> = 1 + 1 = <strong style="color:var(--green)">2</strong></p>
+        </div>
+        <div class="ex-box">
+          <div class="lbl">&#x222B;<sub>1</sub><sup>e</sup> (1/x) dx</div>
+          <p style="font-size:.84rem;line-height:1.9">F(x) = ln|x|<br>= [ln x]<sub>1</sub><sup>e</sup> = 1 &minus; 0 = <strong style="color:var(--green)">1</strong></p>
+        </div>
+        <div class="ex-box">
+          <div class="lbl">Chain Rule + FTC1</div>
+          <p style="font-size:.84rem;line-height:1.9">d/dx [&#x222B;<sub>a</sub><sup>x&sup2;</sup> f(t) dt]<br>= f(x&sup2;) &middot; 2x</p>
+        </div>
+      </div>
+
+      <div class="canvas-wrap" style="margin-top:1rem">
+        <h4>FTC — G(x) = &#x222B;<sub>0</sub><sup>x</sup> f(t) dt สะสมพื้นที่เมื่อ x เพิ่มขึ้น</h4>
+        <canvas id="ftcCanvas" width="760" height="310"></canvas>
+        <div class="controls">
+          <button class="btn on" id="bFTC0" onclick="setFTCFn(0)">f(t) = t</button>
+          <button class="btn"    id="bFTC1" onclick="setFTCFn(1)">f(t) = sin(t)</button>
+          <button class="btn"    id="bFTC2" onclick="setFTCFn(2)">f(t) = t&sup2;&minus;2</button>
+          <span class="ctrl-label" style="margin-left:.5rem">x =</span>
+          <input type="range" id="ftcX" min="0" max="100" value="60" oninput="redrawFTC()">
+          <span id="ftcXVal" style="color:var(--yellow);font-family:monospace;min-width:55px"></span>
+        </div>
+        <div id="ftcInfo" style="text-align:center;font-family:monospace;font-size:.84rem;color:var(--green);margin-top:.4rem"></div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('definite')">&#x2190; 5.3 Definite Integrals</button>
+      <span class="page-nav-ctr">5 / 8</span>
+      <button class="page-nav-btn" onclick="showSec('substitution')">5.5 U-Substitution &#x2192;</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ 5.5 SUBSTITUTION ══ -->
+  <div id="page-substitution" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>5.5 The Substitution Rule</h2>
+      <div class="thm-box">
+        <div class="lbl">Substitution Rule (U-Sub)</div>
+        <p>ถ้า u = g(x) แล้ว du = g'(x) dx</p>
+        <div class="formula">&#x222B; f(g(x))&middot;g'(x) dx = &#x222B; f(u) du</div>
+        <p style="font-size:.84rem;color:#94a3b8;margin-top:.3rem">เป็นการกลับของ Chain Rule — มองหา inner function ที่ Derivative ปรากฏอยู่</p>
+      </div>
+
+      <h3 style="margin-top:1rem">ขั้นตอนการทำ U-Substitution</h3>
+      <div class="ex-box">
+        <div class="lbl">ขั้นตอน</div>
+        <ol style="padding-left:1.2rem;font-size:.87rem;line-height:2.2;color:var(--text)">
+          <li>เลือก u = g(x) (inner function)</li>
+          <li>คำนวณ du = g'(x) dx</li>
+          <li>แทน x ทุกตัวด้วย u (รวมถึง dx)</li>
+          <li>Integrate เทียบกับ u</li>
+          <li>แทน u กลับด้วย g(x)</li>
+        </ol>
+      </div>
+
+      <div class="canvas-wrap" style="margin-top:1rem">
+        <h4>ตัวอย่าง U-Substitution — ขั้นตอนละเอียด</h4>
+        <canvas id="subCanvas" width="760" height="320"></canvas>
+        <div class="controls">
+          <button class="btn on" id="bSub0" onclick="showSub(0)">&#x222B; 2x(x&sup2;+1)&#x2074; dx</button>
+          <button class="btn"    id="bSub1" onclick="showSub(1)">&#x222B; cos(3x) dx</button>
+          <button class="btn"    id="bSub2" onclick="showSub(2)">&#x222B; xe&#x02E3;&#xB2; dx</button>
+          <button class="btn"    id="bSub3" onclick="showSub(3)">&#x222B; sin(x)cos(x) dx</button>
+        </div>
+      </div>
+
+      <div class="cs" style="margin-top:1rem">
+        <h3>Definite Integral กับ U-Sub</h3>
+        <div class="thm-box">
+          <div class="lbl">เปลี่ยน Limits ด้วย</div>
+          <p style="font-size:.84rem;line-height:1.9">&#x222B;<sub>a</sub><sup>b</sup> f(g(x))g'(x) dx = &#x222B;<sub>g(a)</sub><sup>g(b)</sup> f(u) du<br>
+          ตัวอย่าง: &#x222B;<sub>0</sub><sup>1</sup> 2x(x&sup2;+1)&#x2074; dx &rarr; u=x&sup2;+1, u(0)=1, u(1)=2<br>
+          = &#x222B;<sub>1</sub><sup>2</sup> u&#x2074; du = [u&#x2075;/5]<sub>1</sub><sup>2</sup> = 32/5 &minus; 1/5 = <strong style="color:var(--green)">31/5 = 6.2</strong></p>
+        </div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('ftc')">&#x2190; 5.4 FTC</button>
+      <span class="page-nav-ctr">6 / 8</span>
+      <button class="page-nav-btn" onclick="showSec('calculator')">Integral Calculator &#x2192;</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ CALCULATOR ══ -->
+  <div id="page-calculator" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>Numerical Integral Calculator</h2>
+      <p style="color:#94a3b8;margin-bottom:1rem">คำนวณ &#x222B;<sub>a</sub><sup>b</sup> f(x) dx ด้วย Simpson's Rule (เชิงตัวเลข)</p>
+
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.2rem;margin-bottom:1rem">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.8rem;margin-bottom:.8rem">
+          <div>
+            <label style="font-size:.75rem;color:#94a3b8;display:block;margin-bottom:.3rem">Lower bound a</label>
+            <input type="number" id="calcA" value="0" step="0.1"
+              style="width:100%;background:#080c14;border:1px solid var(--border);border-radius:6px;color:var(--text);padding:.45rem .6rem;font-size:.9rem">
+          </div>
+          <div>
+            <label style="font-size:.75rem;color:#94a3b8;display:block;margin-bottom:.3rem">Upper bound b</label>
+            <input type="number" id="calcB" value="1" step="0.1"
+              style="width:100%;background:#080c14;border:1px solid var(--border);border-radius:6px;color:var(--text);padding:.45rem .6rem;font-size:.9rem">
+          </div>
+          <div>
+            <label style="font-size:.75rem;color:#94a3b8;display:block;margin-bottom:.3rem">n subdivisions</label>
+            <input type="number" id="calcN" value="1000" min="2" max="10000" step="100"
+              style="width:100%;background:#080c14;border:1px solid var(--border);border-radius:6px;color:var(--text);padding:.45rem .6rem;font-size:.9rem">
+          </div>
+        </div>
+        <div style="margin-bottom:.8rem">
+          <label style="font-size:.75rem;color:#94a3b8;display:block;margin-bottom:.3rem">f(x) — JavaScript syntax: Math.sin, Math.cos, Math.exp, Math.sqrt, Math.log, Math.PI, Math.abs</label>
+          <input type="text" id="calcFn" value="x*x"
+            style="width:100%;background:#080c14;border:1px solid var(--border);border-radius:6px;color:var(--text);padding:.5rem .7rem;font-size:.95rem;font-family:monospace">
+        </div>
+        <div style="display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:.8rem">
+          <button class="btn" onclick="setCalcPreset('x*x','0','1')">x&sup2; [0,1]</button>
+          <button class="btn" onclick="setCalcPreset('Math.sin(x)','0','Math.PI')">sin(x) [0,&pi;]</button>
+          <button class="btn" onclick="setCalcPreset('Math.exp(x)','0','1')">e&#x02E3; [0,1]</button>
+          <button class="btn" onclick="setCalcPreset('1/x','1','Math.E')">1/x [1,e]</button>
+          <button class="btn" onclick="setCalcPreset('Math.sqrt(1-x*x)','0','1')">&radic;(1&minus;x&sup2;) [0,1]</button>
+          <button class="btn" onclick="setCalcPreset('x*x*x-3*x','-2','2')">x&sup3;&minus;3x [&minus;2,2]</button>
+        </div>
+        <button onclick="runCalc()"
+          style="background:linear-gradient(135deg,#4cc9f0,#00d4aa);color:#000;border:none;border-radius:8px;padding:.65rem 2rem;font-size:.9rem;font-weight:700;cursor:pointer;width:100%">
+          Compute &#x222B;<sub>a</sub><sup>b</sup> f(x) dx
+        </button>
+      </div>
+
+      <div id="calcResult" style="display:none;background:#001a10;border:1px solid #00d4aa44;border-radius:10px;padding:1.2rem;text-align:center">
+        <div style="font-size:.75rem;color:#64748b;letter-spacing:1px;margin-bottom:.4rem">RESULT</div>
+        <div id="calcResultVal" style="font-size:2rem;font-family:monospace;color:#00d4aa;font-weight:700"></div>
+        <div id="calcResultDetail" style="font-size:.78rem;color:#64748b;margin-top:.4rem"></div>
+      </div>
+      <div id="calcError" style="display:none;background:#1a0008;border:1px solid #e9456044;border-radius:10px;padding:1rem;color:#e94560;font-size:.85rem;margin-top:.6rem"></div>
+
+      <div class="canvas-wrap" style="margin-top:1.2rem">
+        <canvas id="calcCanvas" width="760" height="260"></canvas>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('substitution')">&#x2190; 5.5 U-Substitution</button>
+      <span class="page-nav-ctr">7 / 8</span>
+      <button class="page-nav-btn" onclick="showSec('quiz')">แบบฝึกหัด &#x2192;</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ QUIZ ══ -->
+  <div id="page-quiz" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>แบบฝึกหัด — Chapter 5: Integrals</h2>
+      <p style="color:#94a3b8;margin-bottom:1.2rem">เลือกคำตอบที่ถูกต้อง — ระบบจะแสดงคำอธิบายทันที</p>
+      <div id="quizContainer"></div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('calculator')">&#x2190; Calculator</button>
+      <span class="page-nav-ctr">8 / 8</span>
+      <a class="page-nav-btn" href="ch6.html">Chapter VI: Applications of Integrals &#x2192;</a>
+    </div>
+  </div>
+  </div>
+
+</main>
+<script src="sidebar.js"></script>
+<script>
+// ══ CANVAS HELPERS ══
+// Theme-aware palette (see theme.js) — let + applyCanvasTheme() so colors follow
+// the light/dark toggle; draw functions read the live bindings.
+let BG,GRID,AXIS,BLUE,GREEN,YELLOW,RED,PURPLE,MUTED,ORANGE,SURFACE,ON_SURFACE;
+function applyCanvasTheme(){ const t=window.CanvasTheme.get();
+  BG=t.BG;GRID=t.GRID;AXIS=t.AXIS;BLUE=t.BLUE;GREEN=t.GREEN;YELLOW=t.YELLOW;
+  RED=t.RED;PURPLE=t.PURPLE;MUTED=t.MUTED;ORANGE=t.ORANGE;SURFACE=t.SURFACE;ON_SURFACE=t.ON_SURFACE; }
+applyCanvasTheme();
+window._redrawCanvases=function(){ applyCanvasTheme(); initSec(window.CURRENT_SEC||'overview'); };
+
+function setupCanvas(id,W,H){
+  const cv=document.getElementById(id);if(!cv)return null;
+  const dpr=Math.min(window.devicePixelRatio||1,2);
+  cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+'px';cv.style.height=H+'px';
+  const ctx=cv.getContext('2d');ctx.scale(dpr,dpr);return{ctx,W,H};
+}
+function drawGrid(ctx,W,H,xMin,xMax,yMin,yMax){
+  ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);
+  const toX=x=>(x-xMin)/(xMax-xMin)*W, toY=y=>H-(y-yMin)/(yMax-yMin)*H;
+  const xs=Math.abs(xMax-xMin)>15?5:Math.abs(xMax-xMin)>8?2:1;
+  const ys=Math.abs(yMax-yMin)>15?5:Math.abs(yMax-yMin)>8?2:1;
+  ctx.strokeStyle=GRID;ctx.lineWidth=.5;
+  for(let x=Math.ceil(xMin/xs)*xs;x<=xMax;x+=xs){ctx.beginPath();ctx.moveTo(toX(x),0);ctx.lineTo(toX(x),H);ctx.stroke();}
+  for(let y=Math.ceil(yMin/ys)*ys;y<=yMax;y+=ys){ctx.beginPath();ctx.moveTo(0,toY(y));ctx.lineTo(W,toY(y));ctx.stroke();}
+  ctx.strokeStyle=AXIS;ctx.lineWidth=1.5;
+  if(yMin<=0&&yMax>=0){ctx.beginPath();ctx.moveTo(0,toY(0));ctx.lineTo(W,toY(0));ctx.stroke();}
+  if(xMin<=0&&xMax>=0){ctx.beginPath();ctx.moveTo(toX(0),0);ctx.lineTo(toX(0),H);ctx.stroke();}
+  ctx.fillStyle=MUTED;ctx.font='10px monospace';ctx.textAlign='center';
+  for(let x=Math.ceil(xMin/xs)*xs;x<=xMax;x+=xs)if(x!==0)ctx.fillText(x.toFixed(xs<1?1:0),toX(x),toY(0)+13);
+  ctx.textAlign='right';
+  for(let y=Math.ceil(yMin/ys)*ys;y<=yMax;y+=ys)if(y!==0)ctx.fillText(y.toFixed(ys<1?1:0),toX(0)-3,toY(y)+4);
+  return{toX,toY};
+}
+function plotFn(ctx,fn,xMin,xMax,W,H,yMin,yMax,col,lw=2){
+  const toX=x=>(x-xMin)/(xMax-xMin)*W, toY=y=>H-(y-yMin)/(yMax-yMin)*H;
+  ctx.strokeStyle=col;ctx.lineWidth=lw;ctx.beginPath();let ok=false;
+  for(let i=0;i<=W*2;i++){
+    const x=xMin+i/(W*2)*(xMax-xMin);
+    let y;try{y=fn(x);}catch{ok=false;continue;}
+    if(!isFinite(y)||Math.abs(y)>1e6){ok=false;continue;}
+    const px=toX(x),py=toY(y);
+    if(!ok){ctx.moveTo(px,py);ok=true;}else ctx.lineTo(px,py);
+  }ctx.stroke();
+}
+function dot(ctx,x,y,r,col,fill=true){
+  ctx.beginPath();ctx.arc(x,y,r,0,2*Math.PI);
+  if(fill){ctx.fillStyle=col;ctx.fill();}
+  else{ctx.strokeStyle=col;ctx.lineWidth=2;ctx.fillStyle=BG;ctx.fill();ctx.stroke();}
+}
+function lbl(ctx,text,x,y,col,align='center',sz=11){
+  ctx.fillStyle=col;ctx.font=sz+'px monospace';ctx.textAlign=align;ctx.fillText(text,x,y);
+}
+function dashLine(ctx,x1,y1,x2,y2,col,dash=[5,4]){
+  ctx.strokeStyle=col;ctx.lineWidth=1.2;ctx.setLineDash(dash);
+  ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();ctx.setLineDash([]);
+}
+
+// ══ SECTION NAVIGATION ══
+const CRUMBS={
+  overview:'Integrals',antiderivative:'5.1 Antiderivatives',
+  riemann:'5.2 Riemann Sums',definite:'5.3 Definite Integrals',
+  ftc:'5.4 Fundamental Theorem of Calculus',substitution:'5.5 U-Substitution',
+  calculator:'Integral Calculator',quiz:'แบบฝึกหัด'
+};
+window.showSec=function(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.getElementById('crumbSec').textContent=CRUMBS[id]||id;
+  window.CURRENT_SEC=id;
+  if(window.setSidebarSec)setSidebarSec(id);
+  document.getElementById('main').scrollTop=0;
+  setTimeout(()=>initSec(id),60);
+};
+function initSec(id){
+  if(id==='overview')       drawOverview();
+  if(id==='antiderivative') showAnti(0);
+  if(id==='riemann')        initRiemann();
+  if(id==='definite')       initDefinite();
+  if(id==='ftc')            initFTC();
+  if(id==='substitution')   showSub(0);
+  if(id==='calculator')     runCalc();
+  if(id==='quiz')           initQuiz();
+}
+
+// ══ OVERVIEW ══
+function drawOverview(){
+  const c=setupCanvas('overviewCanvas',760,220);if(!c)return;
+  const{ctx,W,H}=c;
+  const fn=x=>0.3*x*x-0.5*x+1;
+  const{toX,toY}=drawGrid(ctx,W,H,-0.5,5,-0.5,5);
+  const a=0.5,b=4,n=8,dx=(b-a)/n;
+  for(let i=0;i<n;i++){
+    const xi=a+(i+0.5)*dx, yi=fn(xi);
+    const rx=toX(a+i*dx), rw=toX(a+(i+1)*dx)-rx;
+    const ry=toY(Math.max(0,yi)), rh=Math.abs(toY(0)-toY(yi));
+    ctx.fillStyle=BLUE+'28';ctx.fillRect(rx,ry,rw,rh);
+    ctx.strokeStyle=BLUE+'66';ctx.lineWidth=.8;ctx.strokeRect(rx,ry,rw,rh);
+  }
+  ctx.fillStyle=GREEN+'18';ctx.beginPath();
+  ctx.moveTo(toX(a),toY(0));
+  for(let i=0;i<=200;i++){const x=a+i/200*(b-a);ctx.lineTo(toX(x),toY(fn(x)));}
+  ctx.lineTo(toX(b),toY(0));ctx.closePath();ctx.fill();
+  plotFn(ctx,fn,-0.5,5,W,H,-0.5,5,BLUE,2.5);
+  dashLine(ctx,toX(a),toY(fn(a)),toX(a),toY(0),YELLOW+'99');
+  dashLine(ctx,toX(b),toY(fn(b)),toX(b),toY(0),YELLOW+'99');
+  lbl(ctx,'f(x) = 0.3x²−0.5x+1',10,18,BLUE,'left',12);
+  lbl(ctx,'Green = exact area | Blue rectangles = Riemann approx (n=8, midpoint)',W/2,H-8,MUTED,'center',10);
+  lbl(ctx,'a',toX(a),H-4,YELLOW,'center',10);
+  lbl(ctx,'b',toX(b),H-4,YELLOW,'center',10);
+}
+
+// ══ 5.1 ANTIDERIVATIVES ══
+const antiFns=[
+  {f:x=>2*x,         F:x=>x*x,          fLbl:'f(x)=2x',      FLbl:'F(x)=x²',       xMin:-3,  xMax:3,  yMinF:-0.5,yMaxF:9,  yMinf:-7, yMaxf:7},
+  {f:x=>3*x*x,       F:x=>x*x*x,        fLbl:'f(x)=3x²',FLbl:'F(x)=x³',       xMin:-2.5,xMax:2.5,yMinF:-16, yMaxF:16, yMinf:-0.5,yMaxf:20},
+  {f:x=>Math.cos(x), F:x=>Math.sin(x),  fLbl:'f(x)=cos(x)',  FLbl:'F(x)=sin(x)',         xMin:-4,  xMax:4,  yMinF:-1.4,yMaxF:1.4,yMinf:-1.4,yMaxf:1.4},
+  {f:x=>Math.exp(x), F:x=>Math.exp(x),  fLbl:'f(x)=eˣ', FLbl:'F(x)=eˣ',        xMin:-2,  xMax:2.5,yMinF:-0.5,yMaxF:12, yMinf:-0.5,yMaxf:12},
+];
+function showAnti(i){
+  document.querySelectorAll('[id^=bAnti]').forEach((b,j)=>b.classList.toggle('on',j===i));
+  const d=antiFns[i];
+  const c=setupCanvas('antiCanvas',760,300);if(!c)return;
+  const{ctx,W,H}=c;
+  const H1=Math.floor(H*.5),H2=H-H1;
+  const{toX:tX1,toY:tY1}=drawGrid(ctx,W,H1,d.xMin,d.xMax,d.yMinF,d.yMaxF);
+  plotFn(ctx,d.F,d.xMin,d.xMax,W,H1,d.yMinF,d.yMaxF,GREEN,2.5);
+  lbl(ctx,d.FLbl+' + C   (Antiderivative)',10,16,GREEN,'left',11);
+  ctx.save();ctx.translate(0,H1);
+  drawGrid(ctx,W,H2,d.xMin,d.xMax,d.yMinf,d.yMaxf);
+  plotFn(ctx,d.f,d.xMin,d.xMax,W,H2,d.yMinf,d.yMaxf,BLUE,2.5);
+  lbl(ctx,d.fLbl+'   (f = F\')',10,16,BLUE,'left',11);
+  lbl(ctx,'F\'(x) = f(x) ✓',W-10,16,MUTED,'right',10);
+  ctx.restore();
+  ctx.strokeStyle=MUTED+'44';ctx.lineWidth=1;ctx.setLineDash([4,4]);
+  ctx.beginPath();ctx.moveTo(0,H1);ctx.lineTo(W,H1);ctx.stroke();ctx.setLineDash([]);
+}
+
+// ══ 5.2 RIEMANN SUMS ══
+const rFns=[
+  {f:x=>x*x,         a:0,b:3,            yMin:0,  yMax:10,  exact:9,         lbl:'f(x)=x², [0,3]'},
+  {f:x=>Math.sin(x), a:0,b:Math.PI,      yMin:-0.2,yMax:1.3,exact:2,         lbl:'f(x)=sin(x), [0,π]'},
+  {f:x=>Math.sqrt(x),a:0,b:4,            yMin:0,  yMax:2.3, exact:16/3,      lbl:'f(x)=√x, [0,4]'},
+];
+let rMethod='left',rFnIdx=0;
+function setRMethod(m){
+  rMethod=m;
+  document.getElementById('bRL').classList.toggle('on',m==='left');
+  document.getElementById('bRR').classList.toggle('on',m==='right');
+  document.getElementById('bRM').classList.toggle('on',m==='mid');
+  redrawRiemann();
+}
+function setRFn(i){rFnIdx=i;document.querySelectorAll('[id^=bRFn]').forEach((b,j)=>b.classList.toggle('on',j===i));redrawRiemann();}
+function initRiemann(){
+  rMethod='left';rFnIdx=0;
+  document.getElementById('bRL').classList.add('on');
+  document.getElementById('bRR').classList.remove('on');
+  document.getElementById('bRM').classList.remove('on');
+  document.querySelectorAll('[id^=bRFn]').forEach((b,j)=>b.classList.toggle('on',j===0));
+  redrawRiemann();
+}
+function redrawRiemann(){
+  const d=rFns[rFnIdx];
+  const n=parseInt(document.getElementById('riemannN').value);
+  document.getElementById('riemannNVal').textContent=n;
+  const dx=(d.b-d.a)/n;
+  let sum=0;
+  for(let i=0;i<n;i++){
+    const xi=rMethod==='left'?d.a+i*dx:rMethod==='right'?d.a+(i+1)*dx:d.a+(i+0.5)*dx;
+    sum+=d.f(xi)*dx;
+  }
+  const err=Math.abs(sum-d.exact);
+  document.getElementById('riemannInfo').textContent=
+    (rMethod==='left'?'LRS':rMethod==='right'?'RRS':'Midpoint')+
+    ': Σ = '+sum.toFixed(5)+'  |  Exact = '+d.exact.toFixed(5)+'  |  Error = '+err.toFixed(5);
+  const c=setupCanvas('riemannCanvas',760,290);if(!c)return;
+  const{ctx,W,H}=c;
+  const pad=0.3;
+  const{toX,toY}=drawGrid(ctx,W,H,d.a-pad,d.b+pad,d.yMin,d.yMax);
+  for(let i=0;i<n;i++){
+    const xi=rMethod==='left'?d.a+i*dx:rMethod==='right'?d.a+(i+1)*dx:d.a+(i+0.5)*dx;
+    const yi=d.f(xi);
+    const rx=toX(d.a+i*dx), rw=Math.max(1,toX(d.a+(i+1)*dx)-rx);
+    const ry=toY(Math.max(0,yi)), rh=Math.abs(toY(0)-toY(yi));
+    ctx.fillStyle=BLUE+'30';ctx.fillRect(rx,ry,rw,rh);
+    ctx.strokeStyle=BLUE+'70';ctx.lineWidth=.6;ctx.strokeRect(rx,ry,rw,rh);
+    if(n<=20)dot(ctx,toX(xi),toY(yi),3,YELLOW);
+  }
+  ctx.fillStyle=GREEN+'15';ctx.beginPath();
+  ctx.moveTo(toX(d.a),toY(0));
+  for(let i=0;i<=300;i++){const x=d.a+i/300*(d.b-d.a);ctx.lineTo(toX(x),toY(d.f(x)));}
+  ctx.lineTo(toX(d.b),toY(0));ctx.closePath();ctx.fill();
+  plotFn(ctx,d.f,d.a-pad,d.b+pad,W,H,d.yMin,d.yMax,BLUE,2.2);
+  lbl(ctx,d.lbl,10,18,BLUE,'left',11);
+}
+
+// ══ 5.3 DEFINITE INTEGRALS ══
+const defFns=[
+  {f:x=>x*x-2,       F:x=>x*x*x/3-2*x,         xMin:-3,          xMax:3,          yMin:-3,yMax:7,  lbl:'f(x)=x²−2'},
+  {f:x=>Math.sin(x), F:x=>-Math.cos(x),          xMin:-0.3,        xMax:Math.PI+.3, yMin:-1.5,yMax:1.5,lbl:'f(x)=sin(x)'},
+  {f:x=>x*x*x-3*x,   F:x=>x*x*x*x/4-1.5*x*x,   xMin:-2.5,        xMax:2.5,        yMin:-5,yMax:5,  lbl:'f(x)=x³−3x'},
+];
+let defFnIdx=0;
+function setDefFn(i){defFnIdx=i;document.querySelectorAll('[id^=bDef]').forEach((b,j)=>b.classList.toggle('on',j===i));redrawDefinite();}
+function initDefinite(){defFnIdx=0;document.querySelectorAll('[id^=bDef]').forEach((b,j)=>b.classList.toggle('on',j===0));redrawDefinite();}
+function redrawDefinite(){
+  const d=defFns[defFnIdx];
+  const ta=parseInt(document.getElementById('defA').value)/10;
+  const tb=parseInt(document.getElementById('defB').value)/10;
+  const span=d.xMax-d.xMin;
+  const av=d.xMin+span*ta/5;
+  const bv=d.xMin+span*tb/5;
+  const lo=Math.min(av,bv), hi=Math.max(av,bv);
+  document.getElementById('defAVal').textContent=lo.toFixed(2);
+  document.getElementById('defBVal').textContent=hi.toFixed(2);
+  const exact=d.F(hi)-d.F(lo);
+  document.getElementById('definiteInfo').textContent=
+    'F(b)−F(a) = '+d.F(hi).toFixed(4)+'−('+d.F(lo).toFixed(4)+') = '+exact.toFixed(4)+
+    (exact>=0?' → net positive':' → net negative (area below x-axis)');
+  const c=setupCanvas('definiteCanvas',760,290);if(!c)return;
+  const{ctx,W,H}=c;
+  const{toX,toY}=drawGrid(ctx,W,H,d.xMin,d.xMax,d.yMin,d.yMax);
+  const steps=400,dxS=(hi-lo)/steps;
+  ctx.fillStyle=GREEN+'30';ctx.beginPath();ctx.moveTo(toX(lo),toY(0));
+  for(let i=0;i<=steps;i++){const x=lo+i*dxS,y=d.f(x);ctx.lineTo(toX(x),toY(y>=0?y:0));}
+  ctx.lineTo(toX(hi),toY(0));ctx.closePath();ctx.fill();
+  ctx.fillStyle=RED+'30';ctx.beginPath();ctx.moveTo(toX(lo),toY(0));
+  for(let i=0;i<=steps;i++){const x=lo+i*dxS,y=d.f(x);ctx.lineTo(toX(x),toY(y<0?y:0));}
+  ctx.lineTo(toX(hi),toY(0));ctx.closePath();ctx.fill();
+  plotFn(ctx,d.f,d.xMin,d.xMax,W,H,d.yMin,d.yMax,BLUE,2.2);
+  dashLine(ctx,toX(lo),0,toX(lo),H,YELLOW+'aa');
+  dashLine(ctx,toX(hi),0,toX(hi),H,YELLOW+'aa');
+  lbl(ctx,'a='+lo.toFixed(2),toX(lo),H-5,YELLOW,'center',9);
+  lbl(ctx,'b='+hi.toFixed(2),toX(hi),H-5,YELLOW,'center',9);
+  lbl(ctx,d.lbl,10,18,BLUE,'left',11);
+  lbl(ctx,'= '+exact.toFixed(3),W-10,18,exact>=0?GREEN:RED,'right',11);
+}
+
+// ══ 5.4 FTC ══
+const ftcFns=[
+  {f:t=>t,           F:t=>t*t/2,         xMin:0,xMax:4,         yMinf:-0.5,yMaxf:4.5,yMinF:-0.5,yMaxF:8.5, fLbl:'f(t)=t'},
+  {f:t=>Math.sin(t), F:t=>1-Math.cos(t), xMin:0,xMax:Math.PI*2, yMinf:-1.4,yMaxf:1.4,yMinF:-0.3,yMaxF:2.3, fLbl:'f(t)=sin(t)'},
+  {f:t=>t*t-2,       F:t=>t*t*t/3-2*t,  xMin:0,xMax:3,         yMinf:-2.5,yMaxf:7.5,yMinF:-3,  yMaxF:4,   fLbl:'f(t)=t²−2'},
+];
+let ftcFnIdx=0;
+function setFTCFn(i){ftcFnIdx=i;document.querySelectorAll('[id^=bFTC]').forEach((b,j)=>b.classList.toggle('on',j===i));redrawFTC();}
+function initFTC(){ftcFnIdx=0;document.querySelectorAll('[id^=bFTC]').forEach((b,j)=>b.classList.toggle('on',j===0));redrawFTC();}
+function redrawFTC(){
+  const d=ftcFns[ftcFnIdx];
+  const t=parseInt(document.getElementById('ftcX').value)/100;
+  const x=d.xMin+(d.xMax-d.xMin)*t;
+  const Gx=d.F(x)-d.F(d.xMin);
+  document.getElementById('ftcXVal').textContent='x='+x.toFixed(3);
+  document.getElementById('ftcInfo').textContent=
+    'G(x) = ∫₀ˣ f(t)dt = '+Gx.toFixed(4)+'   |   G\'(x) = f(x) = '+d.f(x).toFixed(4);
+  const c=setupCanvas('ftcCanvas',760,310);if(!c)return;
+  const{ctx,W,H}=c;
+  const H1=Math.floor(H*.5),H2=H-H1;
+  const{toX:tX1,toY:tY1}=drawGrid(ctx,W,H1,d.xMin,d.xMax,d.yMinf,d.yMaxf);
+  // shade [xMin,x]
+  ctx.fillStyle=BLUE+'25';ctx.beginPath();ctx.moveTo(tX1(d.xMin),tY1(0));
+  for(let i=0;i<=300;i++){const tt=d.xMin+i/300*(x-d.xMin);ctx.lineTo(tX1(tt),tY1(d.f(tt)));}
+  ctx.lineTo(tX1(x),tY1(0));ctx.closePath();ctx.fill();
+  plotFn(ctx,d.f,d.xMin,d.xMax,W,H1,d.yMinf,d.yMaxf,BLUE,2.2);
+  dashLine(ctx,tX1(x),0,tX1(x),H1,YELLOW+'aa');
+  dot(ctx,tX1(x),tY1(d.f(x)),5,YELLOW);
+  lbl(ctx,d.fLbl,10,16,BLUE,'left',11);
+  lbl(ctx,'G('+x.toFixed(2)+')='+Gx.toFixed(3),W-10,16,GREEN,'right',11);
+  ctx.save();ctx.translate(0,H1);
+  const{toX:tX2,toY:tY2}=drawGrid(ctx,W,H2,d.xMin,d.xMax,d.yMinF,d.yMaxF);
+  const GFn=xx=>{if(xx<=d.xMin)return 0;const ns=200,dxx=(xx-d.xMin)/ns;let s=0;for(let i=0;i<ns;i++)s+=d.f(d.xMin+(i+.5)*dxx)*dxx;return s;};
+  plotFn(ctx,GFn,d.xMin,d.xMax,W,H2,d.yMinF,d.yMaxF,GREEN,2.2);
+  dot(ctx,tX2(x),tY2(Gx),6,GREEN);
+  dashLine(ctx,tX2(x),0,tX2(x),H2,YELLOW+'aa');
+  lbl(ctx,'G(x)=∫₀ˣ f(t)dt  [G\'=f ✓]',10,16,GREEN,'left',11);
+  ctx.restore();
+  ctx.strokeStyle=MUTED+'44';ctx.lineWidth=1;ctx.setLineDash([4,4]);
+  ctx.beginPath();ctx.moveTo(0,H1);ctx.lineTo(W,H1);ctx.stroke();ctx.setLineDash([]);
+}
+
+// ══ 5.5 SUBSTITUTION ══
+const subProblems=[
+  {problem:'∫ 2x(x²+1)⁴ dx',
+   steps:[{label:'เลือก u',val:'u = x² + 1'},{label:'หา du',val:'du = 2x dx'},{label:'แทน',val:'∫ u⁴ du'},{label:'Integrate',val:'= u⁵/5 + C'},{label:'แทนกลับ',val:'= (x²+1)⁵ / 5 + C'}],
+   verify:'d/dx [(x²+1)⁵/5] = (x²+1)⁴·2x ✓',color:GREEN},
+  {problem:'∫ cos(3x) dx',
+   steps:[{label:'เลือก u',val:'u = 3x'},{label:'หา du',val:'du = 3 dx → dx = du/3'},{label:'แทน',val:'∫ cos(u) · du/3'},{label:'Integrate',val:'= (1/3) sin(u) + C'},{label:'แทนกลับ',val:'= (1/3) sin(3x) + C'}],
+   verify:'d/dx [(1/3)sin(3x)] = cos(3x) ✓',color:BLUE},
+  {problem:'∫ x·eˣ² dx',
+   steps:[{label:'เลือก u',val:'u = x²'},{label:'หา du',val:'du = 2x dx → x dx = du/2'},{label:'แทน',val:'∫ eᵘ · du/2'},{label:'Integrate',val:'= (1/2) eᵘ + C'},{label:'แทนกลับ',val:'= (1/2) eˣ² + C'}],
+   verify:'d/dx [(1/2)eˣ²] = x·eˣ² ✓',color:YELLOW},
+  {problem:'∫ sin(x)cos(x) dx',
+   steps:[{label:'เลือก u',val:'u = sin(x)'},{label:'หา du',val:'du = cos(x) dx'},{label:'แทน',val:'∫ u du'},{label:'Integrate',val:'= u²/2 + C'},{label:'แทนกลับ',val:'= sin²(x) / 2 + C'}],
+   verify:'d/dx [sin²(x)/2] = sin(x)cos(x) ✓',color:PURPLE},
+];
+function showSub(i){
+  document.querySelectorAll('[id^=bSub]').forEach((b,j)=>b.classList.toggle('on',j===i));
+  const p=subProblems[i];
+  const c=setupCanvas('subCanvas',760,320);if(!c)return;
+  const{ctx,W,H}=c;
+  ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);
+  ctx.fillStyle=p.color;ctx.font='bold 15px monospace';ctx.textAlign='center';
+  ctx.fillText(p.problem,W/2,36);
+  const startY=72,rowH=40;
+  p.steps.forEach((s,idx)=>{
+    const y=startY+idx*rowH;
+    ctx.fillStyle=SURFACE;ctx.strokeStyle=p.color+'44';ctx.lineWidth=1;
+    ctx.beginPath();ctx.rect(40,y-22,W-80,32);ctx.fill();ctx.stroke();
+    ctx.fillStyle=p.color;ctx.font='bold 10px monospace';ctx.textAlign='left';
+    ctx.fillText('Step '+(idx+1)+' — '+s.label,50,y-6);
+    ctx.fillStyle=ON_SURFACE;ctx.font='13px monospace';ctx.textAlign='right';
+    ctx.fillText(s.val,W-50,y-6);
+  });
+  const vy=startY+p.steps.length*rowH+10;
+  ctx.fillStyle=GREEN+'22';ctx.strokeStyle=GREEN+'55';ctx.lineWidth=1;
+  ctx.beginPath();ctx.rect(40,vy-20,W-80,30);ctx.fill();ctx.stroke();
+  ctx.fillStyle=GREEN;ctx.font='11px monospace';ctx.textAlign='center';
+  ctx.fillText('✓ Verify: '+p.verify,W/2,vy-1);
+}
+
+// ══ CALCULATOR ══
+function setCalcPreset(fn,a,b){
+  document.getElementById('calcFn').value=fn;
+  document.getElementById('calcA').value=a;
+  document.getElementById('calcB').value=b;
+}
+function simpson(f,a,b,n){
+  if(n%2!==0)n++;
+  const h=(b-a)/n;let s=f(a)+f(b);
+  for(let i=1;i<n;i++)s+=(i%2===0?2:4)*f(a+i*h);
+  return s*h/3;
+}
+function runCalc(){
+  const fnStr=document.getElementById('calcFn').value.trim();
+  document.getElementById('calcResult').style.display='none';
+  document.getElementById('calcError').style.display='none';
+  let f,a,b;
+  try{
+    a=eval(document.getElementById('calcA').value);
+    b=eval(document.getElementById('calcB').value);
+  }catch(e){
+    document.getElementById('calcError').style.display='block';
+    document.getElementById('calcError').textContent='Invalid bounds: '+e.message;return;
+  }
+  try{ f=x=>Function('x','Math','return '+fnStr)(x,Math); f(0); }
+  catch(e){
+    document.getElementById('calcError').style.display='block';
+    document.getElementById('calcError').textContent='Invalid f(x): '+e.message;return;
+  }
+  if(!isFinite(a)||!isFinite(b)){
+    document.getElementById('calcError').style.display='block';
+    document.getElementById('calcError').textContent='Bounds must be finite numbers';return;
+  }
+  const nVal=Math.max(2,parseInt(document.getElementById('calcN').value)||1000);
+  let result;
+  try{ result=simpson(f,a,b,Math.min(nVal,10000)); }
+  catch(e){
+    document.getElementById('calcError').style.display='block';
+    document.getElementById('calcError').textContent='Evaluation error: '+e.message;return;
+  }
+  document.getElementById('calcResult').style.display='block';
+  document.getElementById('calcResultVal').textContent=result.toFixed(8);
+  document.getElementById('calcResultDetail').textContent=
+    '∫ ('+fnStr+') dx from a='+parseFloat(a).toFixed(4)+' to b='+parseFloat(b).toFixed(4)+
+    '  |  Simpson\'s Rule, n='+nVal;
+  const cv=setupCanvas('calcCanvas',760,260);if(!cv)return;
+  const{ctx,W,H}=cv;
+  const xs=[],n2=W;
+  let yMin=Infinity,yMax=-Infinity;
+  for(let i=0;i<=n2;i++){
+    const x=a+i/n2*(b-a);let y;
+    try{y=f(x);}catch{continue;}
+    if(isFinite(y)){xs.push({x,y});yMin=Math.min(yMin,y);yMax=Math.max(yMax,y);}
+  }
+  if(!isFinite(yMin)){lbl(ctx,'Cannot plot',W/2,H/2,RED,'center',13);return;}
+  const pad=(yMax-yMin)*0.15||0.5;
+  yMin=Math.min(yMin-pad,0);yMax=Math.max(yMax+pad,0);
+  const{toX,toY}=drawGrid(ctx,W,H,a,b,yMin,yMax);
+  ctx.fillStyle=result>=0?GREEN+'28':RED+'28';ctx.beginPath();
+  ctx.moveTo(toX(a),toY(0));xs.forEach(p=>ctx.lineTo(toX(p.x),toY(p.y)));
+  ctx.lineTo(toX(b),toY(0));ctx.closePath();ctx.fill();
+  ctx.strokeStyle=BLUE;ctx.lineWidth=2;ctx.beginPath();let ok=false;
+  xs.forEach(p=>{if(!ok){ctx.moveTo(toX(p.x),toY(p.y));ok=true;}else ctx.lineTo(toX(p.x),toY(p.y));});
+  ctx.stroke();
+  lbl(ctx,'∫ ('+fnStr+') dx = '+result.toFixed(6),W/2,20,result>=0?GREEN:RED,'center',12);
+}
+
+// ══ QUIZ ══
+const quizData=[
+  {q:'∫ x³ dx = ?',
+   opts:['x⁴ + C','x⁴/4 + C','3x² + C','x²/2 + C'],ans:1,
+   exp:'Power Rule: ∫xⁿdx = xⁿ⁺¹/(n+1)+C → ∫x³dx = x⁴/4+C'},
+  {q:'∫ cos(x) dx = ?',
+   opts:['sin(x)+C','−sin(x)+C','−cos(x)+C','tan(x)+C'],ans:0,
+   exp:'∫cos(x)dx = sin(x)+C เพราะ d/dx[sin(x)] = cos(x)'},
+  {q:'Riemann Sum เข้าหา Definite Integral เมื่อ?',
+   opts:['n → 0','Δx → ∞','n → ∞','a → b'],ans:2,
+   exp:'เมื่อ n → ∞ ทำให้ Δx → 0 และ Sum → ∫ f(x)dx'},
+  {q:'FTC Part 2: ∫ₐᵇ f(x)dx = ?',
+   opts:['f(b)−f(a)','F\'(b)−F\'(a)','F(b)−F(a)','f\'(b)−f\'(a)'],ans:2,
+   exp:'FTC Part 2: ∫ₐᵇ f(x)dx = F(b)−F(a) โดย F คือ Antiderivative ของ f'},
+  {q:'∫₀¹ 2x dx = ?',
+   opts:['0','1','2','1/2'],ans:1,
+   exp:'F(x)=x², F(1)−F(0) = 1−0 = 1'},
+  {q:'U-Substitution สอดคล้องกับ Rule ใดของ Derivative?',
+   opts:['Product Rule','Quotient Rule','Chain Rule','Power Rule'],ans:2,
+   exp:'U-Sub คือ Chain Rule ย้อนกลับ: ∫f(g(x))g\'(x)dx = ∫f(u)du'},
+  {q:'∫ eˣ dx = ?',
+   opts:['eˣ/x+C','xeˣ+C','eˣ+C','ln(x)+C'],ans:2,
+   exp:'∫eˣdx = eˣ+C เพราะ d/dx[eˣ] = eˣ'},
+  {q:'ถ้า G(x) = ∫₀ˣ sin(t)dt แล้ว G\'(x) = ?',
+   opts:['cos(x)','−cos(x)','sin(x)','−sin(x)'],ans:2,
+   exp:'FTC Part 1: G\'(x) = f(x) = sin(x)'},
+];
+function initQuiz(){
+  const cont=document.getElementById('quizContainer');cont.innerHTML='';
+  quizData.forEach((q,qi)=>{
+    const d=document.createElement('div');
+    d.style.cssText='background:var(--card);border:1px solid var(--border);border-radius:10px;padding:.95rem 1.2rem;margin-bottom:.8rem';
+    d.innerHTML=`<div style="font-size:.65rem;color:var(--muted);font-weight:700;letter-spacing:1px;margin-bottom:.3rem">ข้อ ${qi+1}/${quizData.length}</div>
+<div style="font-size:.93rem;margin-bottom:.65rem">${q.q}</div>
+${q.opts.map((o,oi)=>`<div class="quiz-opt" id="qo-${qi}-${oi}" onclick="checkAns(${qi},${oi})">${String.fromCharCode(65+oi)}) ${o}</div>`).join('')}
+<div id="qf-${qi}" class="quiz-fb" style="display:none"></div>`;
+    cont.appendChild(d);
+  });
+}
+function checkAns(qi,oi){
+  const q=quizData[qi];
+  for(let i=0;i<q.opts.length;i++){
+    const el=document.getElementById('qo-'+qi+'-'+i);el.onclick=null;
+    if(i===q.ans)el.classList.add('correct');else if(i===oi)el.classList.add('wrong');
+  }
+  const fb=document.getElementById('qf-'+qi);fb.style.display='block';
+  if(oi===q.ans){fb.style.background='#001a10';fb.style.color='var(--green)';fb.textContent='✓ ถูกต้อง! '+q.exp;}
+  else{fb.style.background='#1a0008';fb.style.color='var(--red)';fb.textContent='✗ ไม่ถูกต้อง — '+q.exp;}
+}
+
+// ══ INIT ══
+window.addEventListener('load',()=>{ drawOverview(); });
+</script>
+</body>
+</html>

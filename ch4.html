@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter IV — Applications of Derivatives · Thomas Calculus</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script>
+  window.CURRENT_CH  = 4;
+  window.CURRENT_SEC = 'overview';
+  window._ch4Sections = ['overview','extreme','mvt','monotonic','concavity','lhopital','newton','quiz'];
+</script>
+</head>
+<body class="sb-open">
+<aside id="sidebar"></aside>
+<button id="toggleBtn" onclick="toggleSidebar()" title="Toggle sidebar (S)">☰</button>
+<main id="main">
+
+  <div class="topbar">
+    <div class="topbar-crumb">Chapter IV &nbsp;›&nbsp; <span id="crumbSec">Applications of Derivatives</span></div>
+    <div class="topbar-right">
+      <span class="kb-hint">S sidebar</span>
+      <span class="kb-hint">← → navigate</span>
+      <span class="kb-hint">F fullscreen</span>
+    </div>
+  </div>
+
+  <!-- ══ OVERVIEW ══ -->
+  <div id="page-overview" class="page active">
+  <div class="container">
+    <div class="hero">
+      <div class="badge">Thomas Calculus · Chapter IV</div>
+      <h1><span class="hl">Applications</span> of Derivatives</h1>
+      <p>ใช้ Derivative วิเคราะห์กราฟ หาค่าสูงสุด-ต่ำสุด แก้ปัญหา Optimization และประมาณค่า Root</p>
+    </div>
+    <div class="section-grid">
+      <div class="section-card" onclick="showSec('extreme')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 14 Q5 14 7 8 Q9 2 10 2 Q11 2 13 8 Q15 14 18 14"/><circle cx="10" cy="2" r="1.5" fill="currentColor" stroke="none"/></svg></div>
+        <h3>4.1 Extreme Values</h3><p>Global & Local Max/Min, Critical Points</p>
+      </div>
+      <div class="section-card" onclick="showSec('mvt')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 15 Q8 4 17 5"/><path d="M3 15 L17 5" stroke-dasharray="2 1.5" opacity=".5"/><path d="M8 10 L13 7" stroke-width="2"/></svg></div>
+        <h3>4.2 Mean Value Theorem</h3><p>Slope ของ Secant = Slope ของ Tangent ที่จุด c</p>
+      </div>
+      <div class="section-card" onclick="showSec('monotonic')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 14 L7 8 L12 11 L17 5"/><path d="M7 8 L7 14" stroke-dasharray="2 1.5" opacity=".5"/></svg></div>
+        <h3>4.3 First Derivative Test</h3><p>f' เปลี่ยนเครื่องหมาย → Extremum</p>
+      </div>
+      <div class="section-card" onclick="showSec('concavity')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 14 Q6 4 10 4 Q14 4 18 14" opacity=".5"/><path d="M2 6 Q6 16 10 16 Q14 16 18 6"/></svg></div>
+        <h3>4.4 Concavity & Sketching</h3><p>f'' บอก Concave Up/Down และ Inflection Point</p>
+      </div>
+      <div class="section-card" onclick="showSec('lhopital')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 10 H16"/><path d="M8 6 L12 6"/><path d="M7 14 L13 14"/></svg></div>
+        <h3>4.5 L'Hôpital's Rule</h3><p>แก้ปัญหา 0/0 และ ∞/∞</p>
+      </div>
+      <div class="section-card" onclick="showSec('newton')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 16 Q8 4 17 5"/><path d="M10 10 L14 8 L14 16"/><circle cx="14" cy="16" r="1.5" fill="currentColor" stroke="none"/></svg></div>
+        <h3>4.6 Newton's Method</h3><p>หา Root ด้วย Tangent Line iteration</p>
+      </div>
+      <div class="section-card" onclick="showSec('quiz')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="10" cy="10" r="8" opacity=".35"/><path d="M8 8 Q8 5.5 10 5.5 Q12 5.5 12 7.5 Q12 9.5 10 10 L10 11.5"/><circle cx="10" cy="14" r=".8" fill="currentColor" stroke="none"/></svg></div>
+        <h3>แบบฝึกหัด</h3><p>ทดสอบความเข้าใจ 8 ข้อ</p>
+      </div>
+    </div>
+
+    <div class="cs" style="margin-top:1.8rem">
+      <h2>Derivative บอกอะไรเกี่ยวกับกราฟ?</h2>
+      <div class="grid2">
+        <div class="def-box"><div class="lbl">f'(x) บอก</div>
+          <ul class="info-list">
+            <li>f' > 0 → f <strong style="color:var(--green)">เพิ่ม</strong></li>
+            <li>f' &lt; 0 → f <strong style="color:var(--red)">ลด</strong></li>
+            <li>f' = 0 หรือ DNE → <strong style="color:var(--yellow)">Critical Point</strong></li>
+            <li>f' เปลี่ยนเครื่องหมาย → <strong style="color:var(--yellow)">Local Extremum</strong></li>
+          </ul>
+        </div>
+        <div class="def-box"><div class="lbl">f''(x) บอก</div>
+          <ul class="info-list">
+            <li>f'' > 0 → <strong style="color:var(--blue)">Concave Up</strong> ∪</li>
+            <li>f'' &lt; 0 → <strong style="color:var(--red)">Concave Down</strong> ∩</li>
+            <li>f'' = 0 และเปลี่ยนเครื่องหมาย → <strong style="color:var(--yellow)">Inflection Point</strong></li>
+            <li>f'(c)=0 & f''(c)>0 → Local Min ✓</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs">
+      <h2>ภาพรวม — กราฟ f(x) และสิ่งที่ Derivative บอก</h2>
+      <div class="canvas-wrap"><canvas id="overviewCanvas" width="760" height="230"></canvas></div>
+    </div>
+
+    <div class="page-nav">
+      <a class="page-nav-btn" href="ch3.html">← Chapter III: Derivatives</a>
+      <span class="page-nav-ctr">1 / 8</span>
+      <button class="page-nav-btn" onclick="showSec('extreme')">4.1 Extreme Values →</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ 4.1 EXTREME VALUES ══ -->
+  <div id="page-extreme" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>4.1 Extreme Values of Functions</h2>
+      <div class="grid2">
+        <div class="def-box"><div class="lbl">Absolute (Global) Extremum</div>
+          <p>f(c) เป็น <strong style="color:var(--yellow)">Absolute Max</strong> ถ้า f(c) ≥ f(x) สำหรับทุก x ใน Domain<br>
+          f(c) เป็น <strong style="color:var(--yellow)">Absolute Min</strong> ถ้า f(c) ≤ f(x) สำหรับทุก x</p>
+        </div>
+        <div class="def-box"><div class="lbl">Local (Relative) Extremum</div>
+          <p>f(c) เป็น <strong style="color:var(--green)">Local Max/Min</strong> ถ้า f(c) เป็น max/min ใน <em>บริเวณใกล้เคียง</em> c เท่านั้น</p>
+        </div>
+      </div>
+
+      <div class="thm-box" style="margin-top:.7rem">
+        <div class="lbl">Extreme Value Theorem</div>
+        <p>ถ้า f ต่อเนื่องบน <strong style="color:var(--yellow)">[a, b]</strong> แล้ว f <strong style="color:var(--green)">ต้องมี</strong> Absolute Max และ Absolute Min บน [a, b]</p>
+      </div>
+      <div class="thm-box">
+        <div class="lbl">Critical Point</div>
+        <p>c เป็น Critical Point ของ f ถ้า <strong style="color:var(--yellow)">f'(c) = 0</strong> หรือ <strong style="color:var(--yellow)">f'(c) ไม่มีค่า</strong></p>
+        <p style="font-size:.84rem;color:#94a3b8;margin-top:.3rem">Extremum ภายใน (ไม่ใช่ขอบ) ต้องเป็น Critical Point — แต่ไม่ใช่ทุก Critical Point เป็น Extremum</p>
+      </div>
+
+      <h3>Closed Interval Method — หา Absolute Extrema</h3>
+      <div class="ex-box"><div class="lbl">ขั้นตอน</div>
+        <ol style="padding-left:1.2rem;font-size:.87rem;line-height:2;color:var(--text)">
+          <li>หา Critical Points ของ f ใน (a, b)</li>
+          <li>คำนวณ f ที่ Critical Points ทุกจุด</li>
+          <li>คำนวณ f ที่ขอบ: f(a) และ f(b)</li>
+          <li>ค่าที่มากสุด = Absolute Max, ค่าที่น้อยสุด = Absolute Min</li>
+        </ol>
+      </div>
+
+      <div class="canvas-wrap">
+        <h4>Extreme Values บน [a, b] — เลื่อน slider เพื่อเปลี่ยนฟังก์ชัน</h4>
+        <canvas id="extremeCanvas" width="760" height="300"></canvas>
+        <div class="controls">
+          <button class="btn on" id="bEx0" onclick="showExtreme(0)">f(x) = x³−3x</button>
+          <button class="btn"    id="bEx1" onclick="showExtreme(1)">f(x) = x⁴−4x²</button>
+          <button class="btn"    id="bEx2" onclick="showExtreme(2)">f(x) = |x²−2|</button>
+        </div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('overview')">← ภาพรวม</button>
+      <span class="page-nav-ctr">2 / 8</span>
+      <button class="page-nav-btn" onclick="showSec('mvt')">4.2 MVT →</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ 4.2 MVT ══ -->
+  <div id="page-mvt" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>4.2 The Mean Value Theorem</h2>
+      <div class="thm-box">
+        <div class="lbl">Mean Value Theorem (MVT)</div>
+        <p>ถ้า f <strong style="color:var(--green)">ต่อเนื่อง</strong>บน [a,b] และ <strong style="color:var(--green)">differentiable</strong> บน (a,b) แล้ว มี <strong style="color:var(--yellow)">c ∈ (a,b)</strong> ที่:</p>
+        <div class="formula">f'(c) = (f(b) − f(a)) / (b − a)</div>
+        <p style="font-size:.84rem;color:#94a3b8;margin-top:.35rem">Slope ของ Tangent ที่ c = Slope ของ Secant จาก a ถึง b</p>
+      </div>
+
+      <h3>ความหมายทางกายภาพ</h3>
+      <div class="grid2">
+        <div class="ex-box"><div class="lbl">ความเร็วเฉลี่ย vs ทันที</div>
+          <p>ถ้าขับรถ 200 กม. ใน 2 ชม. → ความเร็วเฉลี่ย 100 กม./ชม.<br>
+          MVT รับประกัน: <strong style="color:var(--yellow)">มีจุดหนึ่ง</strong>ที่ความเร็วทันทีเป็น 100 กม./ชม. พอดี</p>
+        </div>
+        <div class="thm-box"><div class="lbl">Rolle's Theorem (กรณีพิเศษ)</div>
+          <p>ถ้า f(a) = f(b) → มี c ที่ f'(c) = 0 (Tangent แนวนอน)</p>
+        </div>
+      </div>
+
+      <div class="canvas-wrap">
+        <h4>เลื่อน slider เพื่อหาจุด c ที่ f'(c) = slope ของ Secant</h4>
+        <canvas id="mvtCanvas" width="760" height="290"></canvas>
+        <div class="controls">
+          <button class="btn on" id="bMVT0" onclick="setMVTFn(0)">f(x) = −x²+4x</button>
+          <button class="btn"    id="bMVT1" onclick="setMVTFn(1)">f(x) = x³−3x+2</button>
+          <button class="btn"    id="bMVT2" onclick="setMVTFn(2)">f(x) = sin(x)</button>
+          <span class="ctrl-label" style="margin-left:.5rem">c =</span>
+          <input type="range" id="mvtCSlider" min="1" max="99" value="50" oninput="redrawMVT()">
+          <span id="mvtCVal" style="color:var(--yellow);font-family:monospace;min-width:50px"></span>
+          <span id="mvtSlopeInfo" style="color:var(--green);font-family:monospace;margin-left:.5rem;font-size:.8rem"></span>
+        </div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('extreme')">← 4.1 Extreme Values</button>
+      <span class="page-nav-ctr">3 / 8</span>
+      <button class="page-nav-btn" onclick="showSec('monotonic')">4.3 First Derivative Test →</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ 4.3 MONOTONIC ══ -->
+  <div id="page-monotonic" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>4.3 Monotonic Functions &amp; First Derivative Test</h2>
+      <div class="grid2">
+        <div class="thm-box"><div class="lbl">Increasing / Decreasing Test</div>
+          <ul class="info-list">
+            <li>f' > 0 บน (a,b) → f <strong style="color:var(--green)">เพิ่ม</strong>บน (a,b)</li>
+            <li>f' &lt; 0 บน (a,b) → f <strong style="color:var(--red)">ลด</strong>บน (a,b)</li>
+          </ul>
+        </div>
+        <div class="thm-box"><div class="lbl">First Derivative Test</div>
+          <ul class="info-list">
+            <li>f' เปลี่ยน <span style="color:var(--green)">+</span> → <span style="color:var(--red)">−</span> ที่ c → <strong style="color:var(--yellow)">Local Max</strong></li>
+            <li>f' เปลี่ยน <span style="color:var(--red)">−</span> → <span style="color:var(--green)">+</span> ที่ c → <strong style="color:var(--yellow)">Local Min</strong></li>
+            <li>f' ไม่เปลี่ยนเครื่องหมาย → ไม่ใช่ Extremum</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="canvas-wrap">
+        <h4>กราฟ f(x) และ f'(x) — สีแสดงช่วง Increasing/Decreasing</h4>
+        <canvas id="monotonicCanvas" width="760" height="320"></canvas>
+        <div class="controls">
+          <button class="btn on" id="bMon0" onclick="showMonotonic(0)">f(x) = x³−3x</button>
+          <button class="btn"    id="bMon1" onclick="showMonotonic(1)">f(x) = x⁴−4x²+1</button>
+          <button class="btn"    id="bMon2" onclick="showMonotonic(2)">f(x) = sin(x)·eˣ</button>
+        </div>
+      </div>
+
+      <h3>Sign Chart ของ f'</h3>
+      <div id="signChartContainer" style="margin-top:.5rem"></div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('mvt')">← 4.2 MVT</button>
+      <span class="page-nav-ctr">4 / 8</span>
+      <button class="page-nav-btn" onclick="showSec('concavity')">4.4 Concavity →</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ 4.4 CONCAVITY ══ -->
+  <div id="page-concavity" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>4.4 Concavity and Curve Sketching</h2>
+      <div class="grid2">
+        <div class="def-box"><div class="lbl">Concave Up (∪)</div>
+          <p>f'' > 0 บน (a,b) → กราฟโค้งขึ้น</p>
+          <p style="font-size:.83rem;color:#94a3b8;margin-top:.3rem">Tangent Line <em>อยู่ใต้</em>กราฟ</p>
+          <div class="formula" style="text-align:left;font-size:.82rem">f''(c) > 0 & f'(c)=0 → <strong style="color:var(--green)">Local Min</strong></div>
+        </div>
+        <div class="def-box"><div class="lbl">Concave Down (∩)</div>
+          <p>f'' &lt; 0 บน (a,b) → กราฟโค้งลง</p>
+          <p style="font-size:.83rem;color:#94a3b8;margin-top:.3rem">Tangent Line <em>อยู่เหนือ</em>กราฟ</p>
+          <div class="formula" style="text-align:left;font-size:.82rem">f''(c) &lt; 0 & f'(c)=0 → <strong style="color:var(--red)">Local Max</strong></div>
+        </div>
+      </div>
+      <div class="thm-box" style="margin-top:.6rem">
+        <div class="lbl">Inflection Point</div>
+        <p>จุดที่ f'' เปลี่ยนเครื่องหมาย — กราฟเปลี่ยนจาก Concave Up เป็น Down หรือในทางกลับกัน</p>
+      </div>
+
+      <div class="canvas-wrap">
+        <h4>แสดง f, f', f'' พร้อมกัน — เลือกฟังก์ชัน</h4>
+        <canvas id="concavityCanvas" width="760" height="340"></canvas>
+        <div class="controls">
+          <button class="btn on" id="bCon0" onclick="showConcavity(0)">f(x) = x⁴−4x²</button>
+          <button class="btn"    id="bCon1" onclick="showConcavity(1)">f(x) = x³−3x</button>
+          <button class="btn"    id="bCon2" onclick="showConcavity(2)">f(x) = sin(x)</button>
+          <button class="btn"    id="bCon3" onclick="showConcavity(3)">f(x) = eˣ·sin(x)</button>
+        </div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('monotonic')">← 4.3 First Derivative Test</button>
+      <span class="page-nav-ctr">5 / 8</span>
+      <button class="page-nav-btn" onclick="showSec('lhopital')">4.5 L'Hôpital →</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ 4.5 L'HÔPITAL ══ -->
+  <div id="page-lhopital" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>4.5 Indeterminate Forms &amp; L'Hôpital's Rule</h2>
+      <div class="def-box">
+        <div class="lbl">L'Hôpital's Rule</div>
+        <p>ถ้า lim f(x)/g(x) อยู่ในรูป <strong style="color:var(--red)">0/0</strong> หรือ <strong style="color:var(--red)">∞/∞</strong> แล้ว:</p>
+        <div class="formula">lim<sub>x→c</sub> f(x)/g(x) = lim<sub>x→c</sub> f'(x)/g'(x)</div>
+        <p style="font-size:.83rem;color:#94a3b8;margin-top:.35rem">ใช้ได้ซ้ำหลายรอบจนกว่าจะได้คำตอบที่ไม่ใช่ Indeterminate form</p>
+      </div>
+
+      <h3>Indeterminate Forms ทั้งหมด</h3>
+      <div style="display:flex;flex-wrap:wrap;gap:.4rem;margin:.6rem 0">
+        <span class="badge b-r">0/0</span>
+        <span class="badge b-r">∞/∞</span>
+        <span class="badge b-y">0·∞</span>
+        <span class="badge b-y">∞−∞</span>
+        <span class="badge b-b">0⁰</span>
+        <span class="badge b-b">∞⁰</span>
+        <span class="badge b-b">1<sup>∞</sup></span>
+      </div>
+      <p style="color:#94a3b8;font-size:.86rem">รูป 0·∞, ∞−∞, 0⁰, ∞⁰, 1<sup>∞</sup> ต้องแปลงให้เป็น 0/0 หรือ ∞/∞ ก่อน</p>
+
+      <div class="canvas-wrap">
+        <h4>ตัวอย่าง L'Hôpital — ดูขั้นตอนทีละขั้น</h4>
+        <canvas id="lhopitalCanvas" width="760" height="270"></canvas>
+        <div class="controls">
+          <button class="btn on" id="bLH0" onclick="showLH(0)">sin(x)/x → x=0</button>
+          <button class="btn"    id="bLH1" onclick="showLH(1)">(eˣ−1)/x → x=0</button>
+          <button class="btn"    id="bLH2" onclick="showLH(2)">(x²−1)/(x−1) → x=1</button>
+          <button class="btn"    id="bLH3" onclick="showLH(3)">x·ln(x) → x=0⁺</button>
+        </div>
+      </div>
+
+      <h3>ตาราง: รูปมาตรฐาน</h3>
+      <table>
+        <tr><th>Limit</th><th>รูป</th><th>วิธี</th><th>คำตอบ</th></tr>
+        <tr><td>lim<sub>x→0</sub> sin(x)/x</td><td><span class="badge b-r">0/0</span></td><td>L'Hôpital: cos(x)/1</td><td><span class="badge b-g">1</span></td></tr>
+        <tr><td>lim<sub>x→0</sub> (eˣ−1)/x</td><td><span class="badge b-r">0/0</span></td><td>L'Hôpital: eˣ/1</td><td><span class="badge b-g">1</span></td></tr>
+        <tr><td>lim<sub>x→∞</sub> ln(x)/x</td><td><span class="badge b-r">∞/∞</span></td><td>L'Hôpital: (1/x)/1</td><td><span class="badge b-g">0</span></td></tr>
+        <tr><td>lim<sub>x→0⁺</sub> x·ln(x)</td><td><span class="badge b-y">0·∞</span></td><td>= ln(x)/(1/x) → L'Hôpital</td><td><span class="badge b-g">0</span></td></tr>
+        <tr><td>lim<sub>x→∞</sub> xⁿ/eˣ</td><td><span class="badge b-r">∞/∞</span></td><td>L'Hôpital n ครั้ง</td><td><span class="badge b-g">0</span></td></tr>
+      </table>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('concavity')">← 4.4 Concavity</button>
+      <span class="page-nav-ctr">6 / 8</span>
+      <button class="page-nav-btn" onclick="showSec('newton')">4.6 Newton's Method →</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ 4.6 NEWTON ══ -->
+  <div id="page-newton" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>4.6 Newton's Method</h2>
+      <div class="def-box">
+        <div class="lbl">สูตร Newton's Method</div>
+        <p>เริ่มจาก x₀ (ค่าเดา) วนซ้ำด้วย:</p>
+        <div class="formula">x<sub>n+1</sub> = x<sub>n</sub> − f(x<sub>n</sub>) / f'(x<sub>n</sub>)</div>
+        <p style="font-size:.83rem;color:#94a3b8;margin-top:.35rem">ลาก Tangent ที่ xₙ แล้วหาจุดตัดแกน x → ได้ xₙ₊₁ ที่ใกล้ root กว่าเดิม</p>
+      </div>
+
+      <div class="canvas-wrap">
+        <h4>Newton's Method — กด Next Step เพื่อดู Iteration ถัดไป</h4>
+        <canvas id="newtonCanvas" width="760" height="300"></canvas>
+        <div class="controls">
+          <button class="btn on" id="bNwt0" onclick="setNewtonFn(0)">f(x) = x³−2 (root = ∛2)</button>
+          <button class="btn"    id="bNwt1" onclick="setNewtonFn(1)">f(x) = x²−3 (root = √3)</button>
+          <button class="btn"    id="bNwt2" onclick="setNewtonFn(2)">f(x) = cos(x)−x</button>
+        </div>
+        <div class="controls" style="margin-top:.35rem">
+          <button class="btn" onclick="newtonStep(-1)">← Reset</button>
+          <button class="btn on" onclick="newtonStep(1)">Next Step →</button>
+          <span id="newtonStepInfo" style="color:var(--yellow);font-family:monospace;font-size:.82rem;margin-left:.5rem"></span>
+        </div>
+      </div>
+
+      <div id="newtonTable" style="margin-top:.75rem"></div>
+
+      <h3>ข้อควรระวัง</h3>
+      <div class="grid2">
+        <div class="ex-box"><div class="lbl">เมื่อ Newton's Method ไม่ทำงาน</div>
+          <ul class="info-list">
+            <li>f'(xₙ) = 0 → Tangent แนวนอน, ไม่ตัดแกน x</li>
+            <li>x₀ อยู่ไกล root มาก → อาจ diverge</li>
+            <li>มีหลาย root → อาจ converge ผิดจุด</li>
+          </ul>
+        </div>
+        <div class="thm-box"><div class="lbl">ความเร็ว Convergence</div>
+          <p>Newton's Method มี <strong style="color:var(--yellow)">Quadratic Convergence</strong></p>
+          <p style="font-size:.83rem;color:#94a3b8;margin-top:.3rem">ทุก iteration จำนวน decimal ที่ถูกต้องจะเพิ่มเป็น 2 เท่า</p>
+        </div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('lhopital')">← 4.5 L'Hôpital</button>
+      <span class="page-nav-ctr">7 / 8</span>
+      <button class="page-nav-btn" onclick="showSec('quiz')">แบบฝึกหัด →</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ QUIZ ══ -->
+  <div id="page-quiz" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>แบบฝึกหัด Chapter IV</h2>
+      <div id="quizContainer"></div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('newton')">← 4.6 Newton's Method</button>
+      <span class="page-nav-ctr">8 / 8</span>
+      <a class="page-nav-btn" href="ch5.html">Chapter V: Integrals →</a>
+    </div>
+  </div>
+  </div>
+
+</main>
+<script src="sidebar.js"></script>
+<script>
+// ══ CANVAS HELPERS ══
+// Theme-aware palette (see theme.js) — let + applyCanvasTheme() so colors follow
+// the light/dark toggle; draw functions read the live bindings.
+let BG,GRID,AXIS,BLUE,GREEN,YELLOW,RED,PURPLE,MUTED,ORANGE,SURFACE,ON_SURFACE;
+function applyCanvasTheme(){ const t=window.CanvasTheme.get();
+  BG=t.BG;GRID=t.GRID;AXIS=t.AXIS;BLUE=t.BLUE;GREEN=t.GREEN;YELLOW=t.YELLOW;
+  RED=t.RED;PURPLE=t.PURPLE;MUTED=t.MUTED;ORANGE=t.ORANGE;SURFACE=t.SURFACE;ON_SURFACE=t.ON_SURFACE; }
+applyCanvasTheme();
+window._redrawCanvases=function(){ applyCanvasTheme(); initSec(window.CURRENT_SEC||'overview'); };
+
+function setupCanvas(id,W,H){
+  const cv=document.getElementById(id);if(!cv)return null;
+  const dpr=Math.min(window.devicePixelRatio||1,2);
+  cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+'px';cv.style.height=H+'px';
+  const ctx=cv.getContext('2d');ctx.scale(dpr,dpr);return{ctx,W,H};
+}
+function drawGrid(ctx,W,H,xMin,xMax,yMin,yMax){
+  ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);
+  const toX=x=>(x-xMin)/(xMax-xMin)*W, toY=y=>H-(y-yMin)/(yMax-yMin)*H;
+  const xs=Math.abs(xMax-xMin)>15?5:Math.abs(xMax-xMin)>8?2:1;
+  const ys=Math.abs(yMax-yMin)>15?5:Math.abs(yMax-yMin)>8?2:1;
+  ctx.strokeStyle=GRID;ctx.lineWidth=.5;
+  for(let x=Math.ceil(xMin/xs)*xs;x<=xMax;x+=xs){ctx.beginPath();ctx.moveTo(toX(x),0);ctx.lineTo(toX(x),H);ctx.stroke();}
+  for(let y=Math.ceil(yMin/ys)*ys;y<=yMax;y+=ys){ctx.beginPath();ctx.moveTo(0,toY(y));ctx.lineTo(W,toY(y));ctx.stroke();}
+  ctx.strokeStyle=AXIS;ctx.lineWidth=1.5;
+  if(yMin<=0&&yMax>=0){ctx.beginPath();ctx.moveTo(0,toY(0));ctx.lineTo(W,toY(0));ctx.stroke();}
+  if(xMin<=0&&xMax>=0){ctx.beginPath();ctx.moveTo(toX(0),0);ctx.lineTo(toX(0),H);ctx.stroke();}
+  ctx.fillStyle=MUTED;ctx.font='10px monospace';ctx.textAlign='center';
+  for(let x=Math.ceil(xMin/xs)*xs;x<=xMax;x+=xs)if(x!==0)ctx.fillText(x,toX(x),toY(0)+13);
+  ctx.textAlign='right';
+  for(let y=Math.ceil(yMin/ys)*ys;y<=yMax;y+=ys)if(y!==0)ctx.fillText(y,toX(0)-3,toY(y)+4);
+  return{toX,toY};
+}
+function plotFn(ctx,fn,xMin,xMax,W,H,yMin,yMax,col,lw=2){
+  const toX=x=>(x-xMin)/(xMax-xMin)*W, toY=y=>H-(y-yMin)/(yMax-yMin)*H;
+  ctx.strokeStyle=col;ctx.lineWidth=lw;ctx.beginPath();let ok=false;
+  for(let i=0;i<=W*2;i++){
+    const x=xMin+i/(W*2)*(xMax-xMin);
+    let y;try{y=fn(x);}catch{ok=false;continue;}
+    if(!isFinite(y)||Math.abs(y)>1e6){ok=false;continue;}
+    const px=toX(x),py=toY(y);
+    if(!ok){ctx.moveTo(px,py);ok=true;}else ctx.lineTo(px,py);
+  }ctx.stroke();
+}
+function dot(ctx,x,y,r,col,fill=true){
+  ctx.beginPath();ctx.arc(x,y,r,0,2*Math.PI);
+  if(fill){ctx.fillStyle=col;ctx.fill();}
+  else{ctx.strokeStyle=col;ctx.lineWidth=2;ctx.fillStyle=BG;ctx.fill();ctx.stroke();}
+}
+function lbl(ctx,text,x,y,col,align='center',sz=11){
+  ctx.fillStyle=col;ctx.font=sz+'px monospace';ctx.textAlign=align;ctx.fillText(text,x,y);
+}
+function dashLine(ctx,x1,y1,x2,y2,col,dash=[5,4]){
+  ctx.strokeStyle=col;ctx.lineWidth=1.2;ctx.setLineDash(dash);
+  ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();ctx.setLineDash([]);
+}
+
+// ══ SECTION NAVIGATION ══
+const CRUMBS={
+  overview:'Applications of Derivatives',extreme:'4.1 Extreme Values',
+  mvt:'4.2 Mean Value Theorem',monotonic:'4.3 First Derivative Test',
+  concavity:'4.4 Concavity & Curve Sketching',lhopital:"4.5 L'Hôpital's Rule",
+  newton:"4.6 Newton's Method",quiz:'แบบฝึกหัด'
+};
+window.showSec=function(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.getElementById('crumbSec').textContent=CRUMBS[id]||id;
+  window.CURRENT_SEC=id;
+  if(window.setSidebarSec)setSidebarSec(id);
+  document.getElementById('main').scrollTop=0;
+  setTimeout(()=>initSec(id),60);
+};
+function initSec(id){
+  if(id==='overview')   drawOverview();
+  if(id==='extreme')    showExtreme(0);
+  if(id==='mvt')        {mvtFnIdx=0;document.querySelectorAll('[id^=bMVT]').forEach((b,j)=>b.classList.toggle('on',j===0));redrawMVT();}
+  if(id==='monotonic')  showMonotonic(0);
+  if(id==='concavity')  showConcavity(0);
+  if(id==='lhopital')   showLH(0);
+  if(id==='newton')     {setNewtonFn(0);}
+  if(id==='quiz')       initQuiz();
+}
+
+// ══ OVERVIEW CANVAS ══
+function drawOverview(){
+  const c=setupCanvas('overviewCanvas',760,230);if(!c)return;
+  const{ctx,W,H}=c;
+  const{toX,toY}=drawGrid(ctx,W,H,-3.5,3.5,-3,5);
+  const fn=x=>x*x*x-3*x+1;
+  const fp=x=>3*x*x-3;
+  const fpp=x=>6*x;
+
+  // shade concave regions
+  const fillRegion=(xA,xB,col)=>{
+    ctx.fillStyle=col;ctx.beginPath();
+    ctx.moveTo(toX(xA),toY(0));
+    for(let i=0;i<=80;i++){const x=xA+i/80*(xB-xA);ctx.lineTo(toX(x),toY(fn(x)));}
+    ctx.lineTo(toX(xB),toY(0));ctx.closePath();ctx.fill();
+  };
+  fillRegion(-3.5,0,BLUE+'12');
+  fillRegion(0,3.5,RED+'12');
+
+  plotFn(ctx,fn,-3.5,3.5,W,H,-3,5,BLUE,2.5);
+
+  // critical points: f'=3x²-3=0 → x=±1
+  const pts=[
+    {x:-1,y:fn(-1),col:YELLOW,lbl:'Local Max\nf\'=0, f\'\'<0'},
+    {x:1, y:fn(1), col:ORANGE, lbl:'Local Min\nf\'=0, f\'\'>0'},
+    {x:0, y:fn(0), col:GREEN,  lbl:'Inflection\nf\'\'=0'},
+  ];
+  pts.forEach(p=>{
+    dot(ctx,toX(p.x),toY(p.y),7,p.col);
+    dashLine(ctx,toX(p.x),toY(p.y),toX(p.x),H,MUTED+'55');
+    lbl(ctx,p.lbl.split('\n')[0],toX(p.x),toY(p.y)-12,p.col,'center',10);
+    lbl(ctx,p.lbl.split('\n')[1],toX(p.x),toY(p.y)-24,MUTED,'center',9);
+  });
+
+  lbl(ctx,'f(x) = x³−3x+1',10,18,BLUE,'left',12);
+  lbl(ctx,'∪ Concave Up (f\'\'> 0)',toX(-1.8),toY(4.5),BLUE,'center',9);
+  lbl(ctx,'∩ Concave Down (f\'\'< 0)',toX(1.8),toY(4.5),RED,'center',9);
+}
+
+// ══ 4.1 EXTREME VALUES ══
+const exFns=[
+  {fn:x=>x*x*x-3*x, fp:x=>3*x*x-3, lbl:'f(x) = x³−3x', xMin:-2.5,xMax:2.5,yMin:-4,yMax:4,
+   criticals:[-1,1], endpoints:[-2.5,2.5]},
+  {fn:x=>x*x*x*x-4*x*x, fp:x=>4*x*x*x-8*x, lbl:'f(x) = x⁴−4x²', xMin:-2.5,xMax:2.5,yMin:-5,yMax:4,
+   criticals:[-Math.sqrt(2),0,Math.sqrt(2)], endpoints:[-2.5,2.5]},
+  {fn:x=>Math.abs(x*x-2), fp:x=>x*x>2?2*x:-2*x, lbl:'f(x) = |x²−2|', xMin:-2.5,xMax:2.5,yMin:-0.5,yMax:5,
+   criticals:[-Math.sqrt(2),0,Math.sqrt(2)], endpoints:[-2.5,2.5]},
+];
+function showExtreme(i){
+  document.querySelectorAll('[id^=bEx]').forEach((b,j)=>b.classList.toggle('on',j===i));
+  const d=exFns[i];
+  const c=setupCanvas('extremeCanvas',760,300);if(!c)return;
+  const{ctx,W,H}=c;
+  const{toX,toY}=drawGrid(ctx,W,H,d.xMin,d.xMax,d.yMin,d.yMax);
+
+  plotFn(ctx,d.fn,d.xMin,d.xMax,W,H,d.yMin,d.yMax,BLUE,2.5);
+
+  // evaluate at criticals and endpoints
+  const evalPts=[...d.criticals,...d.endpoints].map(x=>({x,y:d.fn(x)}));
+  const yVals=evalPts.map(p=>p.y);
+  const absMax=Math.max(...yVals), absMin=Math.min(...yVals);
+
+  evalPts.forEach(p=>{
+    const isEnd=d.endpoints.includes(p.x);
+    const isAbsMax=Math.abs(p.y-absMax)<1e-9;
+    const isAbsMin=Math.abs(p.y-absMin)<1e-9;
+    const col=isAbsMax?YELLOW:isAbsMin?RED:GREEN;
+    dot(ctx,toX(p.x),toY(p.y),6,col,!isEnd);
+    dashLine(ctx,toX(p.x),H,toX(p.x),toY(p.y),MUTED+'55');
+    const tag=isAbsMax?'Abs Max':isAbsMin?'Abs Min':'Local';
+    lbl(ctx,tag,toX(p.x),toY(p.y)-(isAbsMax?14:-6),col,'center',9);
+    lbl(ctx,'('+p.x.toFixed(2)+', '+p.y.toFixed(2)+')',toX(p.x),toY(p.y)-(isAbsMax?24:-18),MUTED,'center',8);
+  });
+
+  lbl(ctx,d.lbl,10,18,BLUE,'left',12);
+  lbl(ctx,'● Abs Max = '+absMax.toFixed(3),10,34,YELLOW,'left',10);
+  lbl(ctx,'● Abs Min = '+absMin.toFixed(3),10,48,RED,'left',10);
+}
+
+// ══ 4.2 MVT ══
+const mvtFns=[
+  {fn:x=>-x*x+4*x, fp:x=>-2*x+4, lbl:'f(x) = −x²+4x', a:0, b:3, xMin:-.5,xMax:3.5,yMin:-.5,yMax:5},
+  {fn:x=>x*x*x-3*x+2, fp:x=>3*x*x-3, lbl:'f(x) = x³−3x+2', a:-1.5, b:1.5, xMin:-2,xMax:2,yMin:-2,yMax:5},
+  {fn:x=>Math.sin(x), fp:x=>Math.cos(x), lbl:'f(x) = sin(x)', a:0, b:Math.PI, xMin:-.5,xMax:Math.PI+.5,yMin:-1.2,yMax:1.5},
+];
+let mvtFnIdx=0;
+function setMVTFn(i){mvtFnIdx=i;document.querySelectorAll('[id^=bMVT]').forEach((b,j)=>b.classList.toggle('on',j===i));redrawMVT();}
+function redrawMVT(){
+  const d=mvtFns[mvtFnIdx];
+  const{a,b}=d;
+  const slope=(d.fn(b)-d.fn(a))/(b-a);
+
+  // find c where f'(c) = slope (numerically)
+  const t=parseInt(document.getElementById('mvtCSlider').value)/100;
+  const c=a+t*(b-a);
+  const fc=d.fn(c), fpc=d.fp(c);
+
+  document.getElementById('mvtCVal').textContent='c = '+c.toFixed(3);
+  const match=Math.abs(fpc-slope)<0.12;
+  document.getElementById('mvtSlopeInfo').textContent=
+    'f\'(c) = '+fpc.toFixed(3)+(match?' ≈ '+slope.toFixed(3)+' ✓ (MVT!)':' | secant = '+slope.toFixed(3));
+
+  const cv=setupCanvas('mvtCanvas',760,290);if(!cv)return;
+  const{ctx,W,H}=cv;
+  const{toX,toY}=drawGrid(ctx,W,H,d.xMin,d.xMax,d.yMin,d.yMax);
+
+  plotFn(ctx,d.fn,d.xMin,d.xMax,W,H,d.yMin,d.yMax,BLUE,2.5);
+
+  // secant line
+  const secFn=x=>d.fn(a)+slope*(x-a);
+  ctx.strokeStyle=YELLOW;ctx.lineWidth=1.8;ctx.setLineDash([6,4]);
+  ctx.beginPath();ctx.moveTo(toX(d.xMin),toY(secFn(d.xMin)));ctx.lineTo(toX(d.xMax),toY(secFn(d.xMax)));ctx.stroke();ctx.setLineDash([]);
+
+  // tangent at c
+  const tanFn=x=>fc+fpc*(x-c);
+  ctx.strokeStyle=match?GREEN:RED;ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(toX(d.xMin),toY(tanFn(d.xMin)));ctx.lineTo(toX(d.xMax),toY(tanFn(d.xMax)));ctx.stroke();
+
+  // endpoints & c point
+  dot(ctx,toX(a),toY(d.fn(a)),5,YELLOW);
+  dot(ctx,toX(b),toY(d.fn(b)),5,YELLOW);
+  dot(ctx,toX(c),toY(fc),7,match?GREEN:RED);
+  dashLine(ctx,toX(c),H,toX(c),toY(fc),MUTED+'55');
+
+  lbl(ctx,d.lbl,10,18,BLUE,'left',12);
+  lbl(ctx,'Secant slope = '+slope.toFixed(3),10,34,YELLOW,'left',10);
+  lbl(ctx,'Tangent at c: f\'(c) = '+fpc.toFixed(3),10,48,match?GREEN:RED,'left',10);
+  if(match)lbl(ctx,'✓ MVT: f\'(c) = secant slope',W/2,H-8,GREEN,'center',11);
+}
+
+// ══ 4.3 MONOTONIC ══
+const monFns=[
+  {fn:x=>x*x*x-3*x, fp:x=>3*x*x-3, fpp:x=>6*x,
+   lbl:'f(x) = x³−3x', xMin:-3,xMax:3,yMin:-4,yMax:4,
+   criticals:[-1,1],
+   signInfo:'f\'=(+) x<−1 · f\'=(−) −1<x<1 · f\'=(+) x>1'},
+  {fn:x=>x*x*x*x-4*x*x+1, fp:x=>4*x*x*x-8*x, fpp:x=>12*x*x-8,
+   lbl:'f(x) = x⁴−4x²+1', xMin:-2.5,xMax:2.5,yMin:-4,yMax:4,
+   criticals:[-Math.sqrt(2),0,Math.sqrt(2)],
+   signInfo:'f\'=(−) x<−√2 · f\'=(+) −√2<x<0 · f\'=(−) 0<x<√2 · f\'=(+) x>√2'},
+  {fn:x=>Math.sin(x)*Math.exp(x), fp:x=>(Math.sin(x)+Math.cos(x))*Math.exp(x), fpp:x=>2*Math.cos(x)*Math.exp(x),
+   lbl:'f(x) = eˣ·sin(x)', xMin:-1,xMax:5,yMin:-20,yMax:20,
+   criticals:[3*Math.PI/4,7*Math.PI/4].filter(x=>x>-1&&x<5),
+   signInfo:'f\'=0 ที่ x=3π/4, 7π/4'},
+];
+let monIdx=0;
+function showMonotonic(i){
+  monIdx=i;
+  document.querySelectorAll('[id^=bMon]').forEach((b,j)=>b.classList.toggle('on',j===i));
+  const d=monFns[i];
+  const{xMin,xMax,yMin,yMax}=d;
+
+  const cv=setupCanvas('monotonicCanvas',760,320);if(!cv)return;
+  const{ctx,W,H}=cv;
+
+  // split canvas: top 60% for f, bottom 40% for f'
+  const H1=Math.floor(H*.6), H2=H-H1;
+  const{toX:tx1,toY:ty1}=drawGrid(ctx,W,H1,xMin,xMax,yMin,yMax);
+
+  // color bands for increasing/decreasing
+  const steps=400;
+  for(let i=0;i<steps;i++){
+    const x0=xMin+i/steps*(xMax-xMin);
+    const x1=xMin+(i+1)/steps*(xMax-xMin);
+    const fpMid=d.fp((x0+x1)/2);
+    const col=fpMid>0?GREEN+'25':RED+'25';
+    ctx.fillStyle=col;
+    const y0=Math.max(yMin,Math.min(yMax,d.fn(x0)));
+    const y1=Math.max(yMin,Math.min(yMax,d.fn(x1)));
+    ctx.beginPath();ctx.moveTo(tx1(x0),ty1(0));ctx.lineTo(tx1(x0),ty1(y0));ctx.lineTo(tx1(x1),ty1(y1));ctx.lineTo(tx1(x1),ty1(0));ctx.closePath();ctx.fill();
+  }
+  plotFn(ctx,d.fn,xMin,xMax,W,H1,yMin,yMax,BLUE,2.5);
+  d.criticals.forEach(cx=>{
+    dot(ctx,tx1(cx),ty1(d.fn(cx)),6,YELLOW);
+    dashLine(ctx,tx1(cx),0,tx1(cx),H1,MUTED+'55');
+  });
+  lbl(ctx,d.lbl,10,16,BLUE,'left',12);
+  lbl(ctx,'↑ Increasing',10,32,GREEN,'left',10);
+  lbl(ctx,'↓ Decreasing',10+70,32,RED,'left',10);
+
+  // f'(x) panel
+  const fpMax=Math.max(...Array.from({length:100},(_,k)=>{const x=xMin+k/99*(xMax-xMin);return Math.abs(d.fp(x));}).filter(isFinite))*1.1||5;
+  const toX2=x=>(x-xMin)/(xMax-xMin)*W;
+  const toY2=y=>H1+H2-(y+fpMax)/(2*fpMax)*H2;
+
+  ctx.fillStyle=BG;ctx.fillRect(0,H1,W,H2);
+  ctx.strokeStyle=GRID;ctx.lineWidth=.5;
+  ctx.beginPath();ctx.moveTo(0,H1+H2/2);ctx.lineTo(W,H1+H2/2);ctx.stroke();
+  ctx.strokeStyle=AXIS+'88';ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(0,H1);ctx.lineTo(W,H1);ctx.stroke();
+
+  // color f'
+  const fpSteps=400;
+  for(let i=0;i<fpSteps;i++){
+    const x0=xMin+i/fpSteps*(xMax-xMin);
+    const x1=xMin+(i+1)/fpSteps*(xMax-xMin);
+    const fpV=d.fp((x0+x1)/2);
+    ctx.fillStyle=fpV>0?GREEN+'66':RED+'66';
+    const y0c=Math.max(-fpMax,Math.min(fpMax,d.fp(x0)));
+    const y1c=Math.max(-fpMax,Math.min(fpMax,d.fp(x1)));
+    ctx.beginPath();ctx.moveTo(toX2(x0),H1+H2/2);ctx.lineTo(toX2(x0),toY2(y0c));ctx.lineTo(toX2(x1),toY2(y1c));ctx.lineTo(toX2(x1),H1+H2/2);ctx.closePath();ctx.fill();
+  }
+  plotFn(ctx,x=>{const v=d.fp(x);return Math.abs(v)>fpMax*2?NaN:v;},xMin,xMax,W,H2,-fpMax,fpMax,
+    GREEN,1.8);
+
+  // patch plotFn for offset panel
+  ctx.strokeStyle=YELLOW;ctx.lineWidth=1.8;ctx.beginPath();let ok=false;
+  for(let i=0;i<=W*2;i++){
+    const x=xMin+i/(W*2)*(xMax-xMin);
+    const y=d.fp(x);
+    if(!isFinite(y)||Math.abs(y)>fpMax*2){ok=false;continue;}
+    const px=toX2(x),py=toY2(y);
+    if(!ok){ctx.moveTo(px,py);ok=true;}else ctx.lineTo(px,py);
+  }ctx.stroke();
+
+  lbl(ctx,"f'(x)",10,H1+14,YELLOW,'left',11);
+
+  // sign chart
+  const sc=document.getElementById('signChartContainer');
+  sc.innerHTML=`<div style="background:#080c14;border:1px solid var(--border);border-radius:8px;padding:.7rem 1rem;font-size:.8rem;color:#94a3b8">${d.signInfo}</div>`;
+}
+
+// ══ 4.4 CONCAVITY ══
+const conFns=[
+  {fn:x=>x*x*x*x-4*x*x, fp:x=>4*x*x*x-8*x, fpp:x=>12*x*x-8,
+   lbl:'f(x) = x⁴−4x²', xMin:-2.5,xMax:2.5,yMin:-5,yMax:4, inflections:[-Math.sqrt(2/3),Math.sqrt(2/3)]},
+  {fn:x=>x*x*x-3*x, fp:x=>3*x*x-3, fpp:x=>6*x,
+   lbl:'f(x) = x³−3x', xMin:-2.5,xMax:2.5,yMin:-4,yMax:4, inflections:[0]},
+  {fn:x=>Math.sin(x), fp:x=>Math.cos(x), fpp:x=>-Math.sin(x),
+   lbl:'f(x) = sin(x)', xMin:-4,xMax:7,yMin:-1.5,yMax:1.5, inflections:[0,Math.PI,2*Math.PI,3*Math.PI,-Math.PI].filter(x=>x>=-4&&x<=7)},
+  {fn:x=>Math.exp(x)*Math.sin(x), fp:x=>(Math.cos(x)+Math.sin(x))*Math.exp(x), fpp:x=>2*Math.cos(x)*Math.exp(x),
+   lbl:'f(x) = eˣ·sin(x)', xMin:-1,xMax:4,yMin:-5,yMax:10, inflections:[Math.PI/2,3*Math.PI/2].filter(x=>x>=-1&&x<=4)},
+];
+function showConcavity(i){
+  document.querySelectorAll('[id^=bCon]').forEach((b,j)=>b.classList.toggle('on',j===i));
+  const d=conFns[i];
+  const{xMin,xMax,yMin,yMax}=d;
+  const cv=setupCanvas('concavityCanvas',760,340);if(!cv)return;
+  const{ctx,W,H}=cv;
+
+  const H1=Math.floor(H*.5), H2=Math.floor(H*.25), H3=H-H1-H2;
+
+  // ── Panel 1: f(x) with concavity shading ──
+  const{toX:tx1,toY:ty1}=drawGrid(ctx,W,H1,xMin,xMax,yMin,yMax);
+  for(let s=0;s<400;s++){
+    const x0=xMin+s/400*(xMax-xMin), x1=xMin+(s+1)/400*(xMax-xMin);
+    const fppMid=d.fpp((x0+x1)/2);
+    ctx.fillStyle=fppMid>0?BLUE+'20':RED+'20';
+    const y0c=Math.max(yMin,Math.min(yMax,d.fn(x0)));
+    const y1c=Math.max(yMin,Math.min(yMax,d.fn(x1)));
+    ctx.beginPath();ctx.moveTo(tx1(x0),ty1(0));ctx.lineTo(tx1(x0),ty1(y0c));ctx.lineTo(tx1(x1),ty1(y1c));ctx.lineTo(tx1(x1),ty1(0));ctx.closePath();ctx.fill();
+  }
+  plotFn(ctx,d.fn,xMin,xMax,W,H1,yMin,yMax,BLUE,2.5);
+  d.inflections.forEach(ix=>{
+    dot(ctx,tx1(ix),ty1(d.fn(ix)),6,YELLOW);
+    lbl(ctx,'IP',tx1(ix),ty1(d.fn(ix))-12,YELLOW,'center',9);
+  });
+  lbl(ctx,d.lbl,8,15,BLUE,'left',12);
+  lbl(ctx,'∪',toX=>(xMin+xMax)/2*0+30,20,BLUE,'left',10);
+  lbl(ctx,'∪ = f\'\'> 0  ∩ = f\'\'< 0',W-8,15,MUTED,'right',10);
+
+  // ── Panel 2: f'(x) ──
+  const fpRange=Math.max(...Array.from({length:80},(_,k)=>{const x=xMin+k/79*(xMax-xMin);return Math.abs(d.fp(x));}).filter(isFinite))*1.1||3;
+  const fillBG2=()=>{ctx.fillStyle=BG;ctx.fillRect(0,H1,W,H2);ctx.strokeStyle=GRID;ctx.lineWidth=.5;ctx.beginPath();ctx.moveTo(0,H1+H2/2);ctx.lineTo(W,H1+H2/2);ctx.stroke();ctx.strokeStyle=AXIS+'88';ctx.beginPath();ctx.moveTo(0,H1);ctx.lineTo(W,H1);ctx.stroke();};
+  fillBG2();
+  const ty2=y=>H1+H2/2-(y/fpRange)*(H2/2);
+  const tx2=x=>(x-xMin)/(xMax-xMin)*W;
+  ctx.strokeStyle=GREEN;ctx.lineWidth=1.8;ctx.beginPath();let ok=false;
+  for(let i=0;i<=W*2;i++){
+    const x=xMin+i/(W*2)*(xMax-xMin);const y=d.fp(x);
+    if(!isFinite(y)||Math.abs(y)>fpRange*2){ok=false;continue;}
+    const py=ty2(y);if(!ok){ctx.moveTo(tx2(x),py);ok=true;}else ctx.lineTo(tx2(x),py);
+  }ctx.stroke();
+  lbl(ctx,"f'(x)",8,H1+13,GREEN,'left',10);
+
+  // ── Panel 3: f''(x) ──
+  const fppRange=Math.max(...Array.from({length:80},(_,k)=>{const x=xMin+k/79*(xMax-xMin);return Math.abs(d.fpp(x));}).filter(isFinite))*1.1||3;
+  ctx.fillStyle=BG;ctx.fillRect(0,H1+H2,W,H3);
+  ctx.strokeStyle=AXIS+'88';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(0,H1+H2);ctx.lineTo(W,H1+H2);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(0,H1+H2+H3/2);ctx.lineTo(W,H1+H2+H3/2);ctx.stroke();
+  const ty3=y=>H1+H2+H3/2-(y/fppRange)*(H3/2);
+  // shade f'' sign
+  for(let s=0;s<W;s++){
+    const x=xMin+s/W*(xMax-xMin);const fppV=d.fpp(x);
+    ctx.fillStyle=fppV>0?BLUE+'55':RED+'55';
+    ctx.fillRect(s,H1+H2,1,H3);
+  }
+  ctx.strokeStyle=ORANGE;ctx.lineWidth=1.8;ctx.beginPath();ok=false;
+  for(let i=0;i<=W*2;i++){
+    const x=xMin+i/(W*2)*(xMax-xMin);const y=d.fpp(x);
+    if(!isFinite(y)||Math.abs(y)>fppRange*2){ok=false;continue;}
+    const py=ty3(y);if(!ok){ctx.moveTo(tx2(x),py);ok=true;}else ctx.lineTo(tx2(x),py);
+  }ctx.stroke();
+  lbl(ctx,"f''(x)",8,H1+H2+13,ORANGE,'left',10);
+}
+
+// ══ 4.5 L'HÔPITAL ══
+const lhData=[
+  {fn:x=>Math.abs(x)<1e-9?null:Math.sin(x)/x, lbl:'sin(x)/x', cx:0, L:1,
+   form:'0/0', steps:["lim sin(x)/x", "→ L'Hôpital: lim cos(x)/1", "= cos(0)/1 = 1"],
+   xMin:-4,xMax:4,yMin:-.3,yMax:1.3},
+  {fn:x=>Math.abs(x)<1e-9?null:(Math.exp(x)-1)/x, lbl:'(eˣ−1)/x', cx:0, L:1,
+   form:'0/0', steps:["lim (eˣ−1)/x", "→ L'Hôpital: lim eˣ/1", "= e⁰ = 1"],
+   xMin:-2,xMax:3,yMin:-.3,yMax:3},
+  {fn:x=>Math.abs(x-1)<1e-9?null:(x*x-1)/(x-1), lbl:'(x²−1)/(x−1)', cx:1, L:2,
+   form:'0/0', steps:["lim (x²−1)/(x−1)", "→ factor: (x−1)(x+1)/(x−1)", "= lim (x+1) = 2"],
+   xMin:-1,xMax:4,yMin:-.5,yMax:5},
+  {fn:x=>x<1e-9?null:x*Math.log(x), lbl:'x·ln(x)', cx:0, L:0,
+   form:'0·∞', steps:["lim x·ln(x)  [0·∞]", "= lim ln(x)/(1/x)  [∞/∞]", "→ L'Hôpital: (1/x)/(−1/x²) = −x → 0"],
+   xMin:-.2,xMax:2,yMin:-.5,yMax:1},
+];
+function showLH(i){
+  document.querySelectorAll('[id^=bLH]').forEach((b,j)=>b.classList.toggle('on',j===i));
+  const d=lhData[i];
+  const cv=setupCanvas('lhopitalCanvas',760,270);if(!cv)return;
+  const{ctx,W,H}=cv;
+  const{toX,toY}=drawGrid(ctx,W,H,d.xMin,d.xMax,d.yMin,d.yMax);
+
+  plotFn(ctx,t=>{if(Math.abs(t-d.cx)<0.04)return undefined;return d.fn(t);},d.xMin,d.xMax,W,H,d.yMin,d.yMax,BLUE,2.5);
+  dot(ctx,toX(d.cx),toY(d.L),7,YELLOW,false);
+  dot(ctx,toX(d.cx),toY(d.L),3,YELLOW);
+  dashLine(ctx,toX(d.cx),H,toX(d.cx),toY(d.L),MUTED+'55');
+  dashLine(ctx,0,toY(d.L),W,toY(d.L),YELLOW+'44');
+
+  lbl(ctx,d.lbl,10,18,BLUE,'left',12);
+  lbl(ctx,'Form: '+d.form,10,34,RED,'left',10);
+  d.steps.forEach((s,j)=>lbl(ctx,s,10,52+j*16,j===d.steps.length-1?GREEN:MUTED,'left',11));
+  lbl(ctx,'Limit = '+d.L,W-8,18,YELLOW,'right',12);
+}
+
+// ══ 4.6 NEWTON'S METHOD ══
+const nwtFns=[
+  {fn:x=>x*x*x-2, fp:x=>3*x*x, lbl:'f(x) = x³−2', x0:1.5, root:Math.cbrt(2), xMin:.5,xMax:2,yMin:-2,yMax:4},
+  {fn:x=>x*x-3, fp:x=>2*x, lbl:'f(x) = x²−3', x0:2, root:Math.sqrt(3), xMin:0,xMax:2.5,yMin:-3.5,yMax:4},
+  {fn:x=>Math.cos(x)-x, fp:x=>-Math.sin(x)-1, lbl:'f(x) = cos(x)−x', x0:.5, root:0.7390851332, xMin:0,xMax:1.5,yMin:-1.5,yMax:1.5},
+];
+let nwtIdx=0, nwtSteps=[];
+function setNewtonFn(i){
+  nwtIdx=i;nwtSteps=[];
+  document.querySelectorAll('[id^=bNwt]').forEach((b,j)=>b.classList.toggle('on',j===i));
+  buildNewtonSteps();drawNewton();
+}
+function buildNewtonSteps(){
+  const d=nwtFns[nwtIdx];
+  nwtSteps=[d.x0];
+  for(let i=0;i<7;i++){
+    const x=nwtSteps[nwtSteps.length-1];
+    const fpx=d.fp(x);
+    if(Math.abs(fpx)<1e-12)break;
+    nwtSteps.push(x-d.fn(x)/fpx);
+  }
+}
+let nwtVisible=1;
+function newtonStep(dir){
+  if(dir===-1){nwtVisible=1;buildNewtonSteps();}
+  else nwtVisible=Math.min(nwtSteps.length,nwtVisible+1);
+  drawNewton();
+}
+function drawNewton(){
+  const d=nwtFns[nwtIdx];
+  const cv=setupCanvas('newtonCanvas',760,300);if(!cv)return;
+  const{ctx,W,H}=cv;
+  const{toX,toY}=drawGrid(ctx,W,H,d.xMin,d.xMax,d.yMin,d.yMax);
+
+  plotFn(ctx,d.fn,d.xMin,d.xMax,W,H,d.yMin,d.yMax,BLUE,2.5);
+  // zero line already in grid
+
+  const cols=[YELLOW,ORANGE,GREEN,PURPLE,RED,BLUE,GREEN];
+  for(let i=0;i<Math.min(nwtVisible,nwtSteps.length-1);i++){
+    const x=nwtSteps[i], fx=d.fn(x), fpx=d.fp(x);
+    const col=cols[i%cols.length];
+    // vertical to curve
+    dashLine(ctx,toX(x),toY(0),toX(x),toY(fx),col+'88');
+    dot(ctx,toX(x),toY(fx),5,col);
+    // tangent line → x-intercept
+    const x1=nwtSteps[i+1];
+    ctx.strokeStyle=col;ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.moveTo(toX(x),toY(fx));ctx.lineTo(toX(x1),toY(0));ctx.stroke();
+    dot(ctx,toX(x1),toY(0),5,col);
+    lbl(ctx,'x'+i+'='+x.toFixed(5),toX(x),H-8-i*12,col,'center',8);
+  }
+
+  dot(ctx,toX(d.root),toY(0),8,GREEN);
+  lbl(ctx,'root ≈ '+d.root.toFixed(8),toX(d.root),toY(0)-12,GREEN,'center',10);
+  lbl(ctx,d.lbl,10,18,BLUE,'left',12);
+
+  const cur=nwtSteps[Math.min(nwtVisible-1,nwtSteps.length-1)];
+  document.getElementById('newtonStepInfo').textContent=
+    'Step '+nwtVisible+': x = '+cur.toFixed(8)+' | error = '+Math.abs(cur-d.root).toExponential(2);
+
+  // iteration table
+  let tbl='<table><tr><th>n</th><th>xₙ</th><th>f(xₙ)</th><th>f\'(xₙ)</th><th>xₙ₊₁</th><th>Error</th></tr>';
+  nwtSteps.slice(0,nwtVisible).forEach((x,i)=>{
+    if(i>=nwtSteps.length-1)return;
+    const fx=d.fn(x),fpx=d.fp(x),x1=nwtSteps[i+1];
+    tbl+=`<tr><td>${i}</td><td style="color:var(--yellow)">${x.toFixed(7)}</td><td>${fx.toExponential(3)}</td><td>${fpx.toFixed(4)}</td><td style="color:var(--green)">${x1.toFixed(7)}</td><td style="color:var(--muted)">${Math.abs(x1-d.root).toExponential(2)}</td></tr>`;
+  });
+  tbl+='</table>';
+  document.getElementById('newtonTable').innerHTML=tbl;
+}
+
+// ══ QUIZ ══
+const quizData=[
+  {q:'f(x) = x³−3x บน [−2,2] มี Absolute Maximum = ?',opts:['2','3','4','−2'],ans:0,
+   exp:'f(−2)=−2, f(2)=2, f(−1)=2, f(1)=−2 → Abs Max = 2 ที่ x=−1 และ x=2'},
+  {q:'Critical Point ของ f คือจุดที่ f\'(c) = ?',opts:['> 0','< 0','= 0 หรือ DNE','= f(c)'],ans:2,
+   exp:'Critical Point: f\'(c) = 0 หรือ f\'(c) ไม่มีค่า'},
+  {q:'MVT รับประกันว่าในช่วง (a,b) มีจุด c ที่ f\'(c) = ?',opts:['0','f(a)','(f(b)−f(a))/(b−a)','f(b)/b'],ans:2,
+   exp:'MVT: slope ของ tangent ที่ c = slope ของ secant จาก a ถึง b'},
+  {q:'ถ้า f\'(c) = 0 และ f\'\' เปลี่ยน − → + ที่ c แสดงว่า c คือ?',opts:['Local Max','Local Min','Inflection Point','ไม่มี Extremum'],ans:1,
+   exp:'f\' เปลี่ยน (−)→(+) → Local Min (First Derivative Test)'},
+  {q:'f\'\'(x) > 0 บน (a,b) หมายความว่ากราฟเป็น?',opts:['Concave Down','Decreasing','Concave Up','Linear'],ans:2,
+   exp:'f\'\' > 0 → Concave Up (∪) กราฟโค้งขึ้น'},
+  {q:'lim(x→0) sin(3x)/x = ? (ใช้ L\'Hôpital)',opts:['0','1','3','1/3'],ans:2,
+   exp:"L'Hôpital: lim 3cos(3x)/1 = 3cos(0) = 3"},
+  {q:'Newton\'s Method ใช้หาอะไร?',opts:['Derivative','Antiderivative','Root ของฟังก์ชัน','Limit'],ans:2,
+   exp:"Newton's Method วนซ้ำ x_{n+1} = x_n − f(x_n)/f'(x_n) เพื่อหา Root"},
+  {q:'Inflection Point เกิดเมื่อ?',opts:["f'(c) = 0","f''(c) = 0","f'' เปลี่ยนเครื่องหมาย","f(c) = 0"],ans:2,
+   exp:"Inflection Point: f'' เปลี่ยนเครื่องหมาย (ไม่ใช่แค่ f''=0)"},
+];
+function initQuiz(){
+  const cont=document.getElementById('quizContainer');cont.innerHTML='';
+  quizData.forEach((q,qi)=>{
+    const d=document.createElement('div');
+    d.style.cssText='background:var(--card);border:1px solid var(--border);border-radius:10px;padding:.95rem 1.2rem;margin-bottom:.8rem';
+    d.innerHTML=`<div style="font-size:.65rem;color:var(--muted);font-weight:700;letter-spacing:1px;margin-bottom:.3rem">ข้อ ${qi+1}/${quizData.length}</div>
+<div style="font-size:.93rem;margin-bottom:.65rem">${q.q}</div>
+${q.opts.map((o,oi)=>`<div class="quiz-opt" id="qo-${qi}-${oi}" onclick="checkAns(${qi},${oi})">${String.fromCharCode(65+oi)}) ${o}</div>`).join('')}
+<div id="qf-${qi}" class="quiz-fb" style="display:none"></div>`;
+    cont.appendChild(d);
+  });
+}
+function checkAns(qi,oi){
+  const q=quizData[qi];
+  for(let i=0;i<q.opts.length;i++){
+    const el=document.getElementById('qo-'+qi+'-'+i);el.onclick=null;
+    if(i===q.ans)el.classList.add('correct');else if(i===oi)el.classList.add('wrong');
+  }
+  const fb=document.getElementById('qf-'+qi);fb.style.display='block';
+  if(oi===q.ans){fb.style.background='#001a10';fb.style.color='var(--green)';fb.textContent='✓ ถูกต้อง! '+q.exp;}
+  else{fb.style.background='#1a0008';fb.style.color='var(--red)';fb.textContent='✗ ไม่ถูกต้อง — '+q.exp;}
+}
+
+// ══ INIT ══
+window.addEventListener('load',()=>{ drawOverview(); });
+</script>
+</body>
+</html>

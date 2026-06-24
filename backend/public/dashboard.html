@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard · Calculus</title>
+<style>
+  :root {
+    --bg: #0d1117; --surface: #111827; --border: #1e2d45;
+    --blue: #4cc9f0; --green: #00d4aa; --red: #e94560; --orange: #f97316;
+    --text: #e2e8f0; --muted: #64748b;
+  }
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    min-height: 100vh; background: var(--bg);
+    font-family: 'Segoe UI', system-ui, sans-serif; color: var(--text);
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; gap: 1.5rem; padding: 2rem;
+  }
+  body::before {
+    content:''; position:fixed; inset:0;
+    background-image: linear-gradient(var(--border) 1px,transparent 1px),
+                      linear-gradient(90deg,var(--border) 1px,transparent 1px);
+    background-size:40px 40px; opacity:.35; pointer-events:none;
+  }
+  .card {
+    position:relative; width:100%; max-width:480px;
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:16px; padding:2.5rem 2rem; text-align:center;
+    animation: slideUp .3s ease;
+  }
+  @keyframes slideUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:none} }
+
+  .badge {
+    display:inline-block; background:#001f0e; color:var(--green); border:1px solid var(--green);
+    font-size:.65rem; font-weight:700; letter-spacing:2px; padding:.2rem .65rem;
+    border-radius:20px; text-transform:uppercase; margin-bottom:1rem;
+  }
+  h1 { font-size:1.5rem; }
+  h1 span { color:var(--blue); }
+
+  .user-info {
+    margin:1.5rem 0; background:#080c14; border:1px solid var(--border);
+    border-radius:10px; padding:1rem 1.2rem; text-align:left;
+  }
+  .user-info .row {
+    display:flex; justify-content:space-between; font-size:.84rem;
+    padding:.35rem 0; border-bottom:1px solid var(--border);
+  }
+  .user-info .row:last-child { border:none; }
+  .user-info .row .k { color:var(--muted); }
+  .user-info .row .v { color:var(--text); font-weight:600; }
+
+  .role-badge { font-size:.7rem; font-weight:700; padding:.15rem .5rem; border-radius:4px; }
+  .role-USER  { background:#001228; color:var(--blue); }
+  .role-ADMIN { background:#1e0c00; color:var(--orange); }
+
+  /* ── Action buttons ── */
+  .actions { display:flex; flex-direction:column; gap:.65rem; margin-top:.5rem; }
+
+  .btn {
+    display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
+    padding:.72rem 1.5rem; border-radius:10px; font-size:.88rem; font-weight:600;
+    cursor:pointer; transition:all .15s; border:none; text-decoration:none; width:100%;
+  }
+  .btn:hover { filter:brightness(1.1); transform:translateY(-1px); }
+  .btn:active { transform:none; }
+
+  .btn-study {
+    background: linear-gradient(135deg, #4cc9f0, #00d4aa); color:#000;
+  }
+  .btn-admin {
+    background: transparent; border:1px solid var(--orange); color:var(--orange);
+  }
+  .btn-admin:hover { background:var(--orange); color:#fff; }
+  .btn-logout {
+    background:transparent; border:1px solid var(--red); color:var(--red);
+  }
+  .btn-logout:hover { background:var(--red); color:#fff; }
+
+  #loadingMsg { color:var(--muted); font-size:.88rem; margin-top:.5rem; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="badge">Authenticated</div>
+  <h1>Welcome, <span id="username">…</span></h1>
+  <p id="loadingMsg">Loading profile…</p>
+
+  <div class="user-info" id="userInfo" style="display:none">
+    <div class="row"><span class="k">Email</span>      <span class="v" id="infoEmail"></span></div>
+    <div class="row"><span class="k">Username</span>   <span class="v" id="infoUsername"></span></div>
+    <div class="row"><span class="k">Role</span>       <span class="v" id="infoRole"></span></div>
+    <div class="row"><span class="k">Member since</span><span class="v" id="infoDate"></span></div>
+  </div>
+
+  <div class="actions">
+    <a class="btn btn-study" href="/ch1.html">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+      Start Studying
+    </a>
+    <button class="btn btn-admin" id="adminBtn" style="display:none" onclick="location.href='/usermanagement.html'">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      User Management
+    </button>
+    <button class="btn btn-logout" onclick="logout()">Sign Out</button>
+  </div>
+</div>
+
+<footer style="text-align:center;padding:1.2rem;font-size:.75rem;color:#64748b;border-top:1px solid #1e2d45;margin-top:2rem;">
+  &copy; 2026 Dr.Woranidtha Krungseanmuang
+</footer>
+
+<script>
+  const token = sessionStorage.getItem('access_token');
+  if (!token) { window.location.replace('/login.html'); }
+
+  async function loadUser() {
+    const res = await fetch('/api/auth/me', {
+      headers: { Authorization: 'Bearer ' + token },
+      credentials: 'include',
+    });
+    if (res.status === 401) {
+      const r2 = await fetch('/api/auth/refresh', { method:'POST', credentials:'include' });
+      if (!r2.ok) { sessionStorage.clear(); window.location.replace('/login.html'); return; }
+      const d2 = await r2.json();
+      sessionStorage.setItem('access_token', d2.data.accessToken);
+      return loadUser();
+    }
+    const { data } = await res.json();
+    const u = data.user;
+    document.getElementById('username').textContent      = u.username;
+    document.getElementById('infoEmail').textContent     = u.email;
+    document.getElementById('infoUsername').textContent  = u.username;
+    document.getElementById('infoRole').innerHTML        = `<span class="role-badge role-${u.role}">${u.role}</span>`;
+    document.getElementById('infoDate').textContent      = new Date(u.createdAt).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+    document.getElementById('loadingMsg').style.display  = 'none';
+    document.getElementById('userInfo').style.display    = 'block';
+    if (u.role === 'ADMIN') document.getElementById('adminBtn').style.display = 'flex';
+  }
+
+  async function logout() {
+    await fetch('/api/auth/logout', { method:'POST', credentials:'include' });
+    sessionStorage.clear();
+    window.location.replace('/login.html');
+  }
+
+  loadUser();
+</script>
+</body>
+</html>

@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter IX — Infinite Sequences &amp; Series · Thomas Calculus</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script>
+  window.CURRENT_CH  = 9;
+  window.CURRENT_SEC = 'overview';
+  window._ch9Sections = ['overview','sequences','series','tests','powerseries','taylor','quiz'];
+</script>
+</head>
+<body class="sb-open">
+<aside id="sidebar"></aside>
+<button id="toggleBtn" onclick="toggleSidebar()" title="Toggle sidebar (S)">☰</button>
+<main id="main">
+
+  <div class="topbar">
+    <div class="topbar-crumb">Chapter IX &nbsp;›&nbsp; <span id="crumbSec">Infinite Sequences &amp; Series</span></div>
+    <div class="topbar-right">
+      <span class="kb-hint">S sidebar</span>
+      <span class="kb-hint">← → navigate</span>
+      <span class="kb-hint">F fullscreen</span>
+    </div>
+  </div>
+
+  <!-- ══ OVERVIEW ══ -->
+  <div id="page-overview" class="page active">
+  <div class="container">
+    <div class="hero">
+      <div class="badge">Thomas Calculus · Chapter IX</div>
+      <h1>Infinite <span class="hl">Sequences &amp; Series</span></h1>
+      <p>ลำดับและอนุกรมอนันต์ — Convergence Tests, Power Series, Taylor &amp; Maclaurin Series</p>
+    </div>
+    <div class="section-grid">
+      <div class="section-card" onclick="showSec('sequences')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="3" cy="10" r="1.5"/><circle cx="7" cy="7" r="1.5"/><circle cx="11" cy="5.5" r="1.5"/><circle cx="15" cy="4.5" r="1.5"/><circle cx="18" cy="4" r="1.5"/><path d="M3 10 Q10 4 18 4" opacity=".3"/></svg></div>
+        <h3>9.1 Sequences</h3><p>ลำดับ Convergence &amp; Divergence</p>
+      </div>
+      <div class="section-card" onclick="showSec('series')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 16 L3 12 L7 8 L11 10 L15 6 L17 4"/><path d="M3 4 H17" stroke-dasharray="2 2" opacity=".35"/></svg></div>
+        <h3>9.2 Infinite Series</h3><p>Partial Sums &amp; Geometric Series</p>
+      </div>
+      <div class="section-card" onclick="showSec('tests')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 4 H16 V16 H4 Z"/><path d="M7 8 L9 10 L13 6"/></svg></div>
+        <h3>9.3 Convergence Tests</h3><p>Ratio, Root, Comparison, Integral Test</p>
+      </div>
+      <div class="section-card" onclick="showSec('powerseries')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 10 Q5 4 10 4 Q15 4 18 10"/><path d="M4 10 Q7 6 10 6 Q13 6 16 10" opacity=".6"/><path d="M6 10 Q8 8 10 8 Q12 8 14 10" opacity=".35"/></svg></div>
+        <h3>9.4 Power Series</h3><p>Radius of Convergence, Interval of Convergence</p>
+      </div>
+      <div class="section-card" onclick="showSec('taylor')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 10 Q5 4 10 4 Q15 4 18 10"/><path d="M3 10 Q6 6 10 7 Q14 8 17 10" opacity=".7" stroke-dasharray="3 2"/></svg></div>
+        <h3>9.5 Taylor &amp; Maclaurin</h3><p>Polynomial Approximation ของ Functions</p>
+      </div>
+      <div class="section-card" onclick="showSec('quiz')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="10" cy="10" r="8" opacity=".35"/><path d="M8 8 Q8 5.5 10 5.5 Q12 5.5 12 7.5 Q12 9.5 10 10 L10 11.5"/><circle cx="10" cy="14" r=".8" fill="currentColor" stroke="none"/></svg></div>
+        <h3>แบบฝึกหัด</h3><p>ทดสอบความเข้าใจ 8 ข้อ</p>
+      </div>
+    </div>
+
+    <div class="cs" style="margin-top:1.8rem">
+      <h2>แนวคิดหลัก</h2>
+      <div class="grid2">
+        <div class="def-box"><div class="lbl">Sequence vs Series</div>
+          <p style="font-size:.84rem;line-height:2"><strong style="color:var(--yellow)">Sequence</strong>: a₁, a₂, a₃, … — ลำดับของตัวเลข<br>
+          <strong style="color:var(--green)">Series</strong>: S = a₁ + a₂ + a₃ + … = &Sigma;aₙ<br>
+          Series = limit of partial sums Sₙ = &Sigma;ₖ₌₁ⁿ aₖ</p>
+        </div>
+        <div class="def-box"><div class="lbl">Power &amp; Taylor Series</div>
+          <p style="font-size:.84rem;line-height:2"><strong style="color:var(--blue)">Power Series</strong>: &Sigma;cₙ(x&minus;a)ⁿ<br>
+          <strong style="color:var(--green)">Taylor</strong>: f(x) = &Sigma;f⁽ⁿ⁾(a)/n! &middot; (x&minus;a)ⁿ<br>
+          <strong style="color:var(--green)">Maclaurin</strong>: Taylor ที่ a=0</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs">
+      <h2>ภาพรวม — Partial Sums ของ Geometric Series เข้าหา Limit</h2>
+      <div class="canvas-wrap"><canvas id="overviewCanvas" width="760" height="220"></canvas></div>
+    </div>
+
+    <div class="page-nav">
+      <a class="page-nav-btn" href="ch8.html">&#x2190; Chapter VIII: Techniques of Integration</a>
+      <span class="page-nav-ctr">1 / 7</span>
+      <button class="page-nav-btn" onclick="showSec('sequences')">9.1 Sequences &#x2192;</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ 9.1 SEQUENCES ══ -->
+  <div id="page-sequences" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>9.1 Sequences</h2>
+      <div class="thm-box">
+        <div class="lbl">นิยาม — Convergence of a Sequence</div>
+        <div class="formula">lim<sub>n&rarr;&infin;</sub> a<sub>n</sub> = L</div>
+        <p style="font-size:.84rem;color:#94a3b8;margin-top:.3rem">ถ้า limit L มีค่า finite → Sequence <strong style="color:var(--green)">Converges</strong><br>
+        ถ้า limit ไม่มีค่า หรือ &plusmn;&infin; → Sequence <strong style="color:var(--red)">Diverges</strong></p>
+      </div>
+
+      <div class="grid2" style="margin-top:.7rem">
+        <div class="ex-box"><div class="lbl">Squeeze Theorem for Sequences</div>
+          <p style="font-size:.83rem;line-height:1.9">ถ้า aₙ ≤ bₙ ≤ cₙ สำหรับ n ≥ N<br>
+          และ lim aₙ = lim cₙ = L<br>
+          แล้ว <strong style="color:var(--green)">lim bₙ = L</strong></p>
+        </div>
+        <div class="ex-box"><div class="lbl">Monotone Convergence Theorem</div>
+          <p style="font-size:.83rem;line-height:1.9">Sequence ที่ Bounded และ Monotone<br>
+          (เพิ่มขึ้นหรือลดลงเสมอ) ต้อง Converge<br>
+          → ไม่จำเป็นต้องหา limit ก่อน</p>
+        </div>
+      </div>
+
+      <div class="canvas-wrap" style="margin-top:1rem">
+        <h4>Sequence Visualizer — เลือกลำดับ, เลื่อน N เพื่อดู Convergence</h4>
+        <canvas id="seqCanvas" width="760" height="300"></canvas>
+        <div class="controls">
+          <button class="btn on" id="bSeq0" onclick="setSeq(0)">1/n</button>
+          <button class="btn"    id="bSeq1" onclick="setSeq(1)">(&#x2212;1)&#x207F;/n</button>
+          <button class="btn"    id="bSeq2" onclick="setSeq(2)">n/(n+1)</button>
+          <button class="btn"    id="bSeq3" onclick="setSeq(3)">r&#x207F; (|r|&lt;1)</button>
+          <button class="btn"    id="bSeq4" onclick="setSeq(4)">n! / n&#x207F; (Div.)</button>
+          <span class="ctrl-label" style="margin-left:.6rem">N =</span>
+          <input type="range" id="seqN" min="5" max="40" value="20" oninput="redrawSeq()">
+          <span id="seqNVal" style="color:var(--yellow);font-family:monospace;min-width:30px"></span>
+        </div>
+        <div id="seqInfo" style="text-align:center;font-family:monospace;font-size:.82rem;color:var(--green);margin-top:.4rem"></div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('overview')">&#x2190; ภาพรวม</button>
+      <span class="page-nav-ctr">2 / 7</span>
+      <button class="page-nav-btn" onclick="showSec('series')">9.2 Infinite Series &#x2192;</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ 9.2 SERIES ══ -->
+  <div id="page-series" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>9.2 Infinite Series</h2>
+      <div class="thm-box">
+        <div class="lbl">นิยาม — Infinite Series</div>
+        <div class="formula">&Sigma;<sub>n=1</sub><sup>&infin;</sup> a<sub>n</sub> = lim<sub>N&rarr;&infin;</sub> S<sub>N</sub> = lim<sub>N&rarr;&infin;</sub> &Sigma;<sub>n=1</sub><sup>N</sup> a<sub>n</sub></div>
+        <p style="font-size:.84rem;color:#94a3b8;margin-top:.3rem">Converges ถ้า limit ของ Partial Sums มีค่า finite · Diverges ถ้าไม่มี</p>
+      </div>
+
+      <div class="grid2" style="margin-top:.7rem">
+        <div class="thm-box"><div class="lbl">Geometric Series</div>
+          <div class="formula" style="font-size:.95rem">&Sigma; ar&#x207F; = a/(1&minus;r) &nbsp; (|r| &lt; 1)</div>
+          <p style="font-size:.83rem;color:#94a3b8;margin-top:.3rem">|r| ≥ 1 → Diverges &nbsp;·&nbsp; r คือ common ratio</p>
+        </div>
+        <div class="thm-box"><div class="lbl">Test for Divergence</div>
+          <p style="font-size:.83rem;line-height:1.9">ถ้า lim aₙ &ne; 0 → Series <strong style="color:var(--red)">Diverges</strong><br>
+          แต่ lim aₙ = 0 <strong style="color:var(--yellow)">ไม่ได้รับประกัน</strong> Convergence<br>
+          (เช่น Harmonic Series &Sigma;1/n Diverges)</p>
+        </div>
+      </div>
+
+      <div class="grid2" style="margin-top:.7rem">
+        <div class="ex-box"><div class="lbl">Telescoping Series</div>
+          <p style="font-size:.83rem;line-height:1.9">&Sigma; [1/n − 1/(n+1)] = 1 − lim<sub>n→∞</sub> 1/(n+1) = <strong style="color:var(--green)">1</strong><br>
+          ตัวกลางหักล้างกันหมด เหลือแต่ต้นและท้าย</p>
+        </div>
+        <div class="ex-box"><div class="lbl">p-Series</div>
+          <p style="font-size:.83rem;line-height:1.9">&Sigma; 1/nᵖ : Converges iff <strong style="color:var(--yellow)">p &gt; 1</strong><br>
+          p=2: &Sigma;1/n² = π²/6 (Basel Problem)<br>
+          p=1: Harmonic Series → Diverges</p>
+        </div>
+      </div>
+
+      <div class="canvas-wrap" style="margin-top:1rem">
+        <h4>Partial Sums S<sub>N</sub> — เลือก Series &amp; เลื่อน N</h4>
+        <canvas id="seriesCanvas" width="760" height="300"></canvas>
+        <div class="controls">
+          <button class="btn on" id="bSer0" onclick="setSeries(0)">Geometric r=1/2</button>
+          <button class="btn"    id="bSer1" onclick="setSeries(1)">Geometric r=0.9</button>
+          <button class="btn"    id="bSer2" onclick="setSeries(2)">&Sigma; 1/n&sup2; (Conv.)</button>
+          <button class="btn"    id="bSer3" onclick="setSeries(3)">&Sigma; 1/n (Div.)</button>
+          <button class="btn"    id="bSer4" onclick="setSeries(4)">&Sigma; (&minus;1)&#x207F;/n (Cond.)</button>
+          <span class="ctrl-label" style="margin-left:.6rem">N =</span>
+          <input type="range" id="seriesN" min="2" max="60" value="20" oninput="redrawSeries()">
+          <span id="seriesNVal" style="color:var(--yellow);font-family:monospace;min-width:30px"></span>
+        </div>
+        <div id="seriesInfo" style="text-align:center;font-family:monospace;font-size:.82rem;color:var(--green);margin-top:.4rem"></div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('sequences')">&#x2190; 9.1 Sequences</button>
+      <span class="page-nav-ctr">3 / 7</span>
+      <button class="page-nav-btn" onclick="showSec('tests')">9.3 Convergence Tests &#x2192;</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ 9.3 TESTS ══ -->
+  <div id="page-tests" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>9.3 Convergence Tests</h2>
+
+      <div style="overflow-x:auto">
+        <table style="width:100%;border-collapse:collapse;font-size:.82rem">
+          <thead><tr style="background:#111827;color:#94a3b8">
+            <th style="padding:.5rem .8rem;border-bottom:1px solid var(--border);text-align:left">Test</th>
+            <th style="padding:.5rem .8rem;border-bottom:1px solid var(--border);text-align:left">Condition</th>
+            <th style="padding:.5rem .8rem;border-bottom:1px solid var(--border);text-align:left">Conclusion</th>
+          </tr></thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:.4rem .8rem;color:var(--yellow);font-weight:700">Divergence Test</td>
+              <td style="padding:.4rem .8rem">lim aₙ &ne; 0</td>
+              <td style="padding:.4rem .8rem;color:var(--red)">Diverges</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:.4rem .8rem;color:var(--blue);font-weight:700">Integral Test</td>
+              <td style="padding:.4rem .8rem">f(x) ≥ 0, decreasing. ∫₁^∞ f dx</td>
+              <td style="padding:.4rem .8rem">Same convergence as series</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:.4rem .8rem;color:var(--green);font-weight:700">Comparison Test</td>
+              <td style="padding:.4rem .8rem">0 ≤ aₙ ≤ bₙ</td>
+              <td style="padding:.4rem .8rem">∑bₙ conv. → ∑aₙ conv.<br>∑aₙ div. → ∑bₙ div.</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:.4rem .8rem;color:var(--green);font-weight:700">Limit Comparison</td>
+              <td style="padding:.4rem .8rem">lim aₙ/bₙ = L (0&lt;L&lt;∞)</td>
+              <td style="padding:.4rem .8rem">∑aₙ &amp; ∑bₙ same behavior</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:.4rem .8rem;color:var(--orange);font-weight:700">Ratio Test</td>
+              <td style="padding:.4rem .8rem">L = lim |aₙ₊₁/aₙ|</td>
+              <td style="padding:.4rem .8rem">L&lt;1 conv · L&gt;1 div · L=1 inconclusive</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:.4rem .8rem;color:var(--orange);font-weight:700">Root Test</td>
+              <td style="padding:.4rem .8rem">L = lim |aₙ|^(1/n)</td>
+              <td style="padding:.4rem .8rem">L&lt;1 conv · L&gt;1 div · L=1 inconclusive</td>
+            </tr>
+            <tr>
+              <td style="padding:.4rem .8rem;color:var(--purple);font-weight:700">Alternating Series</td>
+              <td style="padding:.4rem .8rem">bₙ → 0, bₙ decreasing</td>
+              <td style="padding:.4rem .8rem;color:var(--green)">∑(−1)ⁿbₙ Converges</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="canvas-wrap" style="margin-top:1rem">
+        <h4>Convergence Tests — ตัวอย่างและ Visual</h4>
+        <canvas id="testsCanvas" width="760" height="310"></canvas>
+        <div class="controls">
+          <button class="btn on" id="bTst0" onclick="setTest(0)">Ratio Test: &Sigma; n/2&#x207F;</button>
+          <button class="btn"    id="bTst1" onclick="setTest(1)">Root Test: &Sigma; (2/3)&#x207F;</button>
+          <button class="btn"    id="bTst2" onclick="setTest(2)">Comparison: &Sigma; 1/(n&sup2;+1)</button>
+          <button class="btn"    id="bTst3" onclick="setTest(3)">Alt. Series: &Sigma; (&minus;1)&#x207F;/n</button>
+        </div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('series')">&#x2190; 9.2 Infinite Series</button>
+      <span class="page-nav-ctr">4 / 7</span>
+      <button class="page-nav-btn" onclick="showSec('powerseries')">9.4 Power Series &#x2192;</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ 9.4 POWER SERIES ══ -->
+  <div id="page-powerseries" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>9.4 Power Series</h2>
+      <div class="thm-box">
+        <div class="lbl">นิยาม — Power Series</div>
+        <div class="formula">&Sigma;<sub>n=0</sub><sup>&infin;</sup> c<sub>n</sub>(x&minus;a)&#x207F; = c₀ + c₁(x&minus;a) + c₂(x&minus;a)&sup2; + &hellip;</div>
+        <p style="font-size:.84rem;color:#94a3b8;margin-top:.3rem">a = center · Converges สำหรับ |x&minus;a| &lt; R (Radius of Convergence)</p>
+      </div>
+
+      <div class="grid2" style="margin-top:.7rem">
+        <div class="thm-box"><div class="lbl">Radius of Convergence R</div>
+          <p style="font-size:.83rem;line-height:1.9">หา R จาก <strong style="color:var(--yellow)">Ratio Test</strong>:<br>
+          R = lim |cₙ/cₙ₊₁| (ถ้า limit นี้มีค่า)<br>
+          R = 0: Converges เฉพาะที่ x=a<br>
+          R = ∞: Converges ทุก x</p>
+        </div>
+        <div class="thm-box"><div class="lbl">Operations on Power Series</div>
+          <p style="font-size:.83rem;line-height:1.9">Differentiate term-by-term ได้ใน |x&minus;a|&lt;R<br>
+          Integrate term-by-term ได้ใน |x&minus;a|&lt;R<br>
+          Multiply &amp; divide สองอนุกรมได้</p>
+        </div>
+      </div>
+
+      <div class="grid2" style="margin-top:.7rem">
+        <div class="ex-box"><div class="lbl">Geometric Power Series</div>
+          <p style="font-size:.83rem;line-height:1.9">1/(1&minus;x) = &Sigma; xⁿ &nbsp; |x| &lt; 1<br>
+          1/(1+x) = &Sigma; (&minus;1)ⁿxⁿ &nbsp; |x| &lt; 1<br>
+          ln(1+x) = &Sigma; (&minus;1)ⁿ⁺¹ xⁿ/n &nbsp; |x| &lt; 1</p>
+        </div>
+        <div class="ex-box"><div class="lbl">ตัวอย่าง — หา R</div>
+          <p style="font-size:.83rem;line-height:1.9">&Sigma; xⁿ/n! : R = lim (n+1) = &infin;<br>
+          &Sigma; n!xⁿ : R = lim 1/(n+1) = 0<br>
+          &Sigma; xⁿ/n : R = 1 (IOC: [&minus;1,1))</p>
+        </div>
+      </div>
+
+      <div class="canvas-wrap" style="margin-top:1rem">
+        <h4>Power Series Approximation — N terms ของ &Sigma; cₙxⁿ</h4>
+        <canvas id="powerCanvas" width="760" height="300"></canvas>
+        <div class="controls">
+          <button class="btn on" id="bPow0" onclick="setPower(0)">1/(1&minus;x) = &Sigma;xⁿ</button>
+          <button class="btn"    id="bPow1" onclick="setPower(1)">ln(1+x) = &Sigma;(&minus;1)ⁿ⁺¹xⁿ/n</button>
+          <button class="btn"    id="bPow2" onclick="setPower(2)">arctan(x) = &Sigma;(&minus;1)ⁿx^(2n+1)/(2n+1)</button>
+          <span class="ctrl-label" style="margin-left:.6rem">N =</span>
+          <input type="range" id="powerN" min="1" max="20" value="5" oninput="redrawPower()">
+          <span id="powerNVal" style="color:var(--yellow);font-family:monospace;min-width:30px"></span>
+        </div>
+        <div id="powerInfo" style="text-align:center;font-family:monospace;font-size:.82rem;color:var(--green);margin-top:.4rem"></div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('tests')">&#x2190; 9.3 Convergence Tests</button>
+      <span class="page-nav-ctr">5 / 7</span>
+      <button class="page-nav-btn" onclick="showSec('taylor')">9.5 Taylor &amp; Maclaurin &#x2192;</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ 9.5 TAYLOR ══ -->
+  <div id="page-taylor" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>9.5 Taylor and Maclaurin Series</h2>
+      <div class="thm-box">
+        <div class="lbl">Taylor Series ของ f รอบจุด a</div>
+        <div class="formula">f(x) = &Sigma;<sub>n=0</sub><sup>&infin;</sup> f<sup>(n)</sup>(a)/n! &middot; (x&minus;a)&#x207F;</div>
+        <p style="font-size:.84rem;color:#94a3b8;margin-top:.3rem"><strong style="color:var(--yellow)">Maclaurin Series</strong> = Taylor ที่ a = 0</p>
+      </div>
+
+      <h3 style="margin-top:.8rem">Maclaurin Series สำคัญ</h3>
+      <div class="grid2">
+        <div class="ex-box"><div class="lbl">eˣ = &Sigma; xⁿ/n!&nbsp; (R=∞)</div>
+          <p style="font-size:.83rem;line-height:1.8">= 1 + x + x²/2! + x³/3! + x⁴/4! + …</p>
+        </div>
+        <div class="ex-box"><div class="lbl">sin x = &Sigma; (&minus;1)ⁿ x^(2n+1)/(2n+1)!&nbsp; (R=∞)</div>
+          <p style="font-size:.83rem;line-height:1.8">= x &minus; x³/6 + x⁵/120 &minus; x⁷/5040 + …</p>
+        </div>
+        <div class="ex-box"><div class="lbl">cos x = &Sigma; (&minus;1)ⁿ x^(2n)/(2n)!&nbsp; (R=∞)</div>
+          <p style="font-size:.83rem;line-height:1.8">= 1 &minus; x²/2 + x⁴/24 &minus; x⁶/720 + …</p>
+        </div>
+        <div class="ex-box"><div class="lbl">1/(1&minus;x) = &Sigma; xⁿ&nbsp; (|x|&lt;1)</div>
+          <p style="font-size:.83rem;line-height:1.8">= 1 + x + x² + x³ + x⁴ + …</p>
+        </div>
+      </div>
+
+      <div class="thm-box" style="margin-top:.8rem">
+        <div class="lbl">Taylor Remainder (Error Bound)</div>
+        <div class="formula" style="font-size:.92rem">|Rₙ(x)| ≤ M|x&minus;a|<sup>n+1</sup> / (n+1)!</div>
+        <p style="font-size:.83rem;color:#94a3b8;margin-top:.3rem">M = max |f^(n+1)| บน interval ที่สนใจ</p>
+      </div>
+
+      <div class="canvas-wrap" style="margin-top:1rem">
+        <h4>Taylor Polynomial — เพิ่ม degree N เพื่อดู Approximation ดีขึ้น</h4>
+        <canvas id="taylorCanvas" width="760" height="320"></canvas>
+        <div class="controls">
+          <button class="btn on" id="bTay0" onclick="setTaylor(0)">sin(x)</button>
+          <button class="btn"    id="bTay1" onclick="setTaylor(1)">cos(x)</button>
+          <button class="btn"    id="bTay2" onclick="setTaylor(2)">e&#x02E3;</button>
+          <button class="btn"    id="bTay3" onclick="setTaylor(3)">ln(1+x)</button>
+          <span class="ctrl-label" style="margin-left:.6rem">Degree N =</span>
+          <input type="range" id="taylorN" min="1" max="12" value="3" oninput="redrawTaylor()">
+          <span id="taylorNVal" style="color:var(--yellow);font-family:monospace;min-width:30px"></span>
+        </div>
+        <div id="taylorInfo" style="text-align:center;font-family:monospace;font-size:.82rem;color:var(--green);margin-top:.4rem"></div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('powerseries')">&#x2190; 9.4 Power Series</button>
+      <span class="page-nav-ctr">6 / 7</span>
+      <button class="page-nav-btn" onclick="showSec('quiz')">แบบฝึกหัด &#x2192;</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ QUIZ ══ -->
+  <div id="page-quiz" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>แบบฝึกหัด — Chapter 9: Infinite Sequences &amp; Series</h2>
+      <p style="color:#94a3b8;margin-bottom:1.2rem">เลือกคำตอบที่ถูกต้อง — ระบบจะแสดงคำอธิบายทันที</p>
+      <div id="quizContainer"></div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('taylor')">&#x2190; 9.5 Taylor &amp; Maclaurin</button>
+      <span class="page-nav-ctr">7 / 7</span>
+      <a class="page-nav-btn" href="ch10.html">Chapter X: Parametric &amp; Polar &#x2192;</a>
+    </div>
+  </div>
+  </div>
+
+</main>
+<script src="sidebar.js"></script>
+<script>
+// ══ CANVAS HELPERS ══
+// Theme-aware palette (see theme.js) — let + applyCanvasTheme() so colors follow
+// the light/dark toggle; draw functions read the live bindings.
+let BG,GRID,AXIS,BLUE,GREEN,YELLOW,RED,PURPLE,MUTED,ORANGE,SURFACE,ON_SURFACE;
+function applyCanvasTheme(){ const t=window.CanvasTheme.get();
+  BG=t.BG;GRID=t.GRID;AXIS=t.AXIS;BLUE=t.BLUE;GREEN=t.GREEN;YELLOW=t.YELLOW;
+  RED=t.RED;PURPLE=t.PURPLE;MUTED=t.MUTED;ORANGE=t.ORANGE;SURFACE=t.SURFACE;ON_SURFACE=t.ON_SURFACE; }
+applyCanvasTheme();
+window._redrawCanvases=function(){ applyCanvasTheme(); initSec(window.CURRENT_SEC||'overview'); };
+
+function setupCanvas(id,W,H){
+  const cv=document.getElementById(id);if(!cv)return null;
+  const dpr=Math.min(window.devicePixelRatio||1,2);
+  cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+'px';cv.style.height=H+'px';
+  const ctx=cv.getContext('2d');ctx.scale(dpr,dpr);return{ctx,W,H};
+}
+function drawGrid(ctx,W,H,xMin,xMax,yMin,yMax){
+  ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);
+  const toX=x=>(x-xMin)/(xMax-xMin)*W, toY=y=>H-(y-yMin)/(yMax-yMin)*H;
+  const xs=Math.abs(xMax-xMin)>15?5:Math.abs(xMax-xMin)>8?2:1;
+  const ys=Math.abs(yMax-yMin)>15?5:Math.abs(yMax-yMin)>8?2:1;
+  ctx.strokeStyle=GRID;ctx.lineWidth=.5;
+  for(let x=Math.ceil(xMin/xs)*xs;x<=xMax;x+=xs){ctx.beginPath();ctx.moveTo(toX(x),0);ctx.lineTo(toX(x),H);ctx.stroke();}
+  for(let y=Math.ceil(yMin/ys)*ys;y<=yMax;y+=ys){ctx.beginPath();ctx.moveTo(0,toY(y));ctx.lineTo(W,toY(y));ctx.stroke();}
+  ctx.strokeStyle=AXIS;ctx.lineWidth=1.5;
+  if(yMin<=0&&yMax>=0){ctx.beginPath();ctx.moveTo(0,toY(0));ctx.lineTo(W,toY(0));ctx.stroke();}
+  if(xMin<=0&&xMax>=0){ctx.beginPath();ctx.moveTo(toX(0),0);ctx.lineTo(toX(0),H);ctx.stroke();}
+  ctx.fillStyle=MUTED;ctx.font='10px monospace';ctx.textAlign='center';
+  for(let x=Math.ceil(xMin/xs)*xs;x<=xMax;x+=xs)if(x!==0)ctx.fillText(x,toX(x),toY(0)+13);
+  ctx.textAlign='right';
+  for(let y=Math.ceil(yMin/ys)*ys;y<=yMax;y+=ys)if(y!==0)ctx.fillText(y.toFixed(1),toX(0)-3,toY(y)+4);
+  return{toX,toY};
+}
+function plotFn(ctx,fn,xMin,xMax,W,H,yMin,yMax,col,lw=2){
+  const toX=x=>(x-xMin)/(xMax-xMin)*W, toY=y=>H-(y-yMin)/(yMax-yMin)*H;
+  ctx.strokeStyle=col;ctx.lineWidth=lw;ctx.beginPath();let ok=false;
+  for(let i=0;i<=W*2;i++){
+    const x=xMin+i/(W*2)*(xMax-xMin);let y;
+    try{y=fn(x);}catch{ok=false;continue;}
+    if(!isFinite(y)||Math.abs(y)>1e6){ok=false;continue;}
+    const px=toX(x),py=toY(y);
+    if(!ok){ctx.moveTo(px,py);ok=true;}else ctx.lineTo(px,py);
+  }ctx.stroke();
+}
+function dot(ctx,x,y,r,col){ctx.beginPath();ctx.arc(x,y,r,0,2*Math.PI);ctx.fillStyle=col;ctx.fill();}
+function lbl(ctx,text,x,y,col,align='center',sz=11){
+  ctx.fillStyle=col;ctx.font=sz+'px monospace';ctx.textAlign=align;ctx.fillText(text,x,y);
+}
+function dashLine(ctx,x1,y1,x2,y2,col,dash=[5,4]){
+  ctx.strokeStyle=col;ctx.lineWidth=1.2;ctx.setLineDash(dash);
+  ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();ctx.setLineDash([]);
+}
+
+// ══ NAVIGATION ══
+const CRUMBS={
+  overview:'Infinite Sequences & Series',sequences:'9.1 Sequences',
+  series:'9.2 Infinite Series',tests:'9.3 Convergence Tests',
+  powerseries:'9.4 Power Series',taylor:'9.5 Taylor & Maclaurin Series',quiz:'แบบฝึกหัด'
+};
+window.showSec=function(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.getElementById('crumbSec').textContent=CRUMBS[id]||id;
+  window.CURRENT_SEC=id;
+  if(window.setSidebarSec)setSidebarSec(id);
+  document.getElementById('main').scrollTop=0;
+  setTimeout(()=>initSec(id),60);
+};
+function initSec(id){
+  if(id==='overview')    drawOverview();
+  if(id==='sequences')   setSeq(0);
+  if(id==='series')      setSeries(0);
+  if(id==='tests')       setTest(0);
+  if(id==='powerseries') setPower(0);
+  if(id==='taylor')      setTaylor(0);
+  if(id==='quiz')        initQuiz();
+}
+
+// ══ OVERVIEW ══
+function drawOverview(){
+  const c=setupCanvas('overviewCanvas',760,220);if(!c)return;
+  const{ctx,W,H}=c;
+  ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);
+  // Geometric series partial sums for r=0.5, a=1
+  const r=0.5, limit=1/(1-r);
+  const N=18;
+  const barW=Math.floor((W-80)/N-4);
+  const maxH=H-50;
+  let sum=0;
+  const cols=[GREEN,BLUE,YELLOW,ORANGE,PURPLE];
+  for(let n=0;n<N;n++){
+    const an=Math.pow(r,n);
+    const barH=an*maxH*0.85;
+    const bx=50+n*(barW+4);
+    ctx.fillStyle=cols[n%cols.length]+'55';
+    ctx.fillRect(bx,H-30-barH,barW,barH);
+    ctx.strokeStyle=cols[n%cols.length];ctx.lineWidth=1;
+    ctx.strokeRect(bx,H-30-barH,barW,barH);
+    sum+=an;
+    const sy=H-30-(sum/limit)*maxH*0.85;
+    if(n>0)dot(ctx,bx+barW/2,sy,3,YELLOW);
+  }
+  // partial sum line
+  let s2=0;
+  ctx.strokeStyle=YELLOW;ctx.lineWidth=2;ctx.beginPath();
+  for(let n=0;n<N;n++){
+    s2+=Math.pow(r,n);
+    const bx=50+n*(barW+4)+barW/2;
+    const sy=H-30-(s2/limit)*maxH*0.85;
+    if(n===0)ctx.moveTo(bx,sy);else ctx.lineTo(bx,sy);
+  }ctx.stroke();
+  // limit line
+  dashLine(ctx,40,H-30-maxH*0.85,W-10,H-30-maxH*0.85,GREEN+'aa');
+  lbl(ctx,'Limit = a/(1-r) = '+limit.toFixed(2),W-12,H-30-maxH*0.85-6,GREEN,'right',10);
+  lbl(ctx,'Geometric Series: r=0.5 — Bars = aₙ, Yellow line = Partial Sums Sₙ',W/2,H-6,MUTED,'center',10);
+}
+
+// ══ 9.1 SEQUENCES ══
+const seqDefs=[
+  {fn:n=>1/n,           lbl:'aₙ = 1/n',          limit:0,     conv:true,  yMin:-0.2,yMax:1.2},
+  {fn:n=>Math.pow(-1,n)/n, lbl:'aₙ = (−1)ⁿ/n',  limit:0,     conv:true,  yMin:-1.2,yMax:1.2},
+  {fn:n=>n/(n+1),       lbl:'aₙ = n/(n+1)',       limit:1,     conv:true,  yMin:0,   yMax:1.3},
+  {fn:n=>Math.pow(0.7,n), lbl:'aₙ = (0.7)ⁿ',     limit:0,     conv:true,  yMin:-0.1,yMax:1.2},
+  {fn:n=>n/Math.pow(2,n), lbl:'aₙ = n/2ⁿ → 0',   limit:0,     conv:true,  yMin:-0.05,yMax:0.35},
+];
+let seqIdx=0;
+function setSeq(i){
+  seqIdx=i;
+  document.querySelectorAll('[id^=bSeq]').forEach((b,j)=>b.classList.toggle('on',j===i));
+  redrawSeq();
+}
+function redrawSeq(){
+  const d=seqDefs[seqIdx];
+  const N=parseInt(document.getElementById('seqN').value);
+  document.getElementById('seqNVal').textContent=N;
+  const c=setupCanvas('seqCanvas',760,300);if(!c)return;
+  const{ctx,W,H}=c;
+  const{toX,toY}=drawGrid(ctx,W,H,0,N+1,d.yMin,d.yMax);
+
+  // draw convergence band
+  if(d.conv&&isFinite(d.limit)){
+    const eps=Math.abs(d.yMax-d.yMin)*0.05;
+    ctx.fillStyle=GREEN+'12';
+    ctx.fillRect(0,toY(d.limit+eps),W,toY(d.limit-eps)-toY(d.limit+eps));
+    dashLine(ctx,0,toY(d.limit),W,toY(d.limit),GREEN+'aa');
+    lbl(ctx,'L='+d.limit,W-5,toY(d.limit)-7,GREEN,'right',10);
+  }
+
+  // draw sequence terms
+  const terms=[];
+  for(let n=1;n<=N;n++){const v=d.fn(n);if(isFinite(v))terms.push({n,v});}
+
+  // connect with faded line
+  ctx.strokeStyle=BLUE+'44';ctx.lineWidth=1;ctx.beginPath();
+  terms.forEach((t,i)=>{if(i===0)ctx.moveTo(toX(t.n),toY(t.v));else ctx.lineTo(toX(t.n),toY(t.v));});
+  ctx.stroke();
+
+  // dots with color coding (close to limit = green)
+  terms.forEach(t=>{
+    const dist=d.conv?Math.abs(t.v-d.limit):0;
+    const maxDist=Math.abs(d.yMax-d.yMin);
+    const ratio=Math.min(1,dist/maxDist*3);
+    const col=`rgb(${Math.round(ratio*228+(1-ratio)*0)},${Math.round(ratio*69+(1-ratio)*212)},${Math.round(ratio*96+(1-ratio)*170)})`;
+    dot(ctx,toX(t.n),toY(t.v),4,col);
+  });
+
+  const last=terms[terms.length-1];
+  lbl(ctx,d.lbl,10,18,BLUE,'left',12);
+  lbl(ctx,d.conv?'Converges to L='+d.limit:'Diverges',W-10,18,d.conv?GREEN:RED,'right',11);
+  document.getElementById('seqInfo').textContent=
+    'd.lbl: a₁='+d.fn(1).toFixed(4)+
+    ', a₅='+d.fn(5).toFixed(4)+
+    ', a'+N+'='+last.v.toFixed(6)+
+    (d.conv?' → L='+d.limit:' → ∞ (Diverges)');
+  document.getElementById('seqInfo').textContent=
+    d.lbl+': a₁='+d.fn(1).toFixed(4)+
+    ', a₁₀='+d.fn(10).toFixed(4)+
+    ', a'+N+'='+d.fn(N).toFixed(6)+
+    (d.conv?' → L='+d.limit:' → Diverges');
+}
+
+// ══ 9.2 SERIES ══
+const seriesDefs=[
+  {an:n=>Math.pow(0.5,n-1), limit:2,        lbl:'∑(0.5)ⁿ⁻¹, r=0.5 → S=2',      conv:true},
+  {an:n=>Math.pow(0.9,n-1), limit:10,       lbl:'∑(0.9)ⁿ⁻¹, r=0.9 → S=10',     conv:true},
+  {an:n=>1/(n*n),           limit:Math.PI*Math.PI/6, lbl:'∑1/n², S=π²/6≈1.645', conv:true},
+  {an:n=>1/n,               limit:Infinity, lbl:'∑1/n (Harmonic) → Diverges',   conv:false},
+  {an:n=>Math.pow(-1,n+1)/n,limit:Math.log(2), lbl:'∑(−1)ⁿ⁺¹/n → ln2≈0.693 (Cond.Conv.)', conv:true},
+];
+let serIdx=0;
+function setSeries(i){
+  serIdx=i;
+  document.querySelectorAll('[id^=bSer]').forEach((b,j)=>b.classList.toggle('on',j===i));
+  redrawSeries();
+}
+function redrawSeries(){
+  const d=seriesDefs[serIdx];
+  const N=parseInt(document.getElementById('seriesN').value);
+  document.getElementById('seriesNVal').textContent=N;
+  const partials=[];let s=0;
+  for(let n=1;n<=N;n++){s+=d.an(n);partials.push(s);}
+  const sN=partials[partials.length-1];
+  const yMax=Math.min(isFinite(d.limit)?d.limit*1.3:sN*1.2,sN*1.3+0.5);
+  const yMin=Math.min(0,sN-Math.abs(sN)*0.1);
+  const c=setupCanvas('seriesCanvas',760,300);if(!c)return;
+  const{ctx,W,H}=c;
+  const{toX,toY}=drawGrid(ctx,W,H,0,N+1,yMin,yMax);
+
+  if(d.conv&&isFinite(d.limit)){
+    dashLine(ctx,0,toY(d.limit),W,toY(d.limit),GREEN+'aa');
+    lbl(ctx,'S='+d.limit.toFixed(4),W-5,toY(d.limit)-7,GREEN,'right',10);
+  }
+
+  // bar chart for aₙ terms (faded, scaled)
+  const barW=Math.max(1,Math.floor(W/N)-2);
+  for(let n=1;n<=N;n++){
+    const an=d.an(n);
+    const bh=Math.abs(toY(0)-toY(Math.min(Math.abs(an),yMax)));
+    const bx=toX(n-0.4);
+    ctx.fillStyle=BLUE+'25';
+    ctx.fillRect(bx,an>=0?toY(an):toY(0),barW,bh);
+  }
+
+  // partial sums line
+  ctx.strokeStyle=YELLOW;ctx.lineWidth=2;ctx.beginPath();
+  partials.forEach((s2,i)=>{
+    const px=toX(i+1),py=toY(s2);
+    if(i===0)ctx.moveTo(px,py);else ctx.lineTo(px,py);
+  });ctx.stroke();
+  partials.forEach((s2,i)=>dot(ctx,toX(i+1),toY(s2),3,YELLOW));
+
+  lbl(ctx,d.lbl,10,18,d.conv?GREEN:RED,'left',11);
+  lbl(ctx,'S'+N+'='+sN.toFixed(4),W-10,18,YELLOW,'right',11);
+  document.getElementById('seriesInfo').textContent=
+    'S'+N+'='+sN.toFixed(6)+
+    (d.conv&&isFinite(d.limit)?' | Exact S='+d.limit.toFixed(6)+' | Error='+(Math.abs(sN-d.limit)).toFixed(6):' | '+( d.conv?'Converges':'Diverges → ∞'));
+}
+
+// ══ 9.3 TESTS ══
+const testDefs=[
+  {
+    title:'Ratio Test: ∑ n/2ⁿ',
+    lines:[
+      'aₙ = n/2ⁿ',
+      'aₙ₊₁/aₙ = [(n+1)/2ⁿ⁺¹] / [n/2ⁿ]',
+      '= (n+1)/(2n)',
+      'L = lim (n+1)/(2n) = 1/2 < 1',
+      '→ Series CONVERGES (Ratio Test)',
+    ],
+    an:n=>n/Math.pow(2,n), conv:true, col:GREEN,
+    extra:'∑n/2ⁿ = 2 (exact)'
+  },
+  {
+    title:'Root Test: ∑ (2/3)ⁿ',
+    lines:[
+      'aₙ = (2/3)ⁿ',
+      '|aₙ|^(1/n) = (2/3)^(n/n) = 2/3',
+      'L = lim (2/3) = 2/3 < 1',
+      '→ Series CONVERGES (Root Test)',
+      'Sum = 1/(1−2/3) = 3  (Geometric)',
+    ],
+    an:n=>Math.pow(2/3,n), conv:true, col:BLUE,
+    extra:'∑(2/3)ⁿ = 3 (geometric)'
+  },
+  {
+    title:'Comparison: ∑ 1/(n²+1)',
+    lines:[
+      '1/(n²+1) < 1/n²   for all n≥1',
+      '∑1/n² = π²/6 (Converges, p=2>1)',
+      'By Comparison Test:',
+      '∑1/(n²+1) also CONVERGES',
+      'Approx: S ≈ π²/6 − 1 ≈ 0.645',
+    ],
+    an:n=>1/(n*n+1), conv:true, col:YELLOW,
+    extra:'Compared with ∑1/n² (p-series, p=2)'
+  },
+  {
+    title:'Alternating Series Test: ∑ (−1)ⁿ/n',
+    lines:[
+      'bₙ = 1/n > 0 ✓',
+      'bₙ decreasing: 1/n > 1/(n+1) ✓',
+      'lim bₙ = lim 1/n = 0 ✓',
+      '→ CONVERGES (Alt. Series Test)',
+      'S = −ln(2) ≈ −0.693',
+    ],
+    an:n=>Math.pow(-1,n)/n, conv:true, col:PURPLE,
+    extra:'Conditionally convergent (∑1/n diverges)'
+  },
+];
+let testIdx=0;
+function setTest(i){
+  testIdx=i;
+  document.querySelectorAll('[id^=bTst]').forEach((b,j)=>b.classList.toggle('on',j===i));
+  const d=testDefs[i];
+  const c=setupCanvas('testsCanvas',760,310);if(!c)return;
+  const{ctx,W,H}=c;
+  ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);
+  const panelW=Math.floor(W*.5);
+
+  // Steps panel
+  ctx.fillStyle=d.col;ctx.font='bold 13px monospace';ctx.textAlign='center';
+  ctx.fillText(d.title,panelW/2,26);
+  d.lines.forEach((line,idx)=>{
+    const y=56+idx*44;
+    const isLast=idx===d.lines.length-1;
+    ctx.fillStyle=isLast?d.col+'22':SURFACE;
+    ctx.strokeStyle=d.col+(isLast?'99':'33');ctx.lineWidth=isLast?1.5:.8;
+    ctx.beginPath();ctx.rect(10,y-20,panelW-20,36);ctx.fill();ctx.stroke();
+    ctx.fillStyle=isLast?d.col:ON_SURFACE;
+    ctx.font=(isLast?'bold ':'')+'11.5px monospace';ctx.textAlign='left';
+    ctx.fillText(line,18,y+8);
+  });
+  lbl(ctx,d.extra,panelW/2,H-10,MUTED,'center',9);
+
+  // Right panel: partial sums plot
+  const N=30;const partials=[];let s=0;
+  for(let n=1;n<=N;n++){s+=d.an(n);partials.push({n,s});}
+  const sN=partials[N-1].s;
+  const allS=partials.map(p=>p.s);
+  const yMin2=Math.min(...allS)-0.1,yMax2=Math.max(...allS)+0.1;
+
+  ctx.save();ctx.translate(panelW+15,0);
+  const rW=W-panelW-25;
+  const{toX,toY}=drawGrid(ctx,rW,H,0,N+1,yMin2,yMax2);
+  ctx.strokeStyle=d.col;ctx.lineWidth=2;ctx.beginPath();
+  partials.forEach((p,i)=>{if(i===0)ctx.moveTo(toX(p.n),toY(p.s));else ctx.lineTo(toX(p.n),toY(p.s));});
+  ctx.stroke();
+  partials.forEach(p=>dot(ctx,toX(p.n),toY(p.s),3,d.col));
+  lbl(ctx,'Partial Sums S_N',rW/2,16,d.col,'center',10);
+  lbl(ctx,'S₃₀='+sN.toFixed(4),rW-5,H-8,YELLOW,'right',10);
+  ctx.restore();
+}
+
+// ══ 9.4 POWER SERIES ══
+const powerDefs=[
+  {
+    lbl:'1/(1−x) = Σxⁿ  [|x|<1]',
+    fn:x=>1/(1-x),
+    partial:(x,N)=>{let s=0;for(let n=0;n<=N;n++)s+=Math.pow(x,n);return s;},
+    xMin:-0.95,xMax:0.95,yMin:-1,yMax:12,
+    R:1,col:GREEN
+  },
+  {
+    lbl:'ln(1+x) = Σ(−1)ⁿ⁺¹xⁿ/n  [|x|≤1]',
+    fn:x=>Math.log(1+x),
+    partial:(x,N)=>{let s=0;for(let n=1;n<=N;n++)s+=Math.pow(-1,n+1)*Math.pow(x,n)/n;return s;},
+    xMin:-0.95,xMax:0.95,yMin:-2,yMax:1.5,
+    R:1,col:BLUE
+  },
+  {
+    lbl:'arctan(x) = Σ(−1)ⁿx^(2n+1)/(2n+1)  [|x|≤1]',
+    fn:x=>Math.atan(x),
+    partial:(x,N)=>{let s=0;for(let n=0;n<=N;n++)s+=Math.pow(-1,n)*Math.pow(x,2*n+1)/(2*n+1);return s;},
+    xMin:-1,xMax:1,yMin:-1.8,yMax:1.8,
+    R:1,col:YELLOW
+  },
+];
+let powIdx=0;
+function setPower(i){
+  powIdx=i;
+  document.querySelectorAll('[id^=bPow]').forEach((b,j)=>b.classList.toggle('on',j===i));
+  redrawPower();
+}
+function redrawPower(){
+  const d=powerDefs[powIdx];
+  const N=parseInt(document.getElementById('powerN').value);
+  document.getElementById('powerNVal').textContent=N;
+  const c=setupCanvas('powerCanvas',760,300);if(!c)return;
+  const{ctx,W,H}=c;
+  const{toX,toY}=drawGrid(ctx,W,H,d.xMin,d.xMax,d.yMin,d.yMax);
+
+  // shade |x| < R
+  const rPx=toX(d.R)-toX(0);
+  ctx.fillStyle=d.col+'0a';
+  ctx.fillRect(toX(-d.R),0,rPx*2,H);
+  dashLine(ctx,toX(-d.R),0,toX(-d.R),H,d.col+'55');
+  dashLine(ctx,toX(d.R),0,toX(d.R),H,d.col+'55');
+  lbl(ctx,'R='+d.R,toX(d.R)+4,14,d.col,'left',9);
+  lbl(ctx,'-R',toX(-d.R)-4,14,d.col,'right',9);
+
+  // true function
+  plotFn(ctx,d.fn,d.xMin,d.xMax,W,H,d.yMin,d.yMax,MUTED,1.5);
+  // partial sum
+  plotFn(ctx,x=>d.partial(x,N),d.xMin,d.xMax,W,H,d.yMin,d.yMax,d.col,2.2);
+
+  lbl(ctx,d.lbl,W/2,18,d.col,'center',11);
+  lbl(ctx,'Gray = true f(x) | Colored = N-term approximation',W/2,H-8,MUTED,'center',10);
+
+  // error at x=0.5
+  const x05=0.5;
+  try{
+    const err=Math.abs(d.fn(x05)-d.partial(x05,N));
+    document.getElementById('powerInfo').textContent=
+      'N='+N+' terms  |  f(0.5)='+d.fn(x05).toFixed(6)+
+      '  |  Approx='+d.partial(x05,N).toFixed(6)+
+      '  |  Error='+err.toFixed(6);
+  }catch(e){}
+}
+
+// ══ 9.5 TAYLOR ══
+const taylorDefs=[
+  {
+    lbl:'sin(x)',fn:x=>Math.sin(x),
+    coeff:(n)=>{
+      // non-zero terms: n=0→x, n=1→-x³/6, ...
+      // coeff for x^(2k+1) is (-1)^k / (2k+1)!
+      const terms=[];
+      for(let k=0;k<=n;k++){
+        const exp2=2*k+1;
+        let fact=1;for(let j=1;j<=exp2;j++)fact*=j;
+        terms.push({c:Math.pow(-1,k)/fact,p:exp2});
+      }
+      return x=>terms.reduce((s,t)=>s+t.c*Math.pow(x,t.p),0);
+    },
+    xMin:-2*Math.PI,xMax:2*Math.PI,yMin:-1.8,yMax:1.8,col:BLUE
+  },
+  {
+    lbl:'cos(x)',fn:x=>Math.cos(x),
+    coeff:(n)=>{
+      const terms=[];
+      for(let k=0;k<=n;k++){
+        const exp2=2*k;
+        let fact=1;for(let j=1;j<=exp2;j++)fact*=j;
+        terms.push({c:Math.pow(-1,k)/(fact||1),p:exp2});
+      }
+      return x=>terms.reduce((s,t)=>s+t.c*Math.pow(x,t.p),0);
+    },
+    xMin:-2*Math.PI,xMax:2*Math.PI,yMin:-1.8,yMax:1.8,col:GREEN
+  },
+  {
+    lbl:'eˣ',fn:x=>Math.exp(x),
+    coeff:(n)=>{
+      const terms=[];let fact=1;
+      for(let k=0;k<=n;k++){if(k>0)fact*=k;terms.push({c:1/fact,p:k});}
+      return x=>terms.reduce((s,t)=>s+t.c*Math.pow(x,t.p),0);
+    },
+    xMin:-3,xMax:3,yMin:-0.5,yMax:10,col:ORANGE
+  },
+  {
+    lbl:'ln(1+x)',fn:x=>Math.log(1+x),
+    coeff:(n)=>{
+      const terms=[];
+      for(let k=1;k<=n+1;k++)terms.push({c:Math.pow(-1,k+1)/k,p:k});
+      return x=>terms.reduce((s,t)=>s+t.c*Math.pow(x,t.p),0);
+    },
+    xMin:-0.95,xMax:1.5,yMin:-2,yMax:1.5,col:YELLOW
+  },
+];
+let tayIdx=0;
+function setTaylor(i){
+  tayIdx=i;
+  document.querySelectorAll('[id^=bTay]').forEach((b,j)=>b.classList.toggle('on',j===i));
+  redrawTaylor();
+}
+function redrawTaylor(){
+  const d=taylorDefs[tayIdx];
+  const N=parseInt(document.getElementById('taylorN').value);
+  document.getElementById('taylorNVal').textContent=N;
+  const tayFn=d.coeff(N);
+  const c=setupCanvas('taylorCanvas',760,320);if(!c)return;
+  const{ctx,W,H}=c;
+  const{toX,toY}=drawGrid(ctx,W,H,d.xMin,d.xMax,d.yMin,d.yMax);
+
+  // error shading between true and approx
+  const steps=W*2;
+  ctx.fillStyle=RED+'18';ctx.beginPath();let startedFill=false;
+  for(let i=0;i<=steps;i++){
+    const x=d.xMin+i/steps*(d.xMax-d.xMin);
+    const yt=Math.min(Math.max(d.fn(x),d.yMin),d.yMax);
+    const ya=Math.min(Math.max(tayFn(x),d.yMin),d.yMax);
+    if(!isFinite(yt)||!isFinite(ya)){startedFill=false;continue;}
+    if(!startedFill){ctx.moveTo(toX(x),toY(yt));startedFill=true;}
+    else ctx.lineTo(toX(x),toY(yt));
+  }
+  for(let i=steps;i>=0;i--){
+    const x=d.xMin+i/steps*(d.xMax-d.xMin);
+    const ya=Math.min(Math.max(tayFn(x),d.yMin),d.yMax);
+    if(!isFinite(ya))continue;
+    ctx.lineTo(toX(x),toY(ya));
+  }
+  ctx.closePath();ctx.fill();
+
+  // true function (gray)
+  plotFn(ctx,d.fn,d.xMin,d.xMax,W,H,d.yMin,d.yMax,MUTED,2);
+  // Taylor polynomial
+  plotFn(ctx,tayFn,d.xMin,d.xMax,W,H,d.yMin,d.yMax,d.col,2.2);
+
+  lbl(ctx,d.lbl,10,18,MUTED,'left',11);
+  lbl(ctx,'T'+N+'(x) = '+N+'-degree Taylor poly',W-10,18,d.col,'right',11);
+  lbl(ctx,'Red shading = error |f(x)−T(x)|  ·  Gray = true, Colored = Taylor poly',W/2,H-8,MUTED,'center',10);
+
+  // error at x=1
+  try{
+    const x1=d.xMin*0.7;
+    const err=Math.abs(d.fn(x1)-tayFn(x1));
+    document.getElementById('taylorInfo').textContent=
+      'N='+N+' | f('+x1.toFixed(2)+')='+d.fn(x1).toFixed(5)+
+      ' | T'+N+'('+x1.toFixed(2)+')='+tayFn(x1).toFixed(5)+
+      ' | Error='+err.toFixed(6);
+  }catch(e){document.getElementById('taylorInfo').textContent='N='+N+' terms';}
+}
+
+// ══ QUIZ ══
+const quizData=[
+  {q:'Geometric Series ∑arⁿ converges เมื่อ?',
+   opts:['|r| > 1','|r| = 1','|r| < 1','r > 0'],ans:2,
+   exp:'∑arⁿ = a/(1−r) เมื่อ |r| < 1 · diverges เมื่อ |r| ≥ 1'},
+  {q:'lim aₙ = 0 หมายความว่า ∑aₙ จะ?',
+   opts:['Converge เสมอ','Diverge เสมอ','ไม่สามารถสรุปได้','Converge to 0'],ans:2,
+   exp:'lim aₙ = 0 ไม่รับประกัน Convergence เช่น Harmonic Series ∑1/n → ∞ แต่ lim 1/n = 0'},
+  {q:'p-Series ∑1/nᵖ converges เมื่อ?',
+   opts:['p < 1','p = 1','p > 1','p > 0'],ans:2,
+   exp:'∑1/nᵖ converges iff p > 1 (Integral Test)'},
+  {q:'Ratio Test: ถ้า L = lim |aₙ₊₁/aₙ| < 1 แล้ว?',
+   opts:['Diverges','Converges Absolutely','Inconclusive','Converges Conditionally'],ans:1,
+   exp:'L < 1 → Converges Absolutely · L > 1 → Diverges · L = 1 → Inconclusive'},
+  {q:'Maclaurin Series ของ eˣ คือ?',
+   opts:['∑xⁿ','∑xⁿ/n','∑xⁿ/n!','∑(−1)ⁿxⁿ/n!'],ans:2,
+   exp:'eˣ = ∑xⁿ/n! = 1 + x + x²/2! + x³/3! + … (R=∞)'},
+  {q:'Taylor Series ของ sin(x) มี term อะไร?',
+   opts:['x − x²/2! + x⁴/4! − …','x − x³/3! + x⁵/5! − …','1 − x²/2! + x⁴/4! − …','x + x³/6 + x⁵/120 + …'],ans:1,
+   exp:'sin(x) = x − x³/3! + x⁵/5! − … (เฉพาะ odd powers, alternating signs)'},
+  {q:'Power Series ∑cₙxⁿ มี Radius of Convergence R = lim ?',
+   opts:['|cₙ/cₙ₊₁|','|cₙ₊₁/cₙ|','|cₙ|^(1/n)','n·|cₙ|'],ans:0,
+   exp:'R = lim |cₙ/cₙ₊₁| (จาก Ratio Test ที่ใช้กับ Power Series)'},
+  {q:'∑(−1)ⁿ/n converges เพราะ?',
+   opts:['Ratio Test L<1','Geometric Series','Alternating Series Test','p-Series p=1>1'],ans:2,
+   exp:'∑(−1)ⁿ/n: bₙ=1/n>0, ลดลง, →0 → Converges โดย AST (Conditionally)'},
+];
+function initQuiz(){
+  const cont=document.getElementById('quizContainer');cont.innerHTML='';
+  quizData.forEach((q,qi)=>{
+    const d=document.createElement('div');
+    d.style.cssText='background:var(--card);border:1px solid var(--border);border-radius:10px;padding:.95rem 1.2rem;margin-bottom:.8rem';
+    d.innerHTML=`<div style="font-size:.65rem;color:var(--muted);font-weight:700;letter-spacing:1px;margin-bottom:.3rem">ข้อ ${qi+1}/${quizData.length}</div>
+<div style="font-size:.93rem;margin-bottom:.65rem">${q.q}</div>
+${q.opts.map((o,oi)=>`<div class="quiz-opt" id="qo-${qi}-${oi}" onclick="checkAns(${qi},${oi})">${String.fromCharCode(65+oi)}) ${o}</div>`).join('')}
+<div id="qf-${qi}" class="quiz-fb" style="display:none"></div>`;
+    cont.appendChild(d);
+  });
+}
+function checkAns(qi,oi){
+  const q=quizData[qi];
+  for(let i=0;i<q.opts.length;i++){
+    const el=document.getElementById('qo-'+qi+'-'+i);el.onclick=null;
+    if(i===q.ans)el.classList.add('correct');else if(i===oi)el.classList.add('wrong');
+  }
+  const fb=document.getElementById('qf-'+qi);fb.style.display='block';
+  if(oi===q.ans){fb.style.background='#001a10';fb.style.color='var(--green)';fb.textContent='✓ ถูกต้อง! '+q.exp;}
+  else{fb.style.background='#1a0008';fb.style.color='var(--red)';fb.textContent='✗ ไม่ถูกต้อง — '+q.exp;}
+}
+
+window.addEventListener('load',()=>{ drawOverview(); });
+</script>
+</body>
+</html>

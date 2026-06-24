@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter VII — Transcendental Functions · Thomas Calculus</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script>
+  window.CURRENT_CH  = 7;
+  window.CURRENT_SEC = 'overview';
+  window._ch7Sections = ['overview','natural','expgrowth','inversetrig','integrals','hyperbolic','quiz'];
+</script>
+</head>
+<body class="sb-open">
+<aside id="sidebar"></aside>
+<button id="toggleBtn" onclick="toggleSidebar()" title="Toggle sidebar (S)">☰</button>
+<main id="main">
+
+  <div class="topbar">
+    <div class="topbar-crumb">Chapter VII &nbsp;›&nbsp; <span id="crumbSec">Transcendental Functions</span></div>
+    <div class="topbar-right">
+      <span class="kb-hint">S sidebar</span>
+      <span class="kb-hint">← → navigate</span>
+      <span class="kb-hint">F fullscreen</span>
+    </div>
+  </div>
+
+  <!-- ══ OVERVIEW ══ -->
+  <div id="page-overview" class="page active">
+  <div class="container">
+    <div class="hero">
+      <div class="badge">Thomas Calculus · Chapter VII</div>
+      <h1><span class="hl">Transcendental</span> Functions</h1>
+      <p>ฟังก์ชัน Logarithm, Exponential, Inverse Trig และ Hyperbolic — กฎของ Derivative และ Integral พร้อมการประยุกต์</p>
+    </div>
+    <div class="section-grid">
+      <div class="section-card" onclick="showSec('natural')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 14 Q5 4 8 4 Q10 4 12 10 Q14 16 17 6"/><path d="M3 12 L17 12" stroke-dasharray="2 1.5" opacity=".3"/></svg></div>
+        <h3>7.1 ln &amp; Exponential</h3><p>Natural Log, e&#x02E3; และความสัมพันธ์ผกผัน</p>
+      </div>
+      <div class="section-card" onclick="showSec('expgrowth')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 16 Q5 15 8 12 Q12 8 17 3"/><path d="M2 6 Q5 7 8 9 Q12 12 17 17" opacity=".5"/></svg></div>
+        <h3>7.2 Exponential Growth &amp; Decay</h3><p>dy/dt = ky — การเติบโตและสลายตัว</p>
+      </div>
+      <div class="section-card" onclick="showSec('inversetrig')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 10 Q5 4 10 4 Q15 4 17 10"/><path d="M3 10 Q5 16 10 16 Q15 16 17 10" stroke-dasharray="3 2" opacity=".5"/></svg></div>
+        <h3>7.3 Inverse Trig Functions</h3><p>arcsin, arccos, arctan และ Derivative</p>
+      </div>
+      <div class="section-card" onclick="showSec('integrals')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6 3 Q5 3 4 10 Q3 17 2 17"/><path d="M14 3 Q15 3 16 10 Q17 17 18 17"/><path d="M7 10 H13"/></svg></div>
+        <h3>7.4 Integration Formulas</h3><p>∫1/x, ∫e&#x02E3;, ∫sin, ∫arctan dx</p>
+      </div>
+      <div class="section-card" onclick="showSec('hyperbolic')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 16 Q5 4 10 4 Q15 4 17 16"/><path d="M3 4 Q5 16 10 16 Q15 16 17 4" opacity=".5"/></svg></div>
+        <h3>7.5 Hyperbolic Functions</h3><p>sinh, cosh, tanh — Derivative และ Identity</p>
+      </div>
+      <div class="section-card" onclick="showSec('quiz')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="10" cy="10" r="8" opacity=".35"/><path d="M8 8 Q8 5.5 10 5.5 Q12 5.5 12 7.5 Q12 9.5 10 10 L10 11.5"/><circle cx="10" cy="14" r=".8" fill="currentColor" stroke="none"/></svg></div>
+        <h3>แบบฝึกหัด</h3><p>ทดสอบความเข้าใจ 8 ข้อ</p>
+      </div>
+    </div>
+
+    <div class="cs" style="margin-top:1.8rem">
+      <h2>ฟังก์ชัน Transcendental คืออะไร?</h2>
+      <div class="grid2">
+        <div class="def-box"><div class="lbl">Logarithm &amp; Exponential</div>
+          <p style="font-size:.84rem;line-height:1.9">ln x = &#x222B;<sub>1</sub><sup>x</sup> (1/t) dt &nbsp; (x&gt;0)<br>
+          e = unique base: d/dx[e&#x02E3;] = e&#x02E3;<br>
+          ln x และ e&#x02E3; เป็น <strong style="color:var(--green)">Inverse functions</strong></p>
+        </div>
+        <div class="def-box"><div class="lbl">Inverse Trig &amp; Hyperbolic</div>
+          <p style="font-size:.84rem;line-height:1.9">arcsin, arccos, arctan มี Derivative เป็น Algebraic<br>
+          sinh x = (e&#x02E3;−e⁻&#x02E3;)/2<br>
+          cosh x = (e&#x02E3;+e⁻&#x02E3;)/2</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs">
+      <h2>ภาพรวม — ln(x) และ e&#x02E3; เป็นฟังก์ชันผกผันกัน</h2>
+      <div class="canvas-wrap"><canvas id="overviewCanvas" width="760" height="220"></canvas></div>
+    </div>
+
+    <div class="page-nav">
+      <a class="page-nav-btn" href="ch6.html">&#x2190; Chapter VI: Applications of Integrals</a>
+      <span class="page-nav-ctr">1 / 7</span>
+      <button class="page-nav-btn" onclick="showSec('natural')">7.1 ln &amp; Exponential &#x2192;</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ 7.1 NATURAL LOG & EXP ══ -->
+  <div id="page-natural" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>7.1 The Natural Logarithm and Exponential Function</h2>
+      <div class="def-box">
+        <div class="lbl">นิยาม — Natural Logarithm</div>
+        <div class="formula">ln x = &#x222B;<sub>1</sub><sup>x</sup> (1/t) dt &nbsp;, &nbsp; x &gt; 0</div>
+        <p style="font-size:.84rem;color:#94a3b8;margin-top:.3rem">นิยามผ่าน Integral — ทำให้ d/dx[ln x] = 1/x เป็นสูตรที่แน่นอน</p>
+      </div>
+
+      <div class="grid2" style="margin-top:.7rem">
+        <div class="ex-box"><div class="lbl">Properties of ln x</div>
+          <p style="font-size:.83rem;line-height:2">ln 1 = 0 &nbsp;·&nbsp; ln e = 1<br>
+          ln(xy) = ln x + ln y<br>
+          ln(x/y) = ln x &minus; ln y<br>
+          ln(x&#x207F;) = n ln x<br>
+          d/dx [ln x] = <strong style="color:var(--yellow)">1/x</strong></p>
+        </div>
+        <div class="ex-box"><div class="lbl">Properties of e&#x02E3;</div>
+          <p style="font-size:.83rem;line-height:2">e = 2.71828…<br>
+          e&#x02E3; = inverse of ln x<br>
+          d/dx [e&#x02E3;] = <strong style="color:var(--yellow)">e&#x02E3;</strong><br>
+          e^(ln x) = x &nbsp;·&nbsp; ln(e&#x02E3;) = x<br>
+          d/dx [a&#x02E3;] = a&#x02E3; · ln a</p>
+        </div>
+        <div class="ex-box"><div class="lbl">Derivative ตัวอย่าง</div>
+          <p style="font-size:.83rem;line-height:2">d/dx [ln(x²+1)] = 2x/(x²+1)<br>
+          d/dx [e^(3x)] = 3e^(3x)<br>
+          d/dx [x^x] = x^x(1+ln x)<br>
+          d/dx [ln|cos x|] = &minus;tan x</p>
+        </div>
+        <div class="ex-box"><div class="lbl">Logarithmic Differentiation</div>
+          <p style="font-size:.83rem;line-height:2">y = x^x &nbsp; → &nbsp; ln y = x ln x<br>
+          (1/y)y' = ln x + 1<br>
+          y' = x^x(ln x + 1)</p>
+        </div>
+      </div>
+
+      <div class="canvas-wrap" style="margin-top:1rem">
+        <h4>ln(x), e&#x02E3; และ Derivative ของแต่ละฟังก์ชัน</h4>
+        <canvas id="naturalCanvas" width="760" height="300"></canvas>
+        <div class="controls">
+          <button class="btn on" id="bNat0" onclick="setNatFn(0)">ln(x) &amp; 1/x</button>
+          <button class="btn"    id="bNat1" onclick="setNatFn(1)">e&#x02E3; &amp; e&#x02E3;</button>
+          <button class="btn"    id="bNat2" onclick="setNatFn(2)">a&#x02E3; (a=2,3)</button>
+          <button class="btn"    id="bNat3" onclick="setNatFn(3)">ln vs e&#x02E3; (Inverse)</button>
+        </div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('overview')">&#x2190; ภาพรวม</button>
+      <span class="page-nav-ctr">2 / 7</span>
+      <button class="page-nav-btn" onclick="showSec('expgrowth')">7.2 Exponential Growth &#x2192;</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ 7.2 EXP GROWTH ══ -->
+  <div id="page-expgrowth" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>7.2 Exponential Growth and Decay</h2>
+      <div class="thm-box">
+        <div class="lbl">สมการ Exponential Change</div>
+        <p>ถ้าอัตราการเปลี่ยนแปลงแปรผันตรงกับปริมาณ: <strong style="color:var(--yellow)">dy/dt = ky</strong> แล้ว</p>
+        <div class="formula">y(t) = y&#x2080; e^(kt)</div>
+        <p style="font-size:.84rem;color:#94a3b8;margin-top:.3rem">k &gt; 0 → Growth (เติบโต) &nbsp;·&nbsp; k &lt; 0 → Decay (สลายตัว)</p>
+      </div>
+
+      <div class="grid2" style="margin-top:.7rem">
+        <div class="ex-box"><div class="lbl">Half-Life (ครึ่งชีวิต)</div>
+          <p style="font-size:.84rem;line-height:1.9">y₀e^(kT) = y₀/2<br>
+          e^(kT) = 1/2 &nbsp; → &nbsp; kT = &minus;ln 2<br>
+          <strong style="color:var(--yellow)">T = ln 2 / |k|</strong><br>
+          Carbon-14: T ≈ 5730 ปี</p>
+        </div>
+        <div class="ex-box"><div class="lbl">Doubling Time</div>
+          <p style="font-size:.84rem;line-height:1.9">y₀e^(kT) = 2y₀<br>
+          e^(kT) = 2 &nbsp; → &nbsp; kT = ln 2<br>
+          <strong style="color:var(--yellow)">T = ln 2 / k</strong><br>
+          กฎ Rule of 70: T ≈ 70/r% ปี</p>
+        </div>
+        <div class="ex-box"><div class="lbl">Newton's Law of Cooling</div>
+          <p style="font-size:.84rem;line-height:1.9">dT/dt = k(T − Tₛ)<br>
+          T(t) = Tₛ + (T₀−Tₛ)e^(kt)<br>
+          k &lt; 0: วัตถุเย็นลงสู่อุณหภูมิห้อง Tₛ</p>
+        </div>
+        <div class="ex-box"><div class="lbl">Compound Interest</div>
+          <p style="font-size:.84rem;line-height:1.9">A = P·e^(rt) (continuous)<br>
+          r = อัตราดอกเบี้ย, t = ปี<br>
+          P=1000, r=5%, t=10:<br>
+          A = 1000·e^(0.5) ≈ <strong style="color:var(--green)">1648.72</strong></p>
+        </div>
+      </div>
+
+      <div class="canvas-wrap" style="margin-top:1rem">
+        <h4>y(t) = y₀e^(kt) — เลื่อน k และ y₀</h4>
+        <canvas id="growthCanvas" width="760" height="290"></canvas>
+        <div class="controls">
+          <span class="ctrl-label">y₀ =</span>
+          <input type="range" id="growY0" min="10" max="90" value="50" oninput="redrawGrowth()">
+          <span id="growY0Val" style="color:var(--blue);font-family:monospace;min-width:35px"></span>
+          <span class="ctrl-label" style="margin-left:.8rem">k =</span>
+          <input type="range" id="growK" min="-50" max="50" value="20" oninput="redrawGrowth()">
+          <span id="growKVal" style="color:var(--yellow);font-family:monospace;min-width:55px"></span>
+          <button class="btn" onclick="document.getElementById('growK').value=20;redrawGrowth()" style="margin-left:.5rem">Growth</button>
+          <button class="btn" onclick="document.getElementById('growK').value=-20;redrawGrowth()">Decay</button>
+        </div>
+        <div id="growthInfo" style="text-align:center;font-family:monospace;font-size:.84rem;color:var(--green);margin-top:.4rem"></div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('natural')">&#x2190; 7.1 ln &amp; Exponential</button>
+      <span class="page-nav-ctr">3 / 7</span>
+      <button class="page-nav-btn" onclick="showSec('inversetrig')">7.3 Inverse Trig &#x2192;</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ 7.3 INVERSE TRIG ══ -->
+  <div id="page-inversetrig" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>7.3 Inverse Trigonometric Functions</h2>
+      <div class="def-box">
+        <div class="lbl">นิยาม — Inverse Trig</div>
+        <p>Trig functions ไม่ One-to-One ต้อง <strong style="color:var(--yellow)">จำกัด Domain</strong> ก่อนหา Inverse</p>
+      </div>
+
+      <div style="overflow-x:auto;margin-top:.7rem">
+        <table style="width:100%;border-collapse:collapse;font-size:.83rem">
+          <thead>
+            <tr style="background:#111827;color:#94a3b8">
+              <th style="padding:.5rem .8rem;text-align:left;border-bottom:1px solid var(--border)">Function</th>
+              <th style="padding:.5rem .8rem;text-align:left;border-bottom:1px solid var(--border)">Domain</th>
+              <th style="padding:.5rem .8rem;text-align:left;border-bottom:1px solid var(--border)">Range</th>
+              <th style="padding:.5rem .8rem;text-align:left;border-bottom:1px solid var(--border)">Derivative</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:.45rem .8rem;color:var(--blue)">arcsin x</td><td style="padding:.45rem .8rem">[−1, 1]</td><td style="padding:.45rem .8rem">[−π/2, π/2]</td><td style="padding:.45rem .8rem;color:var(--yellow)">1/√(1−x²)</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:.45rem .8rem;color:var(--blue)">arccos x</td><td style="padding:.45rem .8rem">[−1, 1]</td><td style="padding:.45rem .8rem">[0, π]</td><td style="padding:.45rem .8rem;color:var(--yellow)">−1/√(1−x²)</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:.45rem .8rem;color:var(--blue)">arctan x</td><td style="padding:.45rem .8rem">(−∞, ∞)</td><td style="padding:.45rem .8rem">(−π/2, π/2)</td><td style="padding:.45rem .8rem;color:var(--yellow)">1/(1+x²)</td></tr>
+            <tr><td style="padding:.45rem .8rem;color:var(--blue)">arcsec x</td><td style="padding:.45rem .8rem">|x| ≥ 1</td><td style="padding:.45rem .8rem">[0,π/2)∪(π/2,π]</td><td style="padding:.45rem .8rem;color:var(--yellow)">1/(|x|√(x²−1))</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="canvas-wrap" style="margin-top:1rem">
+        <h4>Inverse Trig Functions — เลือกดูแต่ละฟังก์ชัน</h4>
+        <canvas id="itrigCanvas" width="760" height="300"></canvas>
+        <div class="controls">
+          <button class="btn on" id="bIT0" onclick="setITrig(0)">arcsin</button>
+          <button class="btn"    id="bIT1" onclick="setITrig(1)">arccos</button>
+          <button class="btn"    id="bIT2" onclick="setITrig(2)">arctan</button>
+          <button class="btn"    id="bIT3" onclick="setITrig(3)">sin vs arcsin</button>
+        </div>
+        <div id="itrigInfo" style="text-align:center;font-family:monospace;font-size:.84rem;color:var(--green);margin-top:.4rem"></div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('expgrowth')">&#x2190; 7.2 Exponential Growth</button>
+      <span class="page-nav-ctr">4 / 7</span>
+      <button class="page-nav-btn" onclick="showSec('integrals')">7.4 Integration Formulas &#x2192;</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ 7.4 INTEGRALS ══ -->
+  <div id="page-integrals" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>7.4 Integration of Transcendental Functions</h2>
+
+      <div class="grid2">
+        <div class="ex-box"><div class="lbl">Logarithm &amp; Exponential</div>
+          <p style="font-size:.83rem;line-height:2.1">
+            &#x222B; (1/x) dx = ln|x| + C<br>
+            &#x222B; e&#x02E3; dx = e&#x02E3; + C<br>
+            &#x222B; a&#x02E3; dx = a&#x02E3;/ln(a) + C<br>
+            &#x222B; ln x dx = x ln x &minus; x + C
+          </p>
+        </div>
+        <div class="ex-box"><div class="lbl">Inverse Trig Integrals</div>
+          <p style="font-size:.83rem;line-height:2.1">
+            &#x222B; 1/&radic;(1&minus;x&sup2;) dx = arcsin x + C<br>
+            &#x222B; 1/(1+x&sup2;) dx = arctan x + C<br>
+            &#x222B; 1/(x&radic;(x&sup2;&minus;1)) dx = arcsec|x| + C<br>
+            &#x222B; 1/&radic;(a&sup2;&minus;x&sup2;) dx = arcsin(x/a) + C
+          </p>
+        </div>
+        <div class="ex-box"><div class="lbl">Trig Integrals</div>
+          <p style="font-size:.83rem;line-height:2.1">
+            &#x222B; tan x dx = ln|sec x| + C<br>
+            &#x222B; sec x dx = ln|sec x + tan x| + C<br>
+            &#x222B; cot x dx = ln|sin x| + C<br>
+            &#x222B; csc x dx = &minus;ln|csc x + cot x| + C
+          </p>
+        </div>
+        <div class="ex-box"><div class="lbl">ตัวอย่างสำคัญ</div>
+          <p style="font-size:.83rem;line-height:2.1">
+            &#x222B; x/(x&sup2;+1) dx = (1/2)ln(x&sup2;+1) + C<br>
+            &#x222B; e^(2x) dx = (1/2)e^(2x) + C<br>
+            &#x222B;₀¹ 1/(1+x&sup2;) dx = arctan(1) &minus; 0 = <strong style="color:var(--green)">&pi;/4</strong><br>
+            &#x222B;₁ᵉ (1/x) dx = ln e &minus; ln 1 = <strong style="color:var(--green)">1</strong>
+          </p>
+        </div>
+      </div>
+
+      <div class="canvas-wrap" style="margin-top:1rem">
+        <h4>Integral Visualizer — พื้นที่ใต้ฟังก์ชัน Transcendental</h4>
+        <canvas id="intCanvas" width="760" height="290"></canvas>
+        <div class="controls">
+          <button class="btn on" id="bInt0" onclick="setIntFn(0)">1/x [1,e]</button>
+          <button class="btn"    id="bInt1" onclick="setIntFn(1)">e&#x02E3; [0,2]</button>
+          <button class="btn"    id="bInt2" onclick="setIntFn(2)">1/(1+x&sup2;) [0,1]</button>
+          <button class="btn"    id="bInt3" onclick="setIntFn(3)">1/&radic;(1&minus;x&sup2;) [0,0.9]</button>
+        </div>
+        <div id="intInfo" style="text-align:center;font-family:monospace;font-size:.84rem;color:var(--green);margin-top:.4rem"></div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('inversetrig')">&#x2190; 7.3 Inverse Trig</button>
+      <span class="page-nav-ctr">5 / 7</span>
+      <button class="page-nav-btn" onclick="showSec('hyperbolic')">7.5 Hyperbolic Functions &#x2192;</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ 7.5 HYPERBOLIC ══ -->
+  <div id="page-hyperbolic" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>7.5 Hyperbolic Functions</h2>
+      <div class="def-box">
+        <div class="lbl">นิยาม — Hyperbolic Functions</div>
+        <div class="grid2" style="margin-top:.5rem">
+          <div><div class="formula" style="font-size:.95rem">sinh x = (e&#x02E3; &minus; e&#x207B;&#x02E3;) / 2</div></div>
+          <div><div class="formula" style="font-size:.95rem">cosh x = (e&#x02E3; + e&#x207B;&#x02E3;) / 2</div></div>
+        </div>
+        <p style="font-size:.84rem;color:#94a3b8;margin-top:.5rem">tanh x = sinh x / cosh x &nbsp;·&nbsp; คล้าย Trig แต่ใช้กับ Hyperbola x²−y²=1</p>
+      </div>
+
+      <div class="grid2" style="margin-top:.7rem">
+        <div class="ex-box"><div class="lbl">Identities</div>
+          <p style="font-size:.83rem;line-height:2">cosh²x &minus; sinh²x = <strong style="color:var(--yellow)">1</strong><br>
+          1 &minus; tanh²x = sech²x<br>
+          sinh(x+y) = sinh x cosh y + cosh x sinh y<br>
+          cosh(x+y) = cosh x cosh y + sinh x sinh y</p>
+        </div>
+        <div class="ex-box"><div class="lbl">Derivatives</div>
+          <p style="font-size:.83rem;line-height:2">d/dx[sinh x] = <strong style="color:var(--yellow)">cosh x</strong><br>
+          d/dx[cosh x] = <strong style="color:var(--yellow)">sinh x</strong><br>
+          d/dx[tanh x] = sech²x<br>
+          d/dx[sech x] = &minus;sech x · tanh x</p>
+        </div>
+        <div class="ex-box"><div class="lbl">Integrals</div>
+          <p style="font-size:.83rem;line-height:2">&#x222B; sinh x dx = cosh x + C<br>
+          &#x222B; cosh x dx = sinh x + C<br>
+          &#x222B; sech²x dx = tanh x + C<br>
+          &#x222B; 1/&radic;(x&sup2;+1) dx = sinh⁻¹x + C</p>
+        </div>
+        <div class="ex-box"><div class="lbl">Catenary (สายโซ่)</div>
+          <p style="font-size:.83rem;line-height:1.9">รูปร่างของสายโซ่ที่แขวน:<br>
+          <strong style="color:var(--green)">y = a·cosh(x/a)</strong><br>
+          Gateway Arch ใช้ inverted catenary<br>
+          y = a·cosh(x/b) เป็นรูปโค้ง</p>
+        </div>
+      </div>
+
+      <div class="canvas-wrap" style="margin-top:1rem">
+        <h4>Hyperbolic Functions — sinh, cosh, tanh</h4>
+        <canvas id="hypCanvas" width="760" height="300"></canvas>
+        <div class="controls">
+          <button class="btn on" id="bHyp0" onclick="setHyp(0)">sinh &amp; cosh</button>
+          <button class="btn"    id="bHyp1" onclick="setHyp(1)">tanh &amp; sech</button>
+          <button class="btn"    id="bHyp2" onclick="setHyp(2)">Catenary y=cosh(x)</button>
+          <button class="btn"    id="bHyp3" onclick="setHyp(3)">sinh vs sin</button>
+        </div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('integrals')">&#x2190; 7.4 Integration Formulas</button>
+      <span class="page-nav-ctr">6 / 7</span>
+      <button class="page-nav-btn" onclick="showSec('quiz')">แบบฝึกหัด &#x2192;</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ QUIZ ══ -->
+  <div id="page-quiz" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>แบบฝึกหัด — Chapter 7: Transcendental Functions</h2>
+      <p style="color:#94a3b8;margin-bottom:1.2rem">เลือกคำตอบที่ถูกต้อง — ระบบจะแสดงคำอธิบายทันที</p>
+      <div id="quizContainer"></div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('hyperbolic')">&#x2190; 7.5 Hyperbolic</button>
+      <span class="page-nav-ctr">7 / 7</span>
+      <a class="page-nav-btn" href="ch8.html">Chapter VIII: Techniques of Integration &#x2192;</a>
+    </div>
+  </div>
+  </div>
+
+</main>
+<script src="sidebar.js"></script>
+<script>
+// ══ CANVAS HELPERS ══
+// Theme-aware palette (see theme.js) — let + applyCanvasTheme() so colors follow
+// the light/dark toggle; draw functions read the live bindings.
+let BG,GRID,AXIS,BLUE,GREEN,YELLOW,RED,PURPLE,MUTED,ORANGE,SURFACE,ON_SURFACE;
+function applyCanvasTheme(){ const t=window.CanvasTheme.get();
+  BG=t.BG;GRID=t.GRID;AXIS=t.AXIS;BLUE=t.BLUE;GREEN=t.GREEN;YELLOW=t.YELLOW;
+  RED=t.RED;PURPLE=t.PURPLE;MUTED=t.MUTED;ORANGE=t.ORANGE;SURFACE=t.SURFACE;ON_SURFACE=t.ON_SURFACE; }
+applyCanvasTheme();
+window._redrawCanvases=function(){ applyCanvasTheme(); initSec(window.CURRENT_SEC||'overview'); };
+
+function setupCanvas(id,W,H){
+  const cv=document.getElementById(id);if(!cv)return null;
+  const dpr=Math.min(window.devicePixelRatio||1,2);
+  cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+'px';cv.style.height=H+'px';
+  const ctx=cv.getContext('2d');ctx.scale(dpr,dpr);return{ctx,W,H};
+}
+function drawGrid(ctx,W,H,xMin,xMax,yMin,yMax){
+  ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);
+  const toX=x=>(x-xMin)/(xMax-xMin)*W,toY=y=>H-(y-yMin)/(yMax-yMin)*H;
+  const xs=Math.abs(xMax-xMin)>15?5:Math.abs(xMax-xMin)>8?2:1;
+  const ys=Math.abs(yMax-yMin)>15?5:Math.abs(yMax-yMin)>8?2:1;
+  ctx.strokeStyle=GRID;ctx.lineWidth=.5;
+  for(let x=Math.ceil(xMin/xs)*xs;x<=xMax;x+=xs){ctx.beginPath();ctx.moveTo(toX(x),0);ctx.lineTo(toX(x),H);ctx.stroke();}
+  for(let y=Math.ceil(yMin/ys)*ys;y<=yMax;y+=ys){ctx.beginPath();ctx.moveTo(0,toY(y));ctx.lineTo(W,toY(y));ctx.stroke();}
+  ctx.strokeStyle=AXIS;ctx.lineWidth=1.5;
+  if(yMin<=0&&yMax>=0){ctx.beginPath();ctx.moveTo(0,toY(0));ctx.lineTo(W,toY(0));ctx.stroke();}
+  if(xMin<=0&&xMax>=0){ctx.beginPath();ctx.moveTo(toX(0),0);ctx.lineTo(toX(0),H);ctx.stroke();}
+  ctx.fillStyle=MUTED;ctx.font='10px monospace';ctx.textAlign='center';
+  for(let x=Math.ceil(xMin/xs)*xs;x<=xMax;x+=xs)if(x!==0)ctx.fillText(x.toFixed(xs<1?1:0),toX(x),toY(0)+13);
+  ctx.textAlign='right';
+  for(let y=Math.ceil(yMin/ys)*ys;y<=yMax;y+=ys)if(y!==0)ctx.fillText(y.toFixed(ys<1?1:0),toX(0)-3,toY(y)+4);
+  return{toX,toY};
+}
+function plotFn(ctx,fn,xMin,xMax,W,H,yMin,yMax,col,lw=2){
+  const toX=x=>(x-xMin)/(xMax-xMin)*W,toY=y=>H-(y-yMin)/(yMax-yMin)*H;
+  ctx.strokeStyle=col;ctx.lineWidth=lw;ctx.beginPath();let ok=false;
+  for(let i=0;i<=W*2;i++){
+    const x=xMin+i/(W*2)*(xMax-xMin);let y;
+    try{y=fn(x);}catch{ok=false;continue;}
+    if(!isFinite(y)||Math.abs(y)>1e6){ok=false;continue;}
+    const px=toX(x),py=toY(y);
+    if(!ok){ctx.moveTo(px,py);ok=true;}else ctx.lineTo(px,py);
+  }ctx.stroke();
+}
+function dot(ctx,x,y,r,col,fill=true){
+  ctx.beginPath();ctx.arc(x,y,r,0,2*Math.PI);
+  if(fill){ctx.fillStyle=col;ctx.fill();}
+  else{ctx.strokeStyle=col;ctx.lineWidth=2;ctx.fillStyle=BG;ctx.fill();ctx.stroke();}
+}
+function lbl(ctx,text,x,y,col,align='center',sz=11){
+  ctx.fillStyle=col;ctx.font=sz+'px monospace';ctx.textAlign=align;ctx.fillText(text,x,y);
+}
+function dashLine(ctx,x1,y1,x2,y2,col,dash=[5,4]){
+  ctx.strokeStyle=col;ctx.lineWidth=1.2;ctx.setLineDash(dash);
+  ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();ctx.setLineDash([]);
+}
+function numInt(f,a,b,n=400){const h=(b-a)/n;let s=0;for(let i=0;i<n;i++)s+=f(a+(i+.5)*h)*h;return s;}
+
+// ══ NAVIGATION ══
+const CRUMBS={
+  overview:'Transcendental Functions',natural:'7.1 ln & Exponential',
+  expgrowth:'7.2 Exponential Growth & Decay',inversetrig:'7.3 Inverse Trig Functions',
+  integrals:'7.4 Integration Formulas',hyperbolic:'7.5 Hyperbolic Functions',quiz:'แบบฝึกหัด'
+};
+window.showSec=function(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.getElementById('crumbSec').textContent=CRUMBS[id]||id;
+  window.CURRENT_SEC=id;
+  if(window.setSidebarSec)setSidebarSec(id);
+  document.getElementById('main').scrollTop=0;
+  setTimeout(()=>initSec(id),60);
+};
+function initSec(id){
+  if(id==='overview')   drawOverview();
+  if(id==='natural')    setNatFn(0);
+  if(id==='expgrowth')  redrawGrowth();
+  if(id==='inversetrig')setITrig(0);
+  if(id==='integrals')  setIntFn(0);
+  if(id==='hyperbolic') setHyp(0);
+  if(id==='quiz')       initQuiz();
+}
+
+// ══ OVERVIEW ══
+function drawOverview(){
+  const c=setupCanvas('overviewCanvas',760,220);if(!c)return;
+  const{ctx,W,H}=c;
+  const{toX,toY}=drawGrid(ctx,W,H,-3,4,-2,7);
+  // y = x diagonal (symmetry line)
+  ctx.strokeStyle=MUTED+'55';ctx.lineWidth=1;ctx.setLineDash([6,4]);
+  ctx.beginPath();ctx.moveTo(toX(-2),toY(-2));ctx.lineTo(toX(4),toY(4));ctx.stroke();ctx.setLineDash([]);
+  lbl(ctx,'y=x',toX(3.2),toY(3.5),MUTED,'center',10);
+  plotFn(ctx,x=>Math.log(x),0.05,4,W,H,-2,7,GREEN,2.5);
+  plotFn(ctx,x=>Math.exp(x),-3,2,W,H,-2,7,BLUE,2.5);
+  // key points
+  dot(ctx,toX(1),toY(0),5,GREEN); lbl(ctx,'(1,0)',toX(1)+5,toY(0)-8,GREEN,'left',9);
+  dot(ctx,toX(Math.E),toY(1),5,GREEN); lbl(ctx,'(e,1)',toX(Math.E)+5,toY(1)-8,GREEN,'left',9);
+  dot(ctx,toX(0),toY(1),5,BLUE); lbl(ctx,'(0,1)',toX(0)+5,toY(1)-8,BLUE,'left',9);
+  dot(ctx,toX(1),toY(Math.E),5,BLUE); lbl(ctx,'(1,e)',toX(1)+5,toY(Math.E)-8,BLUE,'left',9);
+  lbl(ctx,'ln(x)',toX(3.5),toY(Math.log(3.5))-14,GREEN,'center',12);
+  lbl(ctx,'eˣ',toX(1.8),toY(Math.exp(1.8))+16,BLUE,'center',12);
+  lbl(ctx,'ln(x) และ eˣ สะท้อนกันผ่าน y=x (Inverse Functions)',W/2,H-8,MUTED,'center',10);
+}
+
+// ══ 7.1 NATURAL ══
+const natModes=[
+  {draw:(ctx,W,H)=>{
+    const{toX,toY}=drawGrid(ctx,W,H,-0.2,5,-2,4);
+    plotFn(ctx,x=>Math.log(x),0.05,5,W,H,-2,4,GREEN,2.5);
+    plotFn(ctx,x=>1/x,0.05,5,W,H,-2,4,YELLOW,2,);
+    lbl(ctx,'ln(x)',toX(4),toY(Math.log(4))-14,GREEN,'center',11);
+    lbl(ctx,"d/dx[ln x]=1/x",toX(2.5),toY(1/2.5)+18,YELLOW,'center',11);
+    dot(ctx,toX(1),toY(0),5,GREEN); lbl(ctx,'(1,0)',toX(1)+6,toY(0)-8,GREEN,'left',9);
+  }},
+  {draw:(ctx,W,H)=>{
+    const{toX,toY}=drawGrid(ctx,W,H,-2.5,2.5,-0.5,8);
+    plotFn(ctx,x=>Math.exp(x),-2.5,2.5,W,H,-0.5,8,BLUE,2.5);
+    lbl(ctx,'eˣ  (self-derivative)',toX(0),toY(Math.exp(0))+20,BLUE,'center',11);
+    lbl(ctx,'d/dx[eˣ] = eˣ',W/2,30,YELLOW,'center',13);
+    dot(ctx,toX(0),toY(1),5,BLUE); lbl(ctx,'(0,1)',toX(0)+6,toY(1)-8,BLUE,'left',9);
+    dot(ctx,toX(1),toY(Math.E),5,BLUE); lbl(ctx,'(1,e)',toX(1)+6,toY(Math.E)-8,BLUE,'left',9);
+  }},
+  {draw:(ctx,W,H)=>{
+    const{toX,toY}=drawGrid(ctx,W,H,-2,3,-0.5,9);
+    plotFn(ctx,x=>Math.pow(2,x),-2,3,W,H,-0.5,9,ORANGE,2.2);
+    plotFn(ctx,x=>Math.pow(3,x),-2,3,W,H,-0.5,9,PURPLE,2.2);
+    lbl(ctx,'2ˣ',toX(2.5),toY(Math.pow(2,2.5))-14,ORANGE,'center',11);
+    lbl(ctx,'3ˣ',toX(1.8),toY(Math.pow(3,1.8))-14,PURPLE,'center',11);
+    lbl(ctx,"d/dx[aˣ] = aˣ·ln(a)",W/2,22,YELLOW,'center',12);
+  }},
+  {draw:(ctx,W,H)=>{
+    const{toX,toY}=drawGrid(ctx,W,H,-3,4,-2,7);
+    ctx.strokeStyle=MUTED+'55';ctx.lineWidth=1;ctx.setLineDash([6,4]);
+    ctx.beginPath();ctx.moveTo(toX(-2),toY(-2));ctx.lineTo(toX(4),toY(4));ctx.stroke();ctx.setLineDash([]);
+    plotFn(ctx,x=>Math.log(x),0.05,4,W,H,-2,7,GREEN,2.5);
+    plotFn(ctx,x=>Math.exp(x),-3,2,W,H,-2,7,BLUE,2.5);
+    lbl(ctx,'ln(x)',toX(3.5),toY(Math.log(3.5))-12,GREEN,'center',11);
+    lbl(ctx,'eˣ',toX(1.8),toY(Math.exp(1.8))+16,BLUE,'center',11);
+    lbl(ctx,'y=x (symmetry axis)',toX(3),toY(3.5),MUTED,'center',9);
+  }},
+];
+function setNatFn(i){
+  document.querySelectorAll('[id^=bNat]').forEach((b,j)=>b.classList.toggle('on',j===i));
+  const c=setupCanvas('naturalCanvas',760,300);if(!c)return;
+  const{ctx,W,H}=c;
+  ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);
+  natModes[i].draw(ctx,W,H);
+}
+
+// ══ 7.2 EXP GROWTH ══
+function redrawGrowth(){
+  const y0=parseInt(document.getElementById('growY0').value);
+  const kRaw=parseInt(document.getElementById('growK').value);
+  const k=kRaw/100;
+  document.getElementById('growY0Val').textContent=y0;
+  document.getElementById('growKVal').textContent=(k>=0?'+':'')+k.toFixed(2);
+  const tMax=5;
+  const yVals=[];for(let i=0;i<=200;i++){const t=i/200*tMax;yVals.push(y0*Math.exp(k*t));}
+  const yMax=Math.max(...yVals,y0)*1.1, yMin=Math.min(0,...yVals)*1.1;
+  const c=setupCanvas('growthCanvas',760,290);if(!c)return;
+  const{ctx,W,H}=c;
+  const{toX,toY}=drawGrid(ctx,W,H,0,tMax,Math.min(0,yMin),yMax);
+  const fn=t=>y0*Math.exp(k*t);
+  plotFn(ctx,fn,0,tMax,W,H,Math.min(0,yMin),yMax,k>=0?GREEN:RED,2.5);
+  dot(ctx,toX(0),toY(y0),6,YELLOW); lbl(ctx,'y₀='+y0,toX(0)+8,toY(y0)-8,YELLOW,'left',10);
+  const tHalf=k!==0?Math.log(2)/Math.abs(k):Infinity;
+  const tFinal=tMax;
+  const yFinal=fn(tFinal);
+  lbl(ctx,'y('+tFinal.toFixed(0)+')='+yFinal.toFixed(2),W-10,20,k>=0?GREEN:RED,'right',11);
+  lbl(ctx,'y(t)='+y0+'·e^('+( k>=0?'+':'')+k.toFixed(2)+'·t)',W/2,H-8,MUTED,'center',10);
+  if(isFinite(tHalf)&&tHalf<=tMax){
+    const label=k>0?'Double time':'Half-life';
+    dashLine(ctx,toX(tHalf),0,toX(tHalf),H,YELLOW+'77');
+    lbl(ctx,label+' ≈ '+tHalf.toFixed(2),toX(tHalf),H-20,YELLOW,'center',9);
+  }
+  document.getElementById('growthInfo').textContent=
+    'y(t) = '+y0+'·e^('+(k>=0?'+':'')+k.toFixed(2)+'t)  |  y(5) = '+yFinal.toFixed(3)+
+    (isFinite(tHalf)?' |  '+(k>0?'Double':'Half')+' time = '+tHalf.toFixed(3):'');
+}
+
+// ══ 7.3 INVERSE TRIG ══
+const itrigModes=[
+  {draw:(ctx,W,H)=>{
+    const{toX,toY}=drawGrid(ctx,W,H,-1.3,1.3,-1.8,1.8);
+    plotFn(ctx,x=>Math.asin(x),-1,1,W,H,-1.8,1.8,BLUE,2.5);
+    plotFn(ctx,x=>1/Math.sqrt(1-x*x),-0.99,0.99,W,H,-1.8,1.8,YELLOW,1.8);
+    lbl(ctx,'arcsin(x)',toX(0.4),toY(Math.asin(0.4))-14,BLUE,'center',11);
+    lbl(ctx,"d/dx = 1/√(1-x²)",toX(-0.3),toY(1.5),YELLOW,'center',10);
+    dot(ctx,toX(1),toY(Math.PI/2),5,BLUE); lbl(ctx,'(1,π/2)',toX(1)-6,toY(Math.PI/2)-10,BLUE,'right',9);
+    dot(ctx,toX(-1),toY(-Math.PI/2),5,BLUE); lbl(ctx,'(-1,-π/2)',toX(-1)+6,toY(-Math.PI/2)+14,BLUE,'left',9);
+  },info:'arcsin: domain [-1,1], range [-π/2, π/2]'},
+  {draw:(ctx,W,H)=>{
+    const{toX,toY}=drawGrid(ctx,W,H,-1.3,1.3,-0.3,3.5);
+    plotFn(ctx,x=>Math.acos(x),-1,1,W,H,-0.3,3.5,GREEN,2.5);
+    plotFn(ctx,x=>-1/Math.sqrt(1-x*x),-0.99,0.99,W,H,-0.3,3.5,YELLOW,1.8);
+    lbl(ctx,'arccos(x)',toX(-0.5),toY(Math.acos(-0.5))+16,GREEN,'center',11);
+    lbl(ctx,"d/dx = -1/√(1-x²)",toX(0.3),toY(0.3),YELLOW,'center',10);
+    dot(ctx,toX(1),toY(0),5,GREEN); lbl(ctx,'(1,0)',toX(1)-6,toY(0)+14,GREEN,'right',9);
+    dot(ctx,toX(-1),toY(Math.PI),5,GREEN); lbl(ctx,'(-1,π)',toX(-1)+6,toY(Math.PI)-10,GREEN,'left',9);
+  },info:'arccos: domain [-1,1], range [0, π]'},
+  {draw:(ctx,W,H)=>{
+    const{toX,toY}=drawGrid(ctx,W,H,-5,5,-1.8,1.8);
+    plotFn(ctx,x=>Math.atan(x),-5,5,W,H,-1.8,1.8,ORANGE,2.5);
+    plotFn(ctx,x=>1/(1+x*x),-5,5,W,H,-1.8,1.8,YELLOW,1.8);
+    ctx.strokeStyle=MUTED+'55';ctx.lineWidth=1;ctx.setLineDash([6,4]);
+    ctx.beginPath();ctx.moveTo(0,toY(Math.PI/2));ctx.lineTo(W,toY(Math.PI/2));ctx.stroke();
+    ctx.beginPath();ctx.moveTo(0,toY(-Math.PI/2));ctx.lineTo(W,toY(-Math.PI/2));ctx.stroke();
+    ctx.setLineDash([]);
+    lbl(ctx,'arctan(x)',toX(3),toY(Math.atan(3))+16,ORANGE,'center',11);
+    lbl(ctx,"d/dx = 1/(1+x²)",toX(-3.5),toY(1/(1+(-3.5)**2))+18,YELLOW,'center',10);
+    lbl(ctx,'π/2',toX(-4.5),toY(Math.PI/2)-6,MUTED,'center',9);
+    lbl(ctx,'-π/2',toX(-4.5),toY(-Math.PI/2)+12,MUTED,'center',9);
+  },info:'arctan: domain (-∞,∞), range (-π/2, π/2), asymptotes y=±π/2'},
+  {draw:(ctx,W,H)=>{
+    const{toX,toY}=drawGrid(ctx,W,H,-1.3,1.3,-1.8,1.8);
+    ctx.strokeStyle=MUTED+'55';ctx.lineWidth=1;ctx.setLineDash([6,4]);
+    ctx.beginPath();ctx.moveTo(toX(-1.3),toY(-1.3));ctx.lineTo(toX(1.3),toY(1.3));ctx.stroke();ctx.setLineDash([]);
+    plotFn(ctx,x=>Math.sin(x),-Math.PI/2,Math.PI/2,W,H,-1.8,1.8,BLUE,2.5);
+    plotFn(ctx,x=>Math.asin(x),-1,1,W,H,-1.8,1.8,GREEN,2.5);
+    lbl(ctx,'sin(x)',toX(0.8),toY(Math.sin(0.8))+16,BLUE,'center',11);
+    lbl(ctx,'arcsin(x)',toX(0.5),toY(Math.asin(0.5))-14,GREEN,'center',11);
+    lbl(ctx,'y=x',toX(1.1),toY(1.1)-10,MUTED,'center',9);
+  },info:'sin และ arcsin เป็น inverse กัน — สะท้อนผ่าน y=x'},
+];
+let itFnIdx=0;
+function setITrig(i){
+  itFnIdx=i;
+  document.querySelectorAll('[id^=bIT]').forEach((b,j)=>b.classList.toggle('on',j===i));
+  const c=setupCanvas('itrigCanvas',760,300);if(!c)return;
+  const{ctx,W,H}=c;
+  ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);
+  itrigModes[i].draw(ctx,W,H);
+  document.getElementById('itrigInfo').textContent=itrigModes[i].info;
+}
+
+// ══ 7.4 INTEGRALS ══
+const intFns=[
+  {f:x=>1/x,    F:x=>Math.log(x),     a:1,         b:Math.E,     exact:1,         lbl:'∫1/x dx = ln|x|+C   [1,e]=1'},
+  {f:x=>Math.exp(x),F:x=>Math.exp(x), a:0,         b:2,          exact:Math.exp(2)-1, lbl:'∫eˣ dx = eˣ+C   [0,2]=e²-1'},
+  {f:x=>1/(1+x*x),F:x=>Math.atan(x), a:0,          b:1,          exact:Math.PI/4, lbl:'∫1/(1+x²) dx = arctan+C   [0,1]=π/4'},
+  {f:x=>1/Math.sqrt(1-x*x),F:x=>Math.asin(x),a:0,b:0.9,exact:Math.asin(0.9),lbl:'∫1/√(1-x²) dx = arcsin+C   [0,0.9]'},
+];
+let intFnIdx=0;
+function setIntFn(i){
+  intFnIdx=i;
+  document.querySelectorAll('[id^=bInt]').forEach((b,j)=>b.classList.toggle('on',j===i));
+  const d=intFns[i];
+  const steps=600;
+  const xVals=[],yVals=[];
+  for(let k=0;k<=steps;k++){
+    const x=d.a+k/steps*(d.b-d.a);
+    let y;try{y=d.f(x);}catch{continue;}
+    if(isFinite(y)&&Math.abs(y)<50){xVals.push(x);yVals.push(y);}
+  }
+  const yMin=Math.min(0,...yVals), yMax=Math.max(...yVals)*1.15;
+  const xMin=d.a-Math.abs(d.b-d.a)*0.15, xMax=d.b+Math.abs(d.b-d.a)*0.15;
+  const c=setupCanvas('intCanvas',760,290);if(!c)return;
+  const{ctx,W,H}=c;
+  const{toX,toY}=drawGrid(ctx,W,H,xMin,xMax,Math.min(-0.2,yMin),yMax);
+  ctx.fillStyle=GREEN+'28';ctx.beginPath();
+  ctx.moveTo(toX(d.a),toY(0));
+  xVals.forEach((x,idx)=>ctx.lineTo(toX(x),toY(yVals[idx])));
+  ctx.lineTo(toX(d.b),toY(0));ctx.closePath();ctx.fill();
+  ctx.strokeStyle=BLUE;ctx.lineWidth=2.2;ctx.beginPath();let ok=false;
+  xVals.forEach((x,idx)=>{if(!ok){ctx.moveTo(toX(x),toY(yVals[idx]));ok=true;}else ctx.lineTo(toX(x),toY(yVals[idx]));});
+  ctx.stroke();
+  const area=numInt(d.f,d.a,d.b);
+  document.getElementById('intInfo').textContent=
+    d.lbl+' ≈ '+area.toFixed(6)+' (exact: '+d.exact.toFixed(6)+')';
+  lbl(ctx,d.lbl,W/2,H-8,MUTED,'center',10);
+}
+
+// ══ 7.5 HYPERBOLIC ══
+const hypModes=[
+  {draw:(ctx,W,H)=>{
+    const{toX,toY}=drawGrid(ctx,W,H,-3,3,-4,8);
+    plotFn(ctx,x=>(Math.exp(x)-Math.exp(-x))/2,-3,3,W,H,-4,8,BLUE,2.5);
+    plotFn(ctx,x=>(Math.exp(x)+Math.exp(-x))/2,-3,3,W,H,-4,8,GREEN,2.5);
+    lbl(ctx,'sinh(x)',toX(1.8),toY((Math.exp(1.8)-Math.exp(-1.8))/2)+16,BLUE,'center',11);
+    lbl(ctx,'cosh(x)',toX(2),toY((Math.exp(2)+Math.exp(-2))/2)-14,GREEN,'center',11);
+    lbl(ctx,'cosh²-sinh²=1',W/2,22,YELLOW,'center',11);
+    dot(ctx,toX(0),toY(1),5,GREEN); lbl(ctx,'(0,1)',toX(0)+6,toY(1)-8,GREEN,'left',9);
+  }},
+  {draw:(ctx,W,H)=>{
+    const{toX,toY}=drawGrid(ctx,W,H,-3,3,-1.5,1.5);
+    plotFn(ctx,x=>(Math.exp(x)-Math.exp(-x))/(Math.exp(x)+Math.exp(-x)),-3,3,W,H,-1.5,1.5,ORANGE,2.5);
+    plotFn(ctx,x=>2/(Math.exp(x)+Math.exp(-x)),-3,3,W,H,-1.5,1.5,PURPLE,1.8);
+    ctx.strokeStyle=MUTED+'55';ctx.lineWidth=1;ctx.setLineDash([6,4]);
+    ctx.beginPath();ctx.moveTo(0,toY(1));ctx.lineTo(W,toY(1));ctx.stroke();
+    ctx.beginPath();ctx.moveTo(0,toY(-1));ctx.lineTo(W,toY(-1));ctx.stroke();ctx.setLineDash([]);
+    lbl(ctx,'tanh(x) → ±1',toX(2),toY(0.95)-12,ORANGE,'center',11);
+    lbl(ctx,'sech(x)',toX(-2),toY(2/(Math.exp(-2)+Math.exp(2)))+16,PURPLE,'center',11);
+  }},
+  {draw:(ctx,W,H)=>{
+    const{toX,toY}=drawGrid(ctx,W,H,-3,3,0,5);
+    plotFn(ctx,x=>Math.cosh(x),-3,3,W,H,0,5,GREEN,2.5);
+    ctx.fillStyle=GREEN+'15';ctx.beginPath();
+    ctx.moveTo(toX(-3),toY(0));
+    for(let i=0;i<=200;i++){const x=-3+i/200*6;ctx.lineTo(toX(x),toY(Math.cosh(x)));}
+    ctx.lineTo(toX(3),toY(0));ctx.closePath();ctx.fill();
+    lbl(ctx,'y = cosh(x)  — Catenary (รูปสายโซ่แขวน)',W/2,22,GREEN,'center',12);
+    dot(ctx,toX(0),toY(1),6,YELLOW); lbl(ctx,'(0,1) minimum',toX(0)+8,toY(1)-8,YELLOW,'left',10);
+  }},
+  {draw:(ctx,W,H)=>{
+    const{toX,toY}=drawGrid(ctx,W,H,-3,3,-1.5,4);
+    plotFn(ctx,x=>(Math.exp(x)-Math.exp(-x))/2,-3,3,W,H,-1.5,4,BLUE,2.5);
+    plotFn(ctx,x=>Math.sin(x),-3,3,W,H,-1.5,4,RED,2);
+    lbl(ctx,'sinh(x)',toX(2),toY((Math.exp(2)-Math.exp(-2))/2)-14,BLUE,'center',11);
+    lbl(ctx,'sin(x)',toX(1),toY(Math.sin(1))+16,RED,'center',11);
+    lbl(ctx,'sinh เพิ่มเป็น Exponential | sin ± 1 เสมอ',W/2,H-8,MUTED,'center',10);
+  }},
+];
+let hypIdx=0;
+function setHyp(i){
+  hypIdx=i;
+  document.querySelectorAll('[id^=bHyp]').forEach((b,j)=>b.classList.toggle('on',j===i));
+  const c=setupCanvas('hypCanvas',760,300);if(!c)return;
+  const{ctx,W,H}=c;
+  ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);
+  hypModes[i].draw(ctx,W,H);
+}
+
+// ══ QUIZ ══
+const quizData=[
+  {q:'d/dx [ln x] = ?',
+   opts:['ln x','1/x','x','e^x'],ans:1,
+   exp:'d/dx[ln x] = 1/x — มาจากนิยาม ln x = ∫₁ˣ(1/t)dt'},
+  {q:'d/dx [eˣ] = ?',
+   opts:['xe^(x-1)','ln x','eˣ','1/eˣ'],ans:2,
+   exp:'d/dx[eˣ] = eˣ — eˣ เป็นเพียงฟังก์ชันเดียวที่เป็น Derivative ของตัวเอง'},
+  {q:'สมการ dy/dt = ky มีคำตอบ?',
+   opts:['y=k·t+C','y=y₀·eᵏᵗ','y=y₀+kt','y=e^(y₀t)'],ans:1,
+   exp:'Separable ODE: dy/y = k dt → ln y = kt + C → y = y₀eᵏᵗ'},
+  {q:'d/dx [arctan x] = ?',
+   opts:['1/√(1-x²)','-1/√(1-x²)','1/(1+x²)','-1/(1+x²)'],ans:2,
+   exp:'d/dx[arctan x] = 1/(1+x²)'},
+  {q:'∫ (1/x) dx = ?',
+   opts:['x² + C','-1/x² + C','ln|x| + C','eˣ + C'],ans:2,
+   exp:'∫(1/x)dx = ln|x| + C เพราะ d/dx[ln|x|] = 1/x'},
+  {q:'cosh²x − sinh²x = ?',
+   opts:['0','2','sinh(2x)','1'],ans:3,
+   exp:'Identity พื้นฐาน: cosh²x − sinh²x = 1 (คล้าย sin²+cos²=1 ของ Trig)'},
+  {q:'d/dx [arcsin x] = ?',
+   opts:['1/√(1-x²)','-1/√(1-x²)','cos(x)','1/(1+x²)'],ans:0,
+   exp:'d/dx[arcsin x] = 1/√(1-x²)'},
+  {q:'Half-life T ของ y=y₀e^(kt), k<0 คือ?',
+   opts:['ln2/k','-ln2/k','ln2·k','k/ln2'],ans:1,
+   exp:'y₀e^(kT) = y₀/2 → kT = -ln2 → T = -ln2/k = ln2/|k|'},
+];
+function initQuiz(){
+  const cont=document.getElementById('quizContainer');cont.innerHTML='';
+  quizData.forEach((q,qi)=>{
+    const d=document.createElement('div');
+    d.style.cssText='background:var(--card);border:1px solid var(--border);border-radius:10px;padding:.95rem 1.2rem;margin-bottom:.8rem';
+    d.innerHTML=`<div style="font-size:.65rem;color:var(--muted);font-weight:700;letter-spacing:1px;margin-bottom:.3rem">ข้อ ${qi+1}/${quizData.length}</div>
+<div style="font-size:.93rem;margin-bottom:.65rem">${q.q}</div>
+${q.opts.map((o,oi)=>`<div class="quiz-opt" id="qo-${qi}-${oi}" onclick="checkAns(${qi},${oi})">${String.fromCharCode(65+oi)}) ${o}</div>`).join('')}
+<div id="qf-${qi}" class="quiz-fb" style="display:none"></div>`;
+    cont.appendChild(d);
+  });
+}
+function checkAns(qi,oi){
+  const q=quizData[qi];
+  for(let i=0;i<q.opts.length;i++){
+    const el=document.getElementById('qo-'+qi+'-'+i);el.onclick=null;
+    if(i===q.ans)el.classList.add('correct');else if(i===oi)el.classList.add('wrong');
+  }
+  const fb=document.getElementById('qf-'+qi);fb.style.display='block';
+  if(oi===q.ans){fb.style.background='#001a10';fb.style.color='var(--green)';fb.textContent='✓ ถูกต้อง! '+q.exp;}
+  else{fb.style.background='#1a0008';fb.style.color='var(--red)';fb.textContent='✗ ไม่ถูกต้อง — '+q.exp;}
+}
+
+window.addEventListener('load',()=>{ drawOverview(); });
+</script>
+</body>
+</html>

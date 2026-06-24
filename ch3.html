@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter III — Derivatives · Thomas Calculus</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script>
+  window.CURRENT_CH  = 3;
+  window.CURRENT_SEC = 'overview';
+  window._ch3Sections = ['overview','tangent','rules','trig','chain','implicit','calculator','quiz'];
+</script>
+</head>
+<body class="sb-open">
+<aside id="sidebar"></aside>
+<button id="toggleBtn" onclick="toggleSidebar()" title="Toggle sidebar (S)">☰</button>
+
+<main id="main">
+  <div class="topbar">
+    <div class="topbar-crumb">Chapter III &nbsp;›&nbsp; <span id="crumbSec">Derivatives</span></div>
+    <div class="topbar-right">
+      <span class="kb-hint">S sidebar</span>
+      <span class="kb-hint">← → navigate</span>
+      <span class="kb-hint">F fullscreen</span>
+    </div>
+  </div>
+
+  <!-- ══ OVERVIEW ══════════════════════════════════════════════════════════════ -->
+  <div id="page-overview" class="page active">
+  <div class="container">
+    <div class="hero">
+      <div class="badge">Thomas Calculus · Chapter III</div>
+      <h1><span class="hl">Derivatives</span></h1>
+      <p>อัตราการเปลี่ยนแปลงทันที — ความชันของเส้นสัมผัสที่จุดใดๆ บนกราฟ</p>
+    </div>
+    <div class="section-grid">
+      <div class="section-card" onclick="showSec('tangent')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 18 V2M2 18 H18"/><path d="M3 15 Q8 14 12 9 Q15 5 17 3"/><path d="M6 12 L14 6" stroke-opacity=".55"/></svg></div>
+        <h3>Tangent Lines</h3><p>นิยาม Derivative จากเส้นสัมผัส</p>
+      </div>
+      <div class="section-card" onclick="showSec('rules')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="4" width="14" height="3" rx="1"/><rect x="3" y="9" width="10" height="3" rx="1"/><rect x="3" y="14" width="12" height="3" rx="1"/></svg></div>
+        <h3>กฎการหา Derivative</h3><p>Power, Product, Quotient Rules</p>
+      </div>
+      <div class="section-card" onclick="showSec('trig')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 10 Q5 4 8 10 Q11 16 14 10 Q17 4 18 10"/></svg></div>
+        <h3>Trig Derivatives</h3><p>อนุพันธ์ของฟังก์ชันตรีโกณ</p>
+      </div>
+      <div class="section-card" onclick="showSec('chain')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="5" cy="10" r="3"/><circle cx="15" cy="10" r="3"/><path d="M8 10 H12"/></svg></div>
+        <h3>Chain Rule</h3><p>อนุพันธ์ของฟังก์ชันซ้อน</p>
+      </div>
+      <div class="section-card" onclick="showSec('implicit')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="10" cy="10" r="7"/><path d="M10 3 V17M3 10 H17" stroke-opacity=".4"/></svg></div>
+        <h3>Implicit Differentiation</h3><p>หา dy/dx จากสมการที่ไม่ชัดเจน</p>
+      </div>
+      <div class="section-card" onclick="showSec('calculator')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 7h6M7 11h2M11 11h2M7 15h2M11 15h2"/></svg></div>
+        <h3>Derivative Calculator</h3><p>คำนวณอนุพันธ์แบบ interactive</p>
+      </div>
+      <div class="section-card" onclick="showSec('quiz')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="10" cy="10" r="8" stroke-opacity=".35"/><path d="M8 8 Q8 5.5 10 5.5 Q12 5.5 12 7.5 Q12 9.5 10 10 L10 11.5"/><circle cx="10" cy="14" r=".8" fill="currentColor" stroke="none"/></svg></div>
+        <h3>แบบฝึกหัด</h3><p>ทดสอบความเข้าใจ 8 ข้อ</p>
+      </div>
+    </div>
+    <div class="page-nav" style="margin-top:1.8rem">
+      <a class="page-nav-btn" href="ch2.html">← Chapter II: Limits</a>
+      <span class="page-nav-ctr">Chapter 3 / 15</span>
+      <a class="page-nav-btn" href="ch4.html">Chapter IV: Applications →</a>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ 3.1 TANGENT LINES ═════════════════════════════════════════════════════ -->
+  <div id="page-tangent" class="page">
+  <div class="container">
+    <h2 class="sec-title">3.1 Tangent Lines &amp; the Derivative</h2>
+
+    <div class="concept-box">
+      <h3>นิยามของ Derivative</h3>
+      <p>Derivative ของฟังก์ชัน f ที่จุด x = a คือ:</p>
+      <div class="formula">f'(a) = lim<sub>h→0</sub> [f(a+h) − f(a)] / h</div>
+      <p style="margin-top:.75rem">ซึ่งก็คือ <strong>ความชันของเส้นสัมผัส</strong> (tangent line) ที่จุด (a, f(a)) นั่นเอง</p>
+    </div>
+
+    <h3 class="sub-title">เส้นสัมผัส vs เส้นตัด (Secant)</h3>
+    <div class="grid2">
+      <div class="info-box">
+        <h4 style="color:var(--blue);margin-bottom:.5rem">เส้นตัด (Secant Line)</h4>
+        <p>ลากผ่าน 2 จุดบนกราฟ: (a, f(a)) และ (a+h, f(a+h))</p>
+        <div class="formula" style="font-size:.85rem;margin-top:.5rem">m<sub>sec</sub> = [f(a+h) − f(a)] / h</div>
+        <p style="margin-top:.5rem;font-size:.85rem;color:var(--muted)">เมื่อ h → 0 เส้นตัดจะกลายเป็นเส้นสัมผัส</p>
+      </div>
+      <div class="info-box">
+        <h4 style="color:var(--green);margin-bottom:.5rem">เส้นสัมผัส (Tangent Line)</h4>
+        <p>ความชัน = f'(a), สมการเส้นสัมผัส:</p>
+        <div class="formula" style="font-size:.85rem;margin-top:.5rem">y − f(a) = f'(a)(x − a)</div>
+        <p style="margin-top:.5rem;font-size:.85rem;color:var(--muted)">บอกอัตราการเปลี่ยนแปลงทันที ณ จุด a</p>
+      </div>
+    </div>
+
+    <div class="canvas-wrap">
+      <canvas id="tangentCanvas" width="600" height="320"></canvas>
+      <div class="controls">
+        <label style="color:var(--muted);font-size:.82rem">จุด a =</label>
+        <input type="range" id="tangentA" min="-2" max="2" step="0.1" value="1" style="width:160px">
+        <span id="tangentAVal" style="color:var(--blue);font-weight:700;min-width:30px">1.0</span>
+      </div>
+    </div>
+
+    <div class="example-box">
+      <h4>ตัวอย่าง: f(x) = x²</h4>
+      <p>หา f'(2) โดยใช้นิยาม:</p>
+      <div class="step-list">
+        <div class="step">f'(2) = lim<sub>h→0</sub> [(2+h)² − 4] / h</div>
+        <div class="step">= lim<sub>h→0</sub> [4 + 4h + h² − 4] / h</div>
+        <div class="step">= lim<sub>h→0</sub> [4h + h²] / h = lim<sub>h→0</sub> (4 + h)</div>
+        <div class="step" style="color:var(--green)">= <strong>4</strong></div>
+      </div>
+      <p style="margin-top:.75rem">สมการเส้นสัมผัสที่ x=2: &nbsp; y − 4 = 4(x − 2) &nbsp;→&nbsp; <strong>y = 4x − 4</strong></p>
+    </div>
+
+    <div class="nav-btns">
+      <button class="page-nav-btn" onclick="showSec('overview')">← ภาพรวม</button>
+      <button class="page-nav-btn" onclick="showSec('rules')">กฎการหา Derivative →</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ 3.2 DIFFERENTIATION RULES ════════════════════════════════════════════ -->
+  <div id="page-rules" class="page">
+  <div class="container">
+    <h2 class="sec-title">3.2 กฎการหา Derivative</h2>
+
+    <div class="rules-grid">
+      <div class="rule-card">
+        <div class="rule-name">Constant Rule</div>
+        <div class="rule-formula">d/dx [c] = 0</div>
+        <div class="rule-example">d/dx [5] = 0</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-name">Power Rule</div>
+        <div class="rule-formula">d/dx [xⁿ] = nxⁿ⁻¹</div>
+        <div class="rule-example">d/dx [x⁴] = 4x³</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-name">Constant Multiple</div>
+        <div class="rule-formula">d/dx [cf] = c·f'</div>
+        <div class="rule-example">d/dx [3x²] = 6x</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-name">Sum / Difference</div>
+        <div class="rule-formula">d/dx [f±g] = f'±g'</div>
+        <div class="rule-example">d/dx [x³+x] = 3x²+1</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-name">Product Rule</div>
+        <div class="rule-formula">d/dx [fg] = f'g + fg'</div>
+        <div class="rule-example">d/dx [x²·sin x] = 2x·sin x + x²·cos x</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-name">Quotient Rule</div>
+        <div class="rule-formula">d/dx [f/g] = (f'g − fg') / g²</div>
+        <div class="rule-example">d/dx [sin x / x] = (x·cos x − sin x) / x²</div>
+      </div>
+    </div>
+
+    <h3 class="sub-title" style="margin-top:1.5rem">ตัวอย่างแบบฝึก</h3>
+    <div id="ruleExamples">
+      <div class="practice-item" id="rp0">
+        <div class="practice-q">หา f'(x) เมื่อ f(x) = 3x⁴ − 5x² + 7</div>
+        <button class="btn-reveal" onclick="reveal('ra0')">แสดงคำตอบ</button>
+        <div class="practice-a" id="ra0" style="display:none">
+          f'(x) = 12x³ − 10x
+          <div class="practice-hint">ใช้ Power Rule ทีละเทอม: d/dx[3x⁴]=12x³, d/dx[5x²]=10x, d/dx[7]=0</div>
+        </div>
+      </div>
+      <div class="practice-item" id="rp1">
+        <div class="practice-q">หา g'(x) เมื่อ g(x) = x³·eˣ</div>
+        <button class="btn-reveal" onclick="reveal('ra1')">แสดงคำตอบ</button>
+        <div class="practice-a" id="ra1" style="display:none">
+          g'(x) = 3x²·eˣ + x³·eˣ = eˣ(x³ + 3x²)
+          <div class="practice-hint">ใช้ Product Rule: (x³)' = 3x², (eˣ)' = eˣ</div>
+        </div>
+      </div>
+      <div class="practice-item" id="rp2">
+        <div class="practice-q">หา h'(x) เมื่อ h(x) = (x² + 1) / (x − 1)</div>
+        <button class="btn-reveal" onclick="reveal('ra2')">แสดงคำตอบ</button>
+        <div class="practice-a" id="ra2" style="display:none">
+          h'(x) = [2x(x−1) − (x²+1)·1] / (x−1)² = (x² − 2x − 1) / (x−1)²
+          <div class="practice-hint">ใช้ Quotient Rule: f=x²+1, g=x−1, f'=2x, g'=1</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav-btns">
+      <button class="page-nav-btn" onclick="showSec('tangent')">← Tangent Lines</button>
+      <button class="page-nav-btn" onclick="showSec('trig')">Trig Derivatives →</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ 3.3 TRIG DERIVATIVES ══════════════════════════════════════════════════ -->
+  <div id="page-trig" class="page">
+  <div class="container">
+    <h2 class="sec-title">3.3 อนุพันธ์ของฟังก์ชันตรีโกณมิติ</h2>
+
+    <div class="trig-table-wrap">
+      <table class="trig-table">
+        <thead><tr><th>f(x)</th><th>f'(x)</th><th>หมายเหตุ</th></tr></thead>
+        <tbody>
+          <tr><td>sin x</td><td class="hl-cell">cos x</td><td>พื้นฐาน</td></tr>
+          <tr><td>cos x</td><td class="hl-cell">−sin x</td><td>พื้นฐาน</td></tr>
+          <tr><td>tan x</td><td class="hl-cell">sec² x</td><td>= sin x/cos x</td></tr>
+          <tr><td>cot x</td><td class="hl-cell">−csc² x</td><td>= cos x/sin x</td></tr>
+          <tr><td>sec x</td><td class="hl-cell">sec x · tan x</td><td>= 1/cos x</td></tr>
+          <tr><td>csc x</td><td class="hl-cell">−csc x · cot x</td><td>= 1/sin x</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="concept-box" style="margin-top:1.25rem">
+      <h3>การพิสูจน์ d/dx[sin x] = cos x</h3>
+      <div class="step-list">
+        <div class="step">lim<sub>h→0</sub> [sin(x+h) − sin x] / h</div>
+        <div class="step">= lim<sub>h→0</sub> [sin x·cos h + cos x·sin h − sin x] / h</div>
+        <div class="step">= sin x · lim<sub>h→0</sub> [(cos h−1)/h] + cos x · lim<sub>h→0</sub> [sin h/h]</div>
+        <div class="step" style="color:var(--green)">= sin x · <strong>0</strong> + cos x · <strong>1</strong> = cos x ✓</div>
+      </div>
+    </div>
+
+    <div class="canvas-wrap" style="margin-top:1.25rem">
+      <canvas id="trigCanvas" width="600" height="260"></canvas>
+      <div class="controls">
+        <label style="color:var(--muted);font-size:.82rem">ฟังก์ชัน:</label>
+        <select id="trigSelect" onchange="drawTrig()" style="background:#080c14;border:1px solid var(--border);border-radius:6px;color:var(--text);padding:.3rem .6rem;font-size:.82rem">
+          <option value="sin">sin x และ cos x (อนุพันธ์)</option>
+          <option value="cos">cos x และ −sin x (อนุพันธ์)</option>
+          <option value="tan">tan x และ sec²x (อนุพันธ์)</option>
+        </select>
+      </div>
+    </div>
+
+    <h3 class="sub-title">ตัวอย่าง</h3>
+    <div class="example-box">
+      <p><strong>หา d/dx[x²·sin x]</strong> (Product Rule + Trig)</p>
+      <div class="step-list">
+        <div class="step">= (x²)'·sin x + x²·(sin x)'</div>
+        <div class="step">= 2x·sin x + x²·cos x</div>
+      </div>
+    </div>
+    <div class="example-box">
+      <p><strong>หา d/dx[sin²x]</strong> (เขียนใหม่ก่อน)</p>
+      <div class="step-list">
+        <div class="step">= d/dx[(sin x)²] = 2 sin x · cos x</div>
+        <div class="step" style="color:var(--green)">= sin 2x</div>
+      </div>
+    </div>
+
+    <div class="nav-btns">
+      <button class="page-nav-btn" onclick="showSec('rules')">← กฎ Derivative</button>
+      <button class="page-nav-btn" onclick="showSec('chain')">Chain Rule →</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ 3.4 CHAIN RULE ════════════════════════════════════════════════════════ -->
+  <div id="page-chain" class="page">
+  <div class="container">
+    <h2 class="sec-title">3.4 Chain Rule</h2>
+
+    <div class="concept-box">
+      <h3>Chain Rule (กฎลูกโซ่)</h3>
+      <p>ถ้า y = f(g(x)) แล้ว:</p>
+      <div class="formula">dy/dx = f'(g(x)) · g'(x)</div>
+      <p style="margin-top:.75rem;color:var(--muted)">หรือในรูป Leibniz: <strong>dy/dx = (dy/du)·(du/dx)</strong> โดยที่ u = g(x)</p>
+    </div>
+
+    <h3 class="sub-title">วิธีจำ: "อนุพันธ์ภายนอก × อนุพันธ์ภายใน"</h3>
+    <div class="grid2">
+      <div class="info-box">
+        <h4 style="color:var(--blue);margin-bottom:.5rem">ขั้นตอน</h4>
+        <div class="step-list">
+          <div class="step">1. ระบุ outer function f และ inner function g</div>
+          <div class="step">2. หา f'(g(x)) — อนุพันธ์ภายนอก (คงรูปภายใน)</div>
+          <div class="step">3. คูณด้วย g'(x) — อนุพันธ์ภายใน</div>
+        </div>
+      </div>
+      <div class="info-box">
+        <h4 style="color:var(--green);margin-bottom:.5rem">ตัวอย่าง: (sin x)⁵</h4>
+        <div class="step-list">
+          <div class="step">outer: u⁵, inner: u = sin x</div>
+          <div class="step">f'(g(x)) = 5(sin x)⁴</div>
+          <div class="step">g'(x) = cos x</div>
+          <div class="step" style="color:var(--green)">→ 5 sin⁴x · cos x</div>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="sub-title">ตัวอย่างเพิ่มเติม</h3>
+    <div class="rules-grid">
+      <div class="rule-card">
+        <div class="rule-name">y = (3x²+1)⁴</div>
+        <div class="rule-formula">y' = 4(3x²+1)³ · 6x</div>
+        <div class="rule-example">= 24x(3x²+1)³</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-name">y = sin(x³)</div>
+        <div class="rule-formula">y' = cos(x³) · 3x²</div>
+        <div class="rule-example">= 3x²cos(x³)</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-name">y = e^(2x)</div>
+        <div class="rule-formula">y' = e^(2x) · 2</div>
+        <div class="rule-example">= 2e^(2x)</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-name">y = √(x²+1)</div>
+        <div class="rule-formula">y' = ½(x²+1)^(−½) · 2x</div>
+        <div class="rule-example">= x/√(x²+1)</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-name">y = ln(cos x)</div>
+        <div class="rule-formula">y' = (1/cos x) · (−sin x)</div>
+        <div class="rule-example">= −tan x</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-name">y = tan(x²+x)</div>
+        <div class="rule-formula">y' = sec²(x²+x) · (2x+1)</div>
+        <div class="rule-example">= (2x+1)sec²(x²+x)</div>
+      </div>
+    </div>
+
+    <div class="nav-btns">
+      <button class="page-nav-btn" onclick="showSec('trig')">← Trig Derivatives</button>
+      <button class="page-nav-btn" onclick="showSec('implicit')">Implicit Differentiation →</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ 3.5 IMPLICIT DIFFERENTIATION ══════════════════════════════════════════ -->
+  <div id="page-implicit" class="page">
+  <div class="container">
+    <h2 class="sec-title">3.5 Implicit Differentiation</h2>
+
+    <div class="concept-box">
+      <h3>เมื่อไรใช้ Implicit Differentiation?</h3>
+      <p>เมื่อสมการกำหนด y ในรูป <em>implicit</em> เช่น x² + y² = 25 ซึ่งยากจะแก้หา y ชัดเจน</p>
+      <p style="margin-top:.6rem"><strong>วิธี:</strong> หา derivative ของทุกเทอมตามตัวแปร x โดยใช้ Chain Rule เมื่อพบ y</p>
+      <div class="formula" style="margin-top:.75rem">d/dx[y²] = 2y · dy/dx</div>
+    </div>
+
+    <h3 class="sub-title">ตัวอย่างที่ 1: วงกลม x² + y² = 25</h3>
+    <div class="example-box">
+      <div class="step-list">
+        <div class="step">d/dx[x²] + d/dx[y²] = d/dx[25]</div>
+        <div class="step">2x + 2y·(dy/dx) = 0</div>
+        <div class="step">2y·(dy/dx) = −2x</div>
+        <div class="step" style="color:var(--green)">dy/dx = −x/y</div>
+      </div>
+      <p style="margin-top:.75rem">ที่จุด (3, 4): dy/dx = −3/4 &nbsp;→&nbsp; เส้นสัมผัส: y − 4 = −¾(x − 3)</p>
+    </div>
+
+    <h3 class="sub-title">ตัวอย่างที่ 2: x³ + y³ = 6xy (Folium of Descartes)</h3>
+    <div class="example-box">
+      <div class="step-list">
+        <div class="step">3x² + 3y²·(dy/dx) = 6y + 6x·(dy/dx)</div>
+        <div class="step">3y²·(dy/dx) − 6x·(dy/dx) = 6y − 3x²</div>
+        <div class="step">(dy/dx)(3y² − 6x) = 6y − 3x²</div>
+        <div class="step" style="color:var(--green)">dy/dx = (6y − 3x²) / (3y² − 6x) = (2y − x²) / (y² − 2x)</div>
+      </div>
+    </div>
+
+    <div class="canvas-wrap">
+      <canvas id="implicitCanvas" width="600" height="300"></canvas>
+      <p style="text-align:center;font-size:.78rem;color:var(--muted);margin-top:.4rem">วงกลม x²+y²=25 พร้อมเส้นสัมผัสที่ (3,4)</p>
+    </div>
+
+    <div class="nav-btns">
+      <button class="page-nav-btn" onclick="showSec('chain')">← Chain Rule</button>
+      <button class="page-nav-btn" onclick="showSec('calculator')">Derivative Calculator →</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ CALCULATOR ═════════════════════════════════════════════════════════════ -->
+  <div id="page-calculator" class="page">
+  <div class="container">
+    <h2 class="sec-title">Derivative Calculator</h2>
+    <p style="color:var(--muted);margin-bottom:1.25rem">เลือกฟังก์ชันและดูอนุพันธ์พร้อมกราฟ</p>
+
+    <div class="calc-panel">
+      <div class="calc-controls">
+        <div class="field-row">
+          <label>เลือกฟังก์ชัน f(x):</label>
+          <select id="calcFunc" onchange="updateCalc()">
+            <option value="x2">x²</option>
+            <option value="x3">x³</option>
+            <option value="sinx">sin x</option>
+            <option value="cosx">cos x</option>
+            <option value="ex">eˣ</option>
+            <option value="lnx">ln x</option>
+            <option value="x2sinx">x²·sin x</option>
+            <option value="sinx2">sin(x²)</option>
+          </select>
+        </div>
+        <div class="calc-display" id="calcDisplay">
+          <div class="cd-row"><span class="cd-label">f(x) =</span> <span class="cd-val" id="cdF">x²</span></div>
+          <div class="cd-row"><span class="cd-label">f'(x) =</span> <span class="cd-val hl" id="cdFp">2x</span></div>
+          <div class="cd-row"><span class="cd-label">กฎที่ใช้:</span> <span class="cd-val muted" id="cdRule">Power Rule</span></div>
+        </div>
+        <div class="field-row">
+          <label>จุด x₀ = <span id="calcX0Val" style="color:var(--blue)">1.0</span></label>
+          <input type="range" id="calcX0" min="-3" max="3" step="0.1" value="1" oninput="updateCalc()">
+        </div>
+        <div class="tangent-info" id="calcTangentInfo"></div>
+      </div>
+      <canvas id="calcCanvas" width="440" height="340"></canvas>
+    </div>
+
+    <div class="nav-btns">
+      <button class="page-nav-btn" onclick="showSec('implicit')">← Implicit Diff</button>
+      <button class="page-nav-btn" onclick="showSec('quiz')">แบบฝึกหัด →</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ QUIZ ══════════════════════════════════════════════════════════════════ -->
+  <div id="page-quiz" class="page">
+  <div class="container">
+    <h2 class="sec-title">แบบฝึกหัด Chapter III</h2>
+    <div id="quizContainer"></div>
+    <div class="nav-btns" style="margin-top:1rem">
+      <button class="page-nav-btn" onclick="showSec('calculator')">← Calculator</button>
+      <button class="page-nav-btn" onclick="location.href='ch4.html'">Chapter IV →</button>
+    </div>
+  </div>
+  </div>
+
+</main><!-- /main -->
+
+<style>
+/* ── Ch3 extra styles ──────────────────────────────────────────── */
+.concept-box {
+  background: #080c14; border: 1px solid var(--border);
+  border-left: 3px solid var(--blue);
+  border-radius: 10px; padding: 1.1rem 1.25rem; margin-bottom: 1.25rem;
+}
+.concept-box h3 { font-size: .9rem; margin-bottom: .5rem; color: var(--blue); }
+.formula {
+  font-family: 'Courier New', monospace; font-size: 1.05rem;
+  color: var(--green); background: #001a10; border-radius: 6px;
+  padding: .55rem .9rem; display: inline-block; margin: .35rem 0;
+}
+.sub-title { font-size: .9rem; font-weight: 700; color: var(--text2); margin: 1.25rem 0 .75rem; }
+.info-box {
+  background: #080c14; border: 1px solid var(--border);
+  border-radius: 10px; padding: 1rem 1.1rem; font-size: .85rem;
+}
+.step-list { display: flex; flex-direction: column; gap: .35rem; margin-top: .5rem; }
+.step {
+  font-family: 'Courier New', monospace; font-size: .88rem;
+  padding: .3rem .6rem; background: #0d1117; border-radius: 5px;
+}
+.example-box {
+  background: #080c14; border: 1px solid var(--border2);
+  border-radius: 10px; padding: 1rem 1.2rem; margin: .75rem 0;
+  font-size: .88rem;
+}
+.example-box h4 { color: var(--yellow); margin-bottom: .5rem; font-size: .85rem; }
+.nav-btns { display: flex; justify-content: space-between; margin-top: 1.5rem; gap: .75rem; }
+
+/* ── Rules grid ── */
+.rules-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(240px,1fr)); gap: .75rem;
+}
+.rule-card {
+  background: #080c14; border: 1px solid var(--border);
+  border-radius: 10px; padding: .9rem 1.1rem;
+  transition: border-color .2s;
+}
+.rule-card:hover { border-color: var(--blue); }
+.rule-name    { font-size: .72rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .4px; margin-bottom: .4rem; }
+.rule-formula { font-family: 'Courier New', monospace; font-size: .92rem; color: var(--blue); margin-bottom: .35rem; }
+.rule-example { font-size: .78rem; color: var(--muted); font-family: 'Courier New', monospace; }
+
+/* ── Trig table ── */
+.trig-table-wrap { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+.trig-table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+.trig-table th { background: #080c14; padding: .6rem 1rem; text-align: left; color: var(--muted); font-size: .72rem; text-transform: uppercase; letter-spacing: .4px; border-bottom: 1px solid var(--border); }
+.trig-table td { padding: .6rem 1rem; border-bottom: 1px solid var(--border); font-family: 'Courier New', monospace; }
+.trig-table tbody tr:last-child td { border-bottom: none; }
+.trig-table tbody tr:hover { background: #ffffff04; }
+.hl-cell { color: var(--green); font-weight: 600; }
+
+/* ── Practice ── */
+.practice-item {
+  background: #080c14; border: 1px solid var(--border);
+  border-radius: 10px; padding: .9rem 1.1rem; margin-bottom: .75rem;
+}
+.practice-q { font-size: .88rem; margin-bottom: .5rem; font-family: 'Courier New', monospace; }
+.btn-reveal {
+  background: transparent; border: 1px solid var(--border);
+  border-radius: 6px; color: var(--blue); font-size: .75rem;
+  padding: .3rem .75rem; cursor: pointer; transition: all .15s;
+}
+.btn-reveal:hover { background: var(--blue-dim); }
+.practice-a {
+  margin-top: .6rem; padding: .6rem .9rem; background: #001a10;
+  border-radius: 6px; font-family: 'Courier New', monospace;
+  font-size: .88rem; color: var(--green);
+}
+.practice-hint { font-size: .75rem; color: var(--muted); margin-top: .35rem; font-family: 'Segoe UI', sans-serif; }
+
+/* ── Calculator ── */
+.calc-panel { display: flex; gap: 1.25rem; align-items: flex-start; flex-wrap: wrap; }
+.calc-controls { flex: 1; min-width: 220px; display: flex; flex-direction: column; gap: .85rem; }
+.field-row { display: flex; flex-direction: column; gap: .4rem; }
+.field-row label { font-size: .75rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .4px; }
+.field-row select, .field-row input[type=range] { width: 100%; }
+.field-row select { background: #080c14; border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: .85rem; padding: .5rem .75rem; outline: none; }
+.calc-display { background: #080c14; border: 1px solid var(--border); border-radius: 10px; padding: .85rem 1rem; }
+.cd-row { display: flex; gap: .5rem; font-size: .88rem; margin-bottom: .35rem; }
+.cd-row:last-child { margin: 0; }
+.cd-label { color: var(--muted); font-family: 'Courier New', monospace; flex-shrink: 0; }
+.cd-val   { font-family: 'Courier New', monospace; color: var(--text); }
+.cd-val.hl { color: var(--green); font-weight: 700; }
+.cd-val.muted { color: var(--muted); font-size: .8rem; }
+.tangent-info { font-size: .8rem; color: var(--text2); background: #0d1117; border-radius: 8px; padding: .6rem .85rem; font-family: 'Courier New', monospace; }
+</style>
+
+<script>
+// ── showSec ───────────────────────────────────────────────────────────────────
+const LABELS = {
+  overview:'Derivatives', tangent:'3.1 Tangent Lines', rules:'3.2 Differentiation Rules',
+  trig:'3.3 Trig Derivatives', chain:'3.4 Chain Rule',
+  implicit:'3.5 Implicit Differentiation', calculator:'Derivative Calculator', quiz:'แบบฝึกหัด'
+};
+function showSec(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  window.CURRENT_SEC = id;
+  document.getElementById('crumbSec').textContent = LABELS[id] || id;
+  document.querySelectorAll('.sec-item').forEach(el => {
+    el.classList.toggle('active', el.id === 'sbsec-'+id);
+  });
+  window.scrollTo(0,0);
+  if (id === 'tangent')    initTangentCanvas();
+  if (id === 'trig')       drawTrig();
+  if (id === 'implicit')   drawImplicit();
+  if (id === 'calculator') updateCalc();
+  if (id === 'quiz')       buildQuiz();
+}
+window.showSec = showSec;
+
+// ── Theme-aware palette (see theme.js) ────────────────────────────────────────
+// let + applyCanvasTheme() so graph colors follow the light/dark toggle.
+let BG,GRID,AXIS,BLUE,GREEN,YELLOW,RED,PURPLE,MUTED;
+function applyCanvasTheme(){ const t=window.CanvasTheme.get();
+  BG=t.BG;GRID=t.GRID;AXIS=t.AXIS;BLUE=t.BLUE;GREEN=t.GREEN;YELLOW=t.YELLOW;
+  RED=t.RED;PURPLE=t.PURPLE;MUTED=t.MUTED; }
+applyCanvasTheme();
+window._redrawCanvases=function(){ applyCanvasTheme(); const id=window.CURRENT_SEC;
+  if(id==='tangent')initTangentCanvas(); if(id==='trig')drawTrig();
+  if(id==='implicit')drawImplicit(); if(id==='calculator')updateCalc(); if(id==='quiz')buildQuiz(); };
+
+// ── Canvas helpers ────────────────────────────────────────────────────────────
+function setupCtx(canvas) {
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0,0,W,H);
+  return { ctx, W, H };
+}
+function toScreen(x, y, W, H, xMin, xMax, yMin, yMax) {
+  return [
+    (x - xMin) / (xMax - xMin) * W,
+    H - (y - yMin) / (yMax - yMin) * H
+  ];
+}
+function drawAxes(ctx, W, H, xMin, xMax, yMin, yMax) {
+  ctx.strokeStyle = GRID; ctx.lineWidth = 1;
+  // grid
+  for (let x = Math.ceil(xMin); x <= xMax; x++) {
+    const [sx] = toScreen(x, 0, W, H, xMin, xMax, yMin, yMax);
+    ctx.beginPath(); ctx.moveTo(sx, 0); ctx.lineTo(sx, H); ctx.stroke();
+  }
+  for (let y = Math.ceil(yMin); y <= yMax; y++) {
+    const [, sy] = toScreen(0, y, W, H, xMin, xMax, yMin, yMax);
+    ctx.beginPath(); ctx.moveTo(0, sy); ctx.lineTo(W, sy); ctx.stroke();
+  }
+  ctx.strokeStyle = AXIS; ctx.lineWidth = 1.5;
+  const [ox] = toScreen(0, 0, W, H, xMin, xMax, yMin, yMax);
+  const [, oy] = toScreen(0, 0, W, H, xMin, xMax, yMin, yMax);
+  ctx.beginPath(); ctx.moveTo(ox, 0); ctx.lineTo(ox, H); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(0, oy); ctx.lineTo(W, oy); ctx.stroke();
+}
+function plotFn(ctx, fn, W, H, xMin, xMax, yMin, yMax, color, lw=2) {
+  ctx.strokeStyle = color; ctx.lineWidth = lw; ctx.beginPath();
+  let first = true;
+  for (let px = 0; px <= W; px++) {
+    const x = xMin + (px / W) * (xMax - xMin);
+    const y = fn(x);
+    if (!isFinite(y) || y < yMin-10 || y > yMax+10) { first = true; continue; }
+    const [sx, sy] = toScreen(x, y, W, H, xMin, xMax, yMin, yMax);
+    if (first) { ctx.moveTo(sx, sy); first = false; } else ctx.lineTo(sx, sy);
+  }
+  ctx.stroke();
+}
+
+// ── Tangent canvas ────────────────────────────────────────────────────────────
+function initTangentCanvas() {
+  const canvas = document.getElementById('tangentCanvas');
+  const slider = document.getElementById('tangentA');
+  const valEl  = document.getElementById('tangentAVal');
+  function draw() {
+    const a = parseFloat(slider.value);
+    valEl.textContent = a.toFixed(1);
+    const { ctx, W, H } = setupCtx(canvas);
+    const xMin=-3,xMax=3,yMin=-1,yMax=9;
+    drawAxes(ctx,W,H,xMin,xMax,yMin,yMax);
+    const f  = x => x*x;
+    const fp = x => 2*x;
+    plotFn(ctx,f,W,H,xMin,xMax,yMin,yMax,BLUE,2.5);
+    // tangent line
+    const m = fp(a), b = f(a) - m*a;
+    plotFn(ctx, x=>m*x+b, W,H,xMin,xMax,yMin,yMax,GREEN,1.5);
+    // point
+    const [px,py] = toScreen(a,f(a),W,H,xMin,xMax,yMin,yMax);
+    ctx.beginPath(); ctx.arc(px,py,5,0,Math.PI*2);
+    ctx.fillStyle=RED; ctx.fill();
+    // labels
+    ctx.fillStyle=BLUE; ctx.font='13px Segoe UI';
+    ctx.fillText('f(x) = x²', 10, 20);
+    ctx.fillStyle=GREEN;
+    ctx.fillText(`y = ${m.toFixed(1)}x ${b>=0?'+':''} ${b.toFixed(1)}`, 10, 40);
+    ctx.fillStyle=MUTED; ctx.font='11px Segoe UI';
+    ctx.fillText(`f'(${a.toFixed(1)}) = ${m.toFixed(1)}`, 10, 58);
+  }
+  slider.oninput = draw; draw();
+}
+
+// ── Trig canvas ───────────────────────────────────────────────────────────────
+function drawTrig() {
+  const canvas = document.getElementById('trigCanvas');
+  if (!canvas) return;
+  const sel = document.getElementById('trigSelect').value;
+  const { ctx, W, H } = setupCtx(canvas);
+  const xMin=-2*Math.PI, xMax=2*Math.PI, yMin=-2.5, yMax=2.5;
+  drawAxes(ctx,W,H,xMin,xMax,yMin,yMax);
+  const pairs = {
+    sin:  [x=>Math.sin(x),  x=>Math.cos(x)],
+    cos:  [x=>Math.cos(x),  x=>-Math.sin(x)],
+    tan:  [x=>Math.tan(x),  x=>1/Math.pow(Math.cos(x),2)],
+  };
+  const [f, fp] = pairs[sel];
+  plotFn(ctx,f,  W,H,xMin,xMax,yMin,yMax,BLUE,2.5);
+  plotFn(ctx,fp, W,H,xMin,xMax,yMin,yMax,GREEN,2);
+  ctx.fillStyle=BLUE; ctx.font='12px Segoe UI'; ctx.fillText('f(x)',8,18);
+  ctx.fillStyle=GREEN; ctx.fillText("f'(x)",8,36);
+}
+
+// ── Implicit canvas ───────────────────────────────────────────────────────────
+function drawImplicit() {
+  const canvas = document.getElementById('implicitCanvas');
+  if (!canvas) return;
+  const { ctx, W, H } = setupCtx(canvas);
+  const xMin=-7,xMax=7,yMin=-7,yMax=7;
+  drawAxes(ctx,W,H,xMin,xMax,yMin,yMax);
+  // Draw circle x²+y²=25
+  ctx.strokeStyle=BLUE; ctx.lineWidth=2.5;
+  ctx.beginPath();
+  for (let t=0; t<=2*Math.PI; t+=0.02) {
+    const x=5*Math.cos(t), y=5*Math.sin(t);
+    const [sx,sy]=toScreen(x,y,W,H,xMin,xMax,yMin,yMax);
+    t===0 ? ctx.moveTo(sx,sy) : ctx.lineTo(sx,sy);
+  }
+  ctx.stroke();
+  // tangent at (3,4): y-4 = -3/4*(x-3) → y = -3/4*x + 25/4
+  plotFn(ctx, x=>-0.75*x+6.25, W,H,xMin,xMax,yMin,yMax,GREEN,1.8);
+  const [px,py]=toScreen(3,4,W,H,xMin,xMax,yMin,yMax);
+  ctx.beginPath(); ctx.arc(px,py,5,0,Math.PI*2);
+  ctx.fillStyle=RED; ctx.fill();
+  ctx.fillStyle=BLUE; ctx.font='12px Segoe UI'; ctx.fillText('x²+y²=25',8,18);
+  ctx.fillStyle=GREEN; ctx.fillText('สัมผัสที่ (3,4): y=−¾x+25/4',8,36);
+}
+
+// ── Derivative Calculator ─────────────────────────────────────────────────────
+const FUNCS = {
+  x2:     { f: x=>x*x,           fp: x=>2*x,                label:'x²',         dlabel:'2x',              rule:'Power Rule' },
+  x3:     { f: x=>x*x*x,         fp: x=>3*x*x,              label:'x³',         dlabel:'3x²',             rule:'Power Rule' },
+  sinx:   { f: x=>Math.sin(x),   fp: x=>Math.cos(x),        label:'sin x',      dlabel:'cos x',           rule:'Trig Derivative' },
+  cosx:   { f: x=>Math.cos(x),   fp: x=>-Math.sin(x),       label:'cos x',      dlabel:'−sin x',          rule:'Trig Derivative' },
+  ex:     { f: x=>Math.exp(x),   fp: x=>Math.exp(x),        label:'eˣ',         dlabel:'eˣ',              rule:'Exponential Rule' },
+  lnx:    { f: x=>x>0?Math.log(x):NaN, fp: x=>x>0?1/x:NaN, label:'ln x',       dlabel:'1/x',             rule:'Log Rule' },
+  x2sinx: { f: x=>x*x*Math.sin(x), fp: x=>2*x*Math.sin(x)+x*x*Math.cos(x), label:'x²·sin x', dlabel:'2x·sin x + x²·cos x', rule:'Product Rule' },
+  sinx2:  { f: x=>Math.sin(x*x), fp: x=>Math.cos(x*x)*2*x, label:'sin(x²)',    dlabel:'2x·cos(x²)',      rule:'Chain Rule' },
+};
+
+function updateCalc() {
+  const key   = document.getElementById('calcFunc').value;
+  const x0    = parseFloat(document.getElementById('calcX0').value);
+  document.getElementById('calcX0Val').textContent = x0.toFixed(1);
+  const fn    = FUNCS[key];
+  document.getElementById('cdF').textContent    = fn.label;
+  document.getElementById('cdFp').textContent   = fn.dlabel;
+  document.getElementById('cdRule').textContent = fn.rule;
+  const fx0  = fn.f(x0), fpx0 = fn.fp(x0);
+  document.getElementById('calcTangentInfo').innerHTML =
+    isFinite(fx0) && isFinite(fpx0)
+      ? `f(${x0.toFixed(1)}) = ${fx0.toFixed(3)}<br>f'(${x0.toFixed(1)}) = ${fpx0.toFixed(3)}<br>Tangent: y = ${fpx0.toFixed(2)}(x−${x0.toFixed(1)}) + ${fx0.toFixed(2)}`
+      : 'ไม่ได้นิยามที่จุดนี้';
+  drawCalc(key, x0);
+}
+
+function drawCalc(key, x0) {
+  const canvas = document.getElementById('calcCanvas');
+  if (!canvas) return;
+  const fn = FUNCS[key];
+  const { ctx, W, H } = setupCtx(canvas);
+  const xMin=-4, xMax=4;
+  // auto yRange
+  let yMin=-5, yMax=5;
+  if (['ex','lnx'].includes(key)) { yMin=-2; yMax=10; }
+  drawAxes(ctx,W,H,xMin,xMax,yMin,yMax);
+  plotFn(ctx, fn.f,  W,H,xMin,xMax,yMin,yMax,BLUE,2.5);
+  plotFn(ctx, fn.fp, W,H,xMin,xMax,yMin,yMax,GREEN,1.8);
+  // tangent
+  const fx0=fn.f(x0), fpx0=fn.fp(x0);
+  if (isFinite(fx0) && isFinite(fpx0)) {
+    plotFn(ctx, x=>fpx0*(x-x0)+fx0, W,H,xMin,xMax,yMin,yMax,RED+'88',1.5);
+    const [px,py]=toScreen(x0,fx0,W,H,xMin,xMax,yMin,yMax);
+    ctx.beginPath(); ctx.arc(px,py,5,0,Math.PI*2);
+    ctx.fillStyle=RED; ctx.fill();
+  }
+  ctx.fillStyle=BLUE; ctx.font='12px Segoe UI'; ctx.fillText('f(x)',8,18);
+  ctx.fillStyle=GREEN; ctx.fillText("f'(x)",8,36);
+  ctx.fillStyle=RED; ctx.fillText('tangent',8,54);
+}
+
+// ── Quiz ──────────────────────────────────────────────────────────────────────
+const quizData = [
+  { q:'d/dx[x⁵] = ?', opts:['5x⁴','x⁶/6','5x⁵','4x⁴'], ans:0, exp:'Power Rule: nxⁿ⁻¹ = 5x⁴' },
+  { q:'d/dx[sin x] = ?', opts:['cos x','-sin x','-cos x','tan x'], ans:0, exp:'อนุพันธ์พื้นฐาน: d/dx[sin x]=cos x' },
+  { q:'d/dx[cos x] = ?', opts:['-sin x','sin x','cos x','-cos x'], ans:0, exp:'d/dx[cos x] = −sin x' },
+  { q:'d/dx[x²·eˣ] = ? (Product Rule)', opts:['2x·eˣ + x²·eˣ','2x + eˣ','x²·eˣ','2xeˣ'], ans:0, exp:'(x²)\'·eˣ + x²·(eˣ)\' = 2xeˣ + x²eˣ' },
+  { q:'d/dx[sin(3x)] = ? (Chain Rule)', opts:['3cos(3x)','cos(3x)','-3cos(3x)','3sin(3x)'], ans:0, exp:'Chain Rule: cos(3x)·3 = 3cos(3x)' },
+  { q:'ถ้า f(x)=(x²+1)³ แล้ว f\'(x) = ?', opts:['3(x²+1)²·2x','(x²+1)³','6x(x²+1)²','3x²(x²+1)²'], ans:0, exp:'Chain: 3(x²+1)²·2x = 6x(x²+1)²' },
+  { q:'d/dx[tan x] = ?', opts:['sec²x','csc²x','-sec²x','cos²x'], ans:0, exp:'d/dx[tan x] = sec²x' },
+  { q:'Implicit diff: x²+y²=r² → dy/dx = ?', opts:['-x/y','x/y','-y/x','y/x'], ans:0, exp:'2x+2y(dy/dx)=0 → dy/dx = -x/y' },
+];
+function buildQuiz() {
+  if (document.getElementById('quizContainer').children.length > 0) return;
+  const cont = document.getElementById('quizContainer');
+  cont.innerHTML = '';
+  quizData.forEach((q, qi) => {
+    const d = document.createElement('div');
+    d.className = 'quiz-q';
+    d.innerHTML = `<div class="quiz-num">ข้อที่ ${qi+1}</div>
+      <div class="quiz-text">${q.q}</div>
+      <div class="quiz-opts">${q.opts.map((o,oi)=>`<div id="qo-${qi}-${oi}" class="quiz-opt" onclick="checkAns(${qi},${oi})">${o}</div>`).join('')}</div>
+      <div id="qf-${qi}" class="quiz-fb" style="display:none"></div>`;
+    cont.appendChild(d);
+  });
+}
+function checkAns(qi, oi) {
+  const q = quizData[qi];
+  for (let i=0; i<q.opts.length; i++) {
+    const el = document.getElementById(`qo-${qi}-${i}`);
+    el.onclick = null;
+    if (i===q.ans) el.classList.add('correct');
+    else if (i===oi) el.classList.add('wrong');
+  }
+  const fb = document.getElementById(`qf-${qi}`);
+  fb.style.display = 'block';
+  if (oi===q.ans) { fb.style.background='#001a10'; fb.style.color='var(--green)'; fb.textContent='✓ ถูกต้อง! '+q.exp; }
+  else            { fb.style.background='#1a0008'; fb.style.color='var(--red)';   fb.textContent='✗ ไม่ถูกต้อง — '+q.exp; }
+}
+function reveal(id) {
+  const el = document.getElementById(id);
+  el.style.display = el.style.display === 'none' ? 'block' : 'none';
+}
+
+window.addEventListener('load', () => { initTangentCanvas(); });
+</script>
+
+<script src="sidebar.js"></script>
+</body>
+</html>

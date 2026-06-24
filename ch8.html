@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter VIII — Techniques of Integration · Thomas Calculus</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script>
+  window.CURRENT_CH  = 8;
+  window.CURRENT_SEC = 'overview';
+  window._ch8Sections = ['overview','parts','trig','trigsub','partial','improper','quiz'];
+</script>
+</head>
+<body class="sb-open">
+<aside id="sidebar"></aside>
+<button id="toggleBtn" onclick="toggleSidebar()" title="Toggle sidebar (S)">☰</button>
+<main id="main">
+
+  <div class="topbar">
+    <div class="topbar-crumb">Chapter VIII &nbsp;›&nbsp; <span id="crumbSec">Techniques of Integration</span></div>
+    <div class="topbar-right">
+      <span class="kb-hint">S sidebar</span>
+      <span class="kb-hint">← → navigate</span>
+      <span class="kb-hint">F fullscreen</span>
+    </div>
+  </div>
+
+  <!-- ══ OVERVIEW ══ -->
+  <div id="page-overview" class="page active">
+  <div class="container">
+    <div class="hero">
+      <div class="badge">Thomas Calculus · Chapter VIII</div>
+      <h1><span class="hl">Techniques</span> of Integration</h1>
+      <p>เทคนิคการอินทิเกรตขั้นสูง — Integration by Parts, Trig Integrals, Trig Sub, Partial Fractions และ Improper Integrals</p>
+    </div>
+    <div class="section-grid">
+      <div class="section-card" onclick="showSec('parts')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 5 H9 V15 H4"/><path d="M11 5 H16 V15 H11"/><path d="M9 10 H11"/></svg></div>
+        <h3>8.1 Integration by Parts</h3><p>&#x222B; u dv = uv &#x2212; &#x222B; v du</p>
+      </div>
+      <div class="section-card" onclick="showSec('trig')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 10 Q5 4 8 10 Q11 16 14 10 Q17 4 18 10"/></svg></div>
+        <h3>8.2 Trig Integrals</h3><p>&#x222B; sin&#x1D49; cos&#x207F; dx, &#x222B; tan&#x1D49; sec&#x207F; dx</p>
+      </div>
+      <div class="section-card" onclick="showSec('trigsub')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 16 L16 16 L10 5 Z"/><path d="M10 5 L10 16"/><path d="M10 14 L12 14 L12 16"/></svg></div>
+        <h3>8.3 Trig Substitution</h3><p>x = a sin&#x03B8;, a tan&#x03B8;, a sec&#x03B8;</p>
+      </div>
+      <div class="section-card" onclick="showSec('partial')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6 6 H14"/><path d="M4 10 H16"/><path d="M6 14 H9"/><path d="M11 14 H14"/></svg></div>
+        <h3>8.4 Partial Fractions</h3><p>แยก Rational Function เป็นเศษส่วนย่อย</p>
+      </div>
+      <div class="section-card" onclick="showSec('improper')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 14 Q5 10 7 8 Q10 5 14 4 Q18 3 19 3"/><path d="M3 14 L19 14" stroke-dasharray="2 1.5" opacity=".4"/></svg></div>
+        <h3>8.5 Improper Integrals</h3><p>&#x222B; ถึง &#x221E; — Convergence &amp; Divergence</p>
+      </div>
+      <div class="section-card" onclick="showSec('quiz')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="10" cy="10" r="8" opacity=".35"/><path d="M8 8 Q8 5.5 10 5.5 Q12 5.5 12 7.5 Q12 9.5 10 10 L10 11.5"/><circle cx="10" cy="14" r=".8" fill="currentColor" stroke="none"/></svg></div>
+        <h3>แบบฝึกหัด</h3><p>ทดสอบความเข้าใจ 8 ข้อ</p>
+      </div>
+    </div>
+
+    <div class="cs" style="margin-top:1.8rem">
+      <h2>เลือกเทคนิคอย่างไร?</h2>
+      <div class="grid2">
+        <div class="def-box"><div class="lbl">LIATE — ลำดับเลือก u ใน IBP</div>
+          <p style="font-size:.84rem;line-height:2"><strong style="color:var(--yellow)">L</strong>ogarithm &nbsp;·&nbsp; <strong style="color:var(--yellow)">I</strong>nverse Trig<br>
+          <strong style="color:var(--yellow)">A</strong>lgebraic (x, x², …) &nbsp;·&nbsp; <strong style="color:var(--yellow)">T</strong>rig<br>
+          <strong style="color:var(--yellow)">E</strong>xponential — เลือก u = ประเภทที่อยู่ก่อน</p>
+        </div>
+        <div class="def-box"><div class="lbl">ดูรูปแบบ Integrand</div>
+          <p style="font-size:.84rem;line-height:2">มี x&#x207F; · e&#x02E3;, ln x, arctan → <strong style="color:var(--green)">IBP</strong><br>
+          มี sin cos tan → <strong style="color:var(--blue)">Trig Integral</strong><br>
+          มี √(a²−x²) ฯลฯ → <strong style="color:var(--orange)">Trig Sub</strong><br>
+          เป็น P(x)/Q(x) → <strong style="color:var(--purple)">Partial Fractions</strong></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs">
+      <h2>ภาพรวม — เทคนิคและสูตร</h2>
+      <div class="canvas-wrap"><canvas id="overviewCanvas" width="760" height="230"></canvas></div>
+    </div>
+
+    <div class="page-nav">
+      <a class="page-nav-btn" href="ch7.html">&#x2190; Chapter VII: Transcendental Functions</a>
+      <span class="page-nav-ctr">1 / 7</span>
+      <button class="page-nav-btn" onclick="showSec('parts')">8.1 Integration by Parts &#x2192;</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ 8.1 PARTS ══ -->
+  <div id="page-parts" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>8.1 Integration by Parts</h2>
+      <div class="thm-box">
+        <div class="lbl">สูตร Integration by Parts</div>
+        <div class="formula">&#x222B; u dv = uv &#x2212; &#x222B; v du</div>
+        <p style="font-size:.84rem;color:#94a3b8;margin-top:.3rem">มาจาก Product Rule: d(uv) = u dv + v du → ∫u dv = uv − ∫v du</p>
+      </div>
+
+      <div class="ex-box" style="margin-top:.7rem">
+        <div class="lbl">กฎ LIATE — เลือก u</div>
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.4rem">
+          <span style="background:#1a1208;border:1px solid var(--yellow);color:var(--yellow);padding:.25rem .8rem;border-radius:6px;font-size:.82rem;font-weight:700">L — Logarithm</span>
+          <span style="background:#1a1208;border:1px solid var(--yellow);color:var(--yellow);padding:.25rem .8rem;border-radius:6px;font-size:.82rem;font-weight:700">I — Inverse Trig</span>
+          <span style="background:#1a1208;border:1px solid var(--yellow);color:var(--yellow);padding:.25rem .8rem;border-radius:6px;font-size:.82rem;font-weight:700">A — Algebraic</span>
+          <span style="background:#1a1208;border:1px solid var(--yellow);color:var(--yellow);padding:.25rem .8rem;border-radius:6px;font-size:.82rem;font-weight:700">T — Trig</span>
+          <span style="background:#1a1208;border:1px solid var(--yellow);color:var(--yellow);padding:.25rem .8rem;border-radius:6px;font-size:.82rem;font-weight:700">E — Exponential</span>
+        </div>
+      </div>
+
+      <div class="canvas-wrap" style="margin-top:1rem">
+        <h4>Integration by Parts — ตัวอย่างขั้นตอน</h4>
+        <canvas id="partsCanvas" width="760" height="340"></canvas>
+        <div class="controls">
+          <button class="btn on" id="bP0" onclick="showParts(0)">&#x222B; x e&#x02E3; dx</button>
+          <button class="btn"    id="bP1" onclick="showParts(1)">&#x222B; x cos(x) dx</button>
+          <button class="btn"    id="bP2" onclick="showParts(2)">&#x222B; ln(x) dx</button>
+          <button class="btn"    id="bP3" onclick="showParts(3)">&#x222B; x&sup2; e&#x02E3; dx</button>
+        </div>
+      </div>
+
+      <div class="cs" style="margin-top:1rem">
+        <h3>Tabular Method (Repeated IBP)</h3>
+        <div class="thm-box">
+          <div class="lbl">เมื่อต้องทำ IBP ซ้ำหลายรอบ</div>
+          <p style="font-size:.84rem;line-height:1.9">ตัวอย่าง: ∫x²eˣ dx<br>
+          สร้างตาราง: column D (Differentiate u) | column I (Integrate dv)<br>
+          x² | eˣ &nbsp;·&nbsp; 2x | eˣ &nbsp;·&nbsp; 2 | eˣ &nbsp;·&nbsp; 0 | eˣ<br>
+          = (+) x²eˣ − (+) 2xeˣ + (+) 2eˣ + C = <strong style="color:var(--green)">eˣ(x²−2x+2) + C</strong></p>
+        </div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('overview')">&#x2190; ภาพรวม</button>
+      <span class="page-nav-ctr">2 / 7</span>
+      <button class="page-nav-btn" onclick="showSec('trig')">8.2 Trig Integrals &#x2192;</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ 8.2 TRIG INTEGRALS ══ -->
+  <div id="page-trig" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>8.2 Trigonometric Integrals</h2>
+      <div class="grid2">
+        <div class="thm-box"><div class="lbl">&#x222B; sin&#x1D50; x cos&#x207F; x dx — กรณี m หรือ n คี่</div>
+          <p style="font-size:.83rem;line-height:1.9">ถ้า m คี่: แยก sin x ไว้หนึ่งตัว แปลง sin²→1−cos²<br>
+          ถ้า n คี่: แยก cos x ไว้หนึ่งตัว แปลง cos²→1−sin²<br>
+          ถ้าทั้งคู่คู่: ใช้ <strong style="color:var(--yellow)">Half-Angle Identity</strong></p>
+        </div>
+        <div class="thm-box"><div class="lbl">&#x222B; tan&#x1D50; x sec&#x207F; x dx</div>
+          <p style="font-size:.83rem;line-height:1.9">ถ้า n คู่: แยก sec²x แปลง sec²→1+tan²<br>
+          ถ้า m คี่: แยก sec x tan x แปลง tan²→sec²−1</p>
+        </div>
+      </div>
+
+      <h3 style="margin-top:.8rem">Identity ที่ใช้บ่อย</h3>
+      <div class="grid2">
+        <div class="ex-box">
+          <div class="lbl">Power-Reducing (Half-Angle)</div>
+          <p style="font-size:.83rem;line-height:2">sin²x = (1 − cos 2x) / 2<br>
+          cos²x = (1 + cos 2x) / 2<br>
+          sin x cos x = (1/2) sin 2x</p>
+        </div>
+        <div class="ex-box">
+          <div class="lbl">Pythagorean</div>
+          <p style="font-size:.83rem;line-height:2">sin²x + cos²x = 1<br>
+          1 + tan²x = sec²x<br>
+          1 + cot²x = csc²x</p>
+        </div>
+      </div>
+
+      <div class="canvas-wrap" style="margin-top:1rem">
+        <h4>Trig Integral — ขั้นตอนการแก้</h4>
+        <canvas id="trigCanvas" width="760" height="340"></canvas>
+        <div class="controls">
+          <button class="btn on" id="bTr0" onclick="showTrig(0)">&#x222B; sin&#xB3;x dx</button>
+          <button class="btn"    id="bTr1" onclick="showTrig(1)">&#x222B; cos&#x2074;x dx</button>
+          <button class="btn"    id="bTr2" onclick="showTrig(2)">&#x222B; sin&#xB2;x cos&#xB2;x dx</button>
+          <button class="btn"    id="bTr3" onclick="showTrig(3)">&#x222B; tan&#xB2;x sec&#xB2;x dx</button>
+        </div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('parts')">&#x2190; 8.1 Integration by Parts</button>
+      <span class="page-nav-ctr">3 / 7</span>
+      <button class="page-nav-btn" onclick="showSec('trigsub')">8.3 Trig Substitution &#x2192;</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ 8.3 TRIG SUB ══ -->
+  <div id="page-trigsub" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>8.3 Trigonometric Substitution</h2>
+      <div class="thm-box">
+        <div class="lbl">เมื่อ Integrand มีรูป</div>
+        <div style="overflow-x:auto;margin-top:.5rem">
+          <table style="width:100%;border-collapse:collapse;font-size:.83rem">
+            <thead><tr style="background:#111827;color:#94a3b8">
+              <th style="padding:.45rem .8rem;border-bottom:1px solid var(--border);text-align:left">รูป Integrand</th>
+              <th style="padding:.45rem .8rem;border-bottom:1px solid var(--border);text-align:left">Substitution</th>
+              <th style="padding:.45rem .8rem;border-bottom:1px solid var(--border);text-align:left">Identity ที่ใช้</th>
+              <th style="padding:.45rem .8rem;border-bottom:1px solid var(--border);text-align:left">Range of &#x03B8;</th>
+            </tr></thead>
+            <tbody>
+              <tr style="border-bottom:1px solid var(--border)">
+                <td style="padding:.4rem .8rem;color:var(--yellow)">&radic;(a&#xB2;&minus;x&#xB2;)</td>
+                <td style="padding:.4rem .8rem;color:var(--green)">x = a sin&#x03B8;</td>
+                <td style="padding:.4rem .8rem">1&minus;sin&#xB2;&#x03B8; = cos&#xB2;&#x03B8;</td>
+                <td style="padding:.4rem .8rem">&minus;&pi;/2 &#x2264; &#x03B8; &#x2264; &pi;/2</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--border)">
+                <td style="padding:.4rem .8rem;color:var(--yellow)">&radic;(a&#xB2;+x&#xB2;)</td>
+                <td style="padding:.4rem .8rem;color:var(--blue)">x = a tan&#x03B8;</td>
+                <td style="padding:.4rem .8rem">1+tan&#xB2;&#x03B8; = sec&#xB2;&#x03B8;</td>
+                <td style="padding:.4rem .8rem">&minus;&pi;/2 &lt; &#x03B8; &lt; &pi;/2</td>
+              </tr>
+              <tr>
+                <td style="padding:.4rem .8rem;color:var(--yellow)">&radic;(x&#xB2;&minus;a&#xB2;)</td>
+                <td style="padding:.4rem .8rem;color:var(--orange)">x = a sec&#x03B8;</td>
+                <td style="padding:.4rem .8rem">sec&#xB2;&#x03B8;&minus;1 = tan&#xB2;&#x03B8;</td>
+                <td style="padding:.4rem .8rem">0 &#x2264; &#x03B8; &lt; &pi;/2</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="canvas-wrap" style="margin-top:1rem">
+        <h4>Right-Triangle Diagram &amp; ตัวอย่างขั้นตอน</h4>
+        <canvas id="trigsubCanvas" width="760" height="340"></canvas>
+        <div class="controls">
+          <button class="btn on" id="bTS0" onclick="showTrigSub(0)">x = sin&#x03B8; &nbsp;|&nbsp; &radic;(1&minus;x&#xB2;)</button>
+          <button class="btn"    id="bTS1" onclick="showTrigSub(1)">x = tan&#x03B8; &nbsp;|&nbsp; &radic;(1+x&#xB2;)</button>
+          <button class="btn"    id="bTS2" onclick="showTrigSub(2)">x = sec&#x03B8; &nbsp;|&nbsp; &radic;(x&#xB2;&minus;1)</button>
+        </div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('trig')">&#x2190; 8.2 Trig Integrals</button>
+      <span class="page-nav-ctr">4 / 7</span>
+      <button class="page-nav-btn" onclick="showSec('partial')">8.4 Partial Fractions &#x2192;</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ 8.4 PARTIAL FRACTIONS ══ -->
+  <div id="page-partial" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>8.4 Partial Fractions</h2>
+      <div class="thm-box">
+        <div class="lbl">แนวคิด</div>
+        <p>แยก Rational Function P(x)/Q(x) (deg P &lt; deg Q) เป็นผลรวมของ Simpler Fractions แล้วจึง Integrate</p>
+        <div class="formula">P(x)/Q(x) = A/(x&minus;a) + B/(x&minus;b) + &hellip;</div>
+      </div>
+
+      <h3 style="margin-top:.8rem">รูปแบบของ Denominator</h3>
+      <div class="grid2">
+        <div class="ex-box"><div class="lbl">Linear factor (x&minus;a)</div>
+          <p style="font-size:.83rem">ให้ <strong style="color:var(--yellow)">A/(x&minus;a)</strong></p>
+        </div>
+        <div class="ex-box"><div class="lbl">Repeated linear (x&minus;a)&sup2;</div>
+          <p style="font-size:.83rem">ให้ <strong style="color:var(--yellow)">A/(x&minus;a) + B/(x&minus;a)²</strong></p>
+        </div>
+        <div class="ex-box"><div class="lbl">Irreducible quadratic ax²+bx+c</div>
+          <p style="font-size:.83rem">ให้ <strong style="color:var(--yellow)">(Ax+B)/(ax²+bx+c)</strong></p>
+        </div>
+        <div class="ex-box"><div class="lbl">deg P ≥ deg Q → Long Division ก่อน</div>
+          <p style="font-size:.83rem">หาร P÷Q เพื่อให้เศษมี degree &lt; Q ก่อน</p>
+        </div>
+      </div>
+
+      <div class="canvas-wrap" style="margin-top:1rem">
+        <h4>Partial Fractions — ขั้นตอนละเอียด</h4>
+        <canvas id="partialCanvas" width="760" height="360"></canvas>
+        <div class="controls">
+          <button class="btn on" id="bPF0" onclick="showPartial(0)">1/(x&#xB2;&minus;1)</button>
+          <button class="btn"    id="bPF1" onclick="showPartial(1)">(x+3)/((x+1)(x&minus;2))</button>
+          <button class="btn"    id="bPF2" onclick="showPartial(2)">1/(x(x&#xB2;+1))</button>
+          <button class="btn"    id="bPF3" onclick="showPartial(3)">(x&#xB2;+2x+3)/((x+1)&#xB2;(x+2))</button>
+        </div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('trigsub')">&#x2190; 8.3 Trig Substitution</button>
+      <span class="page-nav-ctr">5 / 7</span>
+      <button class="page-nav-btn" onclick="showSec('improper')">8.5 Improper Integrals &#x2192;</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ 8.5 IMPROPER INTEGRALS ══ -->
+  <div id="page-improper" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>8.5 Improper Integrals</h2>
+      <div class="grid2">
+        <div class="thm-box"><div class="lbl">Type I — Infinite Limit</div>
+          <div class="formula" style="font-size:.95rem">&#x222B;<sub>a</sub><sup>&#x221E;</sup> f dx = lim<sub>b&#x2192;&#x221E;</sub> &#x222B;<sub>a</sub><sup>b</sup> f dx</div>
+          <p style="font-size:.83rem;color:#94a3b8;margin-top:.3rem">Converges ถ้า limit มีค่า finite</p>
+        </div>
+        <div class="thm-box"><div class="lbl">Type II — Discontinuous Integrand</div>
+          <div class="formula" style="font-size:.95rem">&#x222B;<sub>a</sub><sup>b</sup> f dx = lim<sub>c&#x2192;b&#x207B;</sub> &#x222B;<sub>a</sub><sup>c</sup> f dx</div>
+          <p style="font-size:.83rem;color:#94a3b8;margin-top:.3rem">ใช้เมื่อ f ไม่ต่อเนื่องที่ขอบ</p>
+        </div>
+      </div>
+
+      <div class="thm-box" style="margin-top:.7rem">
+        <div class="lbl">p-Integral Test</div>
+        <div class="formula">&#x222B;<sub>1</sub><sup>&#x221E;</sup> 1/x&#x1D56; dx &nbsp; converges iff &nbsp; p &gt; 1</div>
+        <p style="font-size:.83rem;color:#94a3b8;margin-top:.3rem">p &gt; 1 → converges to 1/(p−1) &nbsp;·&nbsp; p ≤ 1 → diverges</p>
+      </div>
+
+      <div class="grid2" style="margin-top:.7rem">
+        <div class="ex-box"><div class="lbl">ตัวอย่าง Converge</div>
+          <p style="font-size:.83rem;line-height:1.9">&#x222B;<sub>1</sub><sup>&infin;</sup> 1/x&#xB2; dx = lim<sub>b→∞</sub> [−1/x]₁ᵇ<br>
+          = lim<sub>b→∞</sub> (−1/b + 1) = <strong style="color:var(--green)">1</strong></p>
+        </div>
+        <div class="ex-box"><div class="lbl">ตัวอย่าง Diverge</div>
+          <p style="font-size:.83rem;line-height:1.9">&#x222B;<sub>1</sub><sup>&infin;</sup> 1/x dx = lim<sub>b→∞</sub> [ln x]₁ᵇ<br>
+          = lim<sub>b→∞</sub> ln b = <strong style="color:var(--red)">+∞ (Diverges)</strong></p>
+        </div>
+      </div>
+
+      <div class="canvas-wrap" style="margin-top:1rem">
+        <h4>&#x222B;<sub>1</sub><sup>b</sup> 1/x&#x1D56; dx — เลื่อน b และ p เพื่อดู Convergence</h4>
+        <canvas id="improperCanvas" width="760" height="290"></canvas>
+        <div class="controls">
+          <span class="ctrl-label">p =</span>
+          <input type="range" id="impP" min="20" max="300" value="200" oninput="redrawImproper()">
+          <span id="impPVal" style="color:var(--yellow);font-family:monospace;min-width:40px"></span>
+          <span class="ctrl-label" style="margin-left:.8rem">b =</span>
+          <input type="range" id="impB" min="11" max="200" value="60" oninput="redrawImproper()">
+          <span id="impBVal" style="color:var(--blue);font-family:monospace;min-width:40px"></span>
+          <button class="btn" onclick="document.getElementById('impP').value=200;document.getElementById('impB').value=200;redrawImproper()" style="margin-left:.5rem">p=2 (Conv.)</button>
+          <button class="btn" onclick="document.getElementById('impP').value=100;document.getElementById('impB').value=200;redrawImproper()">p=1 (Div.)</button>
+        </div>
+        <div id="improperInfo" style="text-align:center;font-family:monospace;font-size:.84rem;color:var(--green);margin-top:.4rem"></div>
+      </div>
+
+      <div class="cs" style="margin-top:1rem">
+        <h3>Comparison Test for Improper Integrals</h3>
+        <div class="grid2">
+          <div class="def-box"><div class="lbl">Direct Comparison</div>
+            <p style="font-size:.83rem;line-height:1.9">ถ้า 0 ≤ f ≤ g บน [a,∞):<br>
+            ∫g converges → ∫f converges<br>
+            ∫f diverges → ∫g diverges</p>
+          </div>
+          <div class="def-box"><div class="lbl">Limit Comparison</div>
+            <p style="font-size:.83rem;line-height:1.9">ถ้า lim<sub>x→∞</sub> f(x)/g(x) = L (0&lt;L&lt;∞)<br>
+            แล้ว ∫f และ ∫g Converge/Diverge พร้อมกัน</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('partial')">&#x2190; 8.4 Partial Fractions</button>
+      <span class="page-nav-ctr">6 / 7</span>
+      <button class="page-nav-btn" onclick="showSec('quiz')">แบบฝึกหัด &#x2192;</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ QUIZ ══ -->
+  <div id="page-quiz" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>แบบฝึกหัด — Chapter 8: Techniques of Integration</h2>
+      <p style="color:#94a3b8;margin-bottom:1.2rem">เลือกคำตอบที่ถูกต้อง — ระบบจะแสดงคำอธิบายทันที</p>
+      <div id="quizContainer"></div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('improper')">&#x2190; 8.5 Improper Integrals</button>
+      <span class="page-nav-ctr">7 / 7</span>
+      <a class="page-nav-btn" href="ch9.html">Chapter IX: Sequences &amp; Series &#x2192;</a>
+    </div>
+  </div>
+  </div>
+
+</main>
+<script src="sidebar.js"></script>
+<script>
+// ══ CANVAS HELPERS ══
+// Theme-aware palette (see theme.js) — let + applyCanvasTheme() so colors follow
+// the light/dark toggle; draw functions read the live bindings.
+let BG,GRID,AXIS,BLUE,GREEN,YELLOW,RED,PURPLE,MUTED,ORANGE,SURFACE,ON_SURFACE,LIGHT;
+function applyCanvasTheme(){ const t=window.CanvasTheme.get(); LIGHT=window.CanvasTheme.isLight();
+  BG=t.BG;GRID=t.GRID;AXIS=t.AXIS;BLUE=t.BLUE;GREEN=t.GREEN;YELLOW=t.YELLOW;
+  RED=t.RED;PURPLE=t.PURPLE;MUTED=t.MUTED;ORANGE=t.ORANGE;SURFACE=t.SURFACE;ON_SURFACE=t.ON_SURFACE; }
+applyCanvasTheme();
+window._redrawCanvases=function(){ applyCanvasTheme(); initSec(window.CURRENT_SEC||'overview'); };
+
+function setupCanvas(id,W,H){
+  const cv=document.getElementById(id);if(!cv)return null;
+  const dpr=Math.min(window.devicePixelRatio||1,2);
+  cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+'px';cv.style.height=H+'px';
+  const ctx=cv.getContext('2d');ctx.scale(dpr,dpr);return{ctx,W,H};
+}
+function drawGrid(ctx,W,H,xMin,xMax,yMin,yMax){
+  ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);
+  const toX=x=>(x-xMin)/(xMax-xMin)*W, toY=y=>H-(y-yMin)/(yMax-yMin)*H;
+  const xs=Math.abs(xMax-xMin)>15?5:Math.abs(xMax-xMin)>8?2:1;
+  const ys=Math.abs(yMax-yMin)>15?5:Math.abs(yMax-yMin)>8?2:1;
+  ctx.strokeStyle=GRID;ctx.lineWidth=.5;
+  for(let x=Math.ceil(xMin/xs)*xs;x<=xMax;x+=xs){ctx.beginPath();ctx.moveTo(toX(x),0);ctx.lineTo(toX(x),H);ctx.stroke();}
+  for(let y=Math.ceil(yMin/ys)*ys;y<=yMax;y+=ys){ctx.beginPath();ctx.moveTo(0,toY(y));ctx.lineTo(W,toY(y));ctx.stroke();}
+  ctx.strokeStyle=AXIS;ctx.lineWidth=1.5;
+  if(yMin<=0&&yMax>=0){ctx.beginPath();ctx.moveTo(0,toY(0));ctx.lineTo(W,toY(0));ctx.stroke();}
+  if(xMin<=0&&xMax>=0){ctx.beginPath();ctx.moveTo(toX(0),0);ctx.lineTo(toX(0),H);ctx.stroke();}
+  ctx.fillStyle=MUTED;ctx.font='10px monospace';ctx.textAlign='center';
+  for(let x=Math.ceil(xMin/xs)*xs;x<=xMax;x+=xs)if(x!==0)ctx.fillText(x.toFixed(xs<1?1:0),toX(x),toY(0)+13);
+  ctx.textAlign='right';
+  for(let y=Math.ceil(yMin/ys)*ys;y<=yMax;y+=ys)if(y!==0)ctx.fillText(y.toFixed(ys<1?1:0),toX(0)-3,toY(y)+4);
+  return{toX,toY};
+}
+function plotFn(ctx,fn,xMin,xMax,W,H,yMin,yMax,col,lw=2){
+  const toX=x=>(x-xMin)/(xMax-xMin)*W, toY=y=>H-(y-yMin)/(yMax-yMin)*H;
+  ctx.strokeStyle=col;ctx.lineWidth=lw;ctx.beginPath();let ok=false;
+  for(let i=0;i<=W*2;i++){
+    const x=xMin+i/(W*2)*(xMax-xMin);let y;
+    try{y=fn(x);}catch{ok=false;continue;}
+    if(!isFinite(y)||Math.abs(y)>1e6){ok=false;continue;}
+    const px=toX(x),py=toY(y);
+    if(!ok){ctx.moveTo(px,py);ok=true;}else ctx.lineTo(px,py);
+  }ctx.stroke();
+}
+function lbl(ctx,text,x,y,col,align='center',sz=11){
+  ctx.fillStyle=col;ctx.font=sz+'px monospace';ctx.textAlign=align;ctx.fillText(text,x,y);
+}
+function dashLine(ctx,x1,y1,x2,y2,col,dash=[5,4]){
+  ctx.strokeStyle=col;ctx.lineWidth=1.2;ctx.setLineDash(dash);
+  ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();ctx.setLineDash([]);
+}
+
+// ══ NAVIGATION ══
+const CRUMBS={
+  overview:'Techniques of Integration',parts:'8.1 Integration by Parts',
+  trig:'8.2 Trigonometric Integrals',trigsub:'8.3 Trigonometric Substitution',
+  partial:'8.4 Partial Fractions',improper:'8.5 Improper Integrals',quiz:'แบบฝึกหัด'
+};
+window.showSec=function(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.getElementById('crumbSec').textContent=CRUMBS[id]||id;
+  window.CURRENT_SEC=id;
+  if(window.setSidebarSec)setSidebarSec(id);
+  document.getElementById('main').scrollTop=0;
+  setTimeout(()=>initSec(id),60);
+};
+function initSec(id){
+  if(id==='overview')  drawOverview();
+  if(id==='parts')     showParts(0);
+  if(id==='trig')      showTrig(0);
+  if(id==='trigsub')   showTrigSub(0);
+  if(id==='partial')   showPartial(0);
+  if(id==='improper')  redrawImproper();
+  if(id==='quiz')      initQuiz();
+}
+
+// ══ OVERVIEW ══
+function drawOverview(){
+  const c=setupCanvas('overviewCanvas',760,230);if(!c)return;
+  const{ctx,W,H}=c;
+  ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);
+  const cards=[
+    {x:30, col:GREEN,  title:'IBP',    sub:'∫u dv = uv−∫v du', hint:'LIATE'},
+    {x:185,col:BLUE,   title:'Trig ∫', sub:'∫sinᵐcosⁿ dx',     hint:'Half-Angle'},
+    {x:340,col:ORANGE, title:'Trig Sub',sub:'x=a sinθ/tanθ',   hint:'Triangle'},
+    {x:495,col:PURPLE, title:'Part.Fr.',sub:'P/Q=A/(x-a)+…',   hint:'Coefficients'},
+    {x:620,col:YELLOW, title:'Improper',sub:'∫₁^∞ 1/xᵖ dx',   hint:'p>1→Conv.'},
+  ];
+  cards.forEach(card=>{
+    ctx.fillStyle=SURFACE;ctx.strokeStyle=card.col+'55';ctx.lineWidth=1;
+    ctx.beginPath();ctx.rect(card.x,30,125,160);ctx.fill();ctx.stroke();
+    ctx.fillStyle=card.col;ctx.font='bold 13px monospace';ctx.textAlign='center';
+    ctx.fillText(card.title,card.x+62,60);
+    ctx.fillStyle=ON_SURFACE;ctx.font='10px monospace';
+    ctx.fillText(card.sub,card.x+62,90);
+    ctx.fillStyle=MUTED;ctx.font='9px monospace';
+    ctx.fillText('► '+card.hint,card.x+62,155);
+    // arrow down
+    ctx.fillStyle=card.col+'88';ctx.beginPath();
+    ctx.moveTo(card.x+52,170);ctx.lineTo(card.x+72,170);ctx.lineTo(card.x+62,185);ctx.closePath();ctx.fill();
+    ctx.fillStyle=card.col;ctx.font='9px monospace';ctx.fillText('Integrate',card.x+62,200);
+  });
+  lbl(ctx,'8 Techniques of Integration — Choose based on Integrand form',W/2,H-6,MUTED,'center',10);
+}
+
+// ══ 8.1 IBP STEP CANVAS ══
+const partsProblems=[
+  {title:'∫ x eˣ dx',
+   steps:[
+     {lbl:'เลือก u, dv',   val:'u = x   →   du = dx'},
+     {lbl:'',              val:'dv = eˣ dx   →   v = eˣ'},
+     {lbl:'แทนสูตร',       val:'∫ x eˣ dx = x·eˣ − ∫ eˣ dx'},
+     {lbl:'Integrate ∫v du',val:'= x eˣ − eˣ + C'},
+     {lbl:'คำตอบ',         val:'= eˣ(x − 1) + C'},
+   ],
+   verify:'d/dx [eˣ(x−1)] = eˣ(x−1) + eˣ = x eˣ ✓', col:GREEN,
+   fnF:x=>Math.exp(x)*(x-1), fnf:x=>x*Math.exp(x), xMin:-1,xMax:3,yMin:-1.5,yMax:8},
+  {title:'∫ x cos(x) dx',
+   steps:[
+     {lbl:'เลือก u, dv',   val:'u = x   →   du = dx'},
+     {lbl:'',              val:'dv = cos(x) dx   →   v = sin(x)'},
+     {lbl:'แทนสูตร',       val:'∫ x cos(x) dx = x sin(x) − ∫ sin(x) dx'},
+     {lbl:'Integrate',     val:'= x sin(x) − (−cos(x)) + C'},
+     {lbl:'คำตอบ',         val:'= x sin(x) + cos(x) + C'},
+   ],
+   verify:'d/dx [x sin x + cos x] = sin x + x cos x − sin x = x cos x ✓', col:BLUE,
+   fnF:x=>x*Math.sin(x)+Math.cos(x), fnf:x=>x*Math.cos(x), xMin:-1,xMax:5,yMin:-5,yMax:5},
+  {title:'∫ ln(x) dx',
+   steps:[
+     {lbl:'เลือก u, dv',   val:'u = ln x   →   du = 1/x dx'},
+     {lbl:'',              val:'dv = dx   →   v = x'},
+     {lbl:'แทนสูตร',       val:'∫ ln x dx = x·ln x − ∫ x·(1/x) dx'},
+     {lbl:'Simplify',      val:'= x ln x − ∫ 1 dx'},
+     {lbl:'คำตอบ',         val:'= x ln x − x + C'},
+   ],
+   verify:'d/dx [x ln x − x] = ln x + x·(1/x) − 1 = ln x ✓', col:YELLOW,
+   fnF:x=>x*Math.log(x)-x, fnf:x=>Math.log(x), xMin:0.1,xMax:4,yMin:-2,yMax:4},
+  {title:'∫ x² eˣ dx  (Tabular)',
+   steps:[
+     {lbl:'D column',  val:'x²   →   2x   →   2   →   0'},
+     {lbl:'I column',  val:'eˣ   →   eˣ   →   eˣ   →   eˣ'},
+     {lbl:'(+) sign',  val:'(+)x²eˣ'},
+     {lbl:'(−) sign',  val:'(−)2xeˣ'},
+     {lbl:'คำตอบ',     val:'eˣ(x²−2x+2) + C'},
+   ],
+   verify:'d/dx [eˣ(x²−2x+2)] = eˣ(x²−2x+2)+eˣ(2x−2) = x²eˣ ✓', col:ORANGE,
+   fnF:x=>Math.exp(x)*(x*x-2*x+2), fnf:x=>x*x*Math.exp(x), xMin:-1,xMax:3,yMin:-1,yMax:10},
+];
+function showParts(i){
+  document.querySelectorAll('[id^=bP]').forEach((b,j)=>b.classList.toggle('on',j===i));
+  const p=partsProblems[i];
+  const c=setupCanvas('partsCanvas',760,340);if(!c)return;
+  const{ctx,W,H}=c;
+  ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);
+
+  // left: step panel (55% width)
+  const panelW=Math.floor(W*0.55);
+  ctx.fillStyle=p.col;ctx.font='bold 14px monospace';ctx.textAlign='center';
+  ctx.fillText(p.title,panelW/2,28);
+  const startY=52,rowH=44;
+  p.steps.forEach((s,idx)=>{
+    const y=startY+idx*rowH;
+    ctx.fillStyle=SURFACE;ctx.strokeStyle=p.col+'33';ctx.lineWidth=1;
+    ctx.beginPath();ctx.rect(12,y-20,panelW-24,36);ctx.fill();ctx.stroke();
+    if(s.lbl){ctx.fillStyle=p.col;ctx.font='bold 9px monospace';ctx.textAlign='left';ctx.fillText('Step '+(idx+1)+' — '+s.lbl,20,y-4);}
+    ctx.fillStyle=ON_SURFACE;ctx.font='12px monospace';ctx.textAlign='left';
+    ctx.fillText(s.val,20,y+12);
+  });
+  const vy=startY+p.steps.length*rowH+8;
+  ctx.fillStyle=GREEN+'22';ctx.strokeStyle=GREEN+'55';ctx.lineWidth=1;
+  ctx.beginPath();ctx.rect(12,vy-18,panelW-24,28);ctx.fill();ctx.stroke();
+  ctx.fillStyle=GREEN;ctx.font='10px monospace';ctx.textAlign='center';
+  ctx.fillText('✓ '+p.verify,panelW/2,vy-1);
+
+  // right: plot F(x) and f(x)
+  const rX=panelW+10,rW=W-rX-10;
+  // find y range
+  const xs=[];for(let k=0;k<=100;k++)xs.push(p.xMin+k/100*(p.xMax-p.xMin));
+  const{toX:tX,toY:tY}=drawGrid(ctx,rW,H,p.xMin,p.xMax,p.yMin,p.yMax);
+  // offset right panel
+  ctx.save();ctx.translate(rX,0);
+  const{toX,toY}=drawGrid(ctx,rW,H,p.xMin,p.xMax,p.yMin,p.yMax);
+  plotFn(ctx,p.fnF,p.xMin,p.xMax,rW,H,p.yMin,p.yMax,p.col,2.5);
+  plotFn(ctx,p.fnf,p.xMin,p.xMax,rW,H,p.yMin,p.yMax,MUTED,1.5);
+  lbl(ctx,'F(x)',rW-10,20,p.col,'right',10);
+  lbl(ctx,'f(x)',rW-10,34,MUTED,'right',10);
+  ctx.restore();
+}
+
+// ══ 8.2 TRIG INTEGRALS ══
+const trigProblems=[
+  {title:'∫ sin³x dx',
+   steps:[
+     {s:'แยก: sin³x = sin²x · sin x'},
+     {s:'แปลง: sin²x = 1 − cos²x'},
+     {s:'∫(1−cos²x)sin x dx'},
+     {s:'u-sub: u=cos x, du=−sin x dx'},
+     {s:'−∫(1−u²)du = −u + u³/3 + C'},
+     {s:'= −cos x + cos³x/3 + C'},
+   ], col:BLUE,
+   fn:x=>Math.sin(x)**3, Fn:x=>-Math.cos(x)+Math.cos(x)**3/3,
+   xMin:-Math.PI,xMax:Math.PI,yMin:-1.2,yMax:1.2},
+  {title:'∫ cos⁴x dx',
+   steps:[
+     {s:'cos²x = (1+cos 2x)/2'},
+     {s:'cos⁴x = (cos²x)² = [(1+cos 2x)/2]²'},
+     {s:'= (1/4)(1 + 2cos 2x + cos²2x)'},
+     {s:'cos²2x = (1+cos 4x)/2'},
+     {s:'= (3/8) + (1/2)cos 2x + (1/8)cos 4x'},
+     {s:'= 3x/8 + sin(2x)/4 + sin(4x)/32 + C'},
+   ], col:GREEN,
+   fn:x=>Math.cos(x)**4, Fn:x=>3*x/8+Math.sin(2*x)/4+Math.sin(4*x)/32,
+   xMin:-Math.PI,xMax:Math.PI,yMin:-0.3,yMax:1.3},
+  {title:'∫ sin²x cos²x dx',
+   steps:[
+     {s:'sin²x cos²x = (sin x cos x)² = (sin 2x / 2)²'},
+     {s:'= sin²(2x)/4'},
+     {s:'sin²(2x) = (1−cos 4x)/2'},
+     {s:'= (1−cos 4x)/8'},
+     {s:'∫(1−cos 4x)/8 dx'},
+     {s:'= x/8 − sin(4x)/32 + C'},
+   ], col:YELLOW,
+   fn:x=>Math.sin(x)**2*Math.cos(x)**2, Fn:x=>x/8-Math.sin(4*x)/32,
+   xMin:-Math.PI,xMax:Math.PI,yMin:-0.3,yMax:0.6},
+  {title:'∫ tan²x sec²x dx',
+   steps:[
+     {s:'u-sub: u = tan x,  du = sec²x dx'},
+     {s:'∫ u² du'},
+     {s:'= u³/3 + C'},
+     {s:'= tan³x / 3 + C'},
+     {s:'Verify: d/dx[tan³x/3]'},
+     {s:'= tan²x · sec²x ✓'},
+   ], col:ORANGE,
+   fn:x=>Math.tan(x)**2/Math.cos(x)**2, Fn:x=>Math.tan(x)**3/3,
+   xMin:-1.2,xMax:1.2,yMin:-0.5,yMax:5},
+];
+function showTrig(i){
+  document.querySelectorAll('[id^=bTr]').forEach((b,j)=>b.classList.toggle('on',j===i));
+  const p=trigProblems[i];
+  const c=setupCanvas('trigCanvas',760,340);if(!c)return;
+  const{ctx,W,H}=c;
+  ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);
+  const panelW=Math.floor(W*.52);
+  ctx.fillStyle=p.col;ctx.font='bold 14px monospace';ctx.textAlign='center';
+  ctx.fillText(p.title,panelW/2,28);
+  p.steps.forEach((s,idx)=>{
+    const y=55+idx*44;
+    ctx.fillStyle=SURFACE;ctx.strokeStyle=p.col+'33';ctx.lineWidth=1;
+    ctx.beginPath();ctx.rect(10,y-20,panelW-20,36);ctx.fill();ctx.stroke();
+    ctx.fillStyle=p.col+'cc';ctx.font='bold 9px monospace';ctx.textAlign='left';
+    ctx.fillText('Step '+(idx+1),18,y-5);
+    ctx.fillStyle=ON_SURFACE;ctx.font='12px monospace';
+    ctx.fillText(s.s,18,y+11);
+  });
+  // right panel: plot f and F
+  const rX=panelW+10,rW=W-rX-10;
+  ctx.save();ctx.translate(rX,0);
+  const{toX,toY}=drawGrid(ctx,rW,H,p.xMin,p.xMax,p.yMin,p.yMax);
+  plotFn(ctx,p.Fn,p.xMin,p.xMax,rW,H,p.yMin,p.yMax,p.col,2.5);
+  plotFn(ctx,p.fn,p.xMin,p.xMax,rW,H,p.yMin,p.yMax,MUTED,1.5);
+  lbl(ctx,'F(x)=Antiderivative',rW/2,18,p.col,'center',10);
+  lbl(ctx,'f(x)=Integrand',rW/2,H-6,MUTED,'center',9);
+  ctx.restore();
+}
+
+// ══ 8.3 TRIG SUB ══
+const trigsubCases=[
+  {title:'x = a sinθ  |  √(a²−x²) = a cosθ  (a=1)',
+   triangle:{opp:'x',adj:'√(1−x²)',hyp:'1',angle:'θ'},
+   problem:'∫ 1/√(1−x²) dx',
+   steps:[
+     'x = sin θ  →  dx = cos θ dθ',
+     '√(1−x²) = √(1−sin²θ) = cos θ',
+     '∫ cos θ dθ / cos θ = ∫ dθ = θ + C',
+     '= arcsin(x) + C',
+   ], col:GREEN},
+  {title:'x = a tanθ  |  √(a²+x²) = a secθ  (a=1)',
+   triangle:{opp:'x',adj:'1',hyp:'√(1+x²)',angle:'θ'},
+   problem:'∫ 1/(1+x²) dx',
+   steps:[
+     'x = tan θ  →  dx = sec²θ dθ',
+     '1+x² = 1+tan²θ = sec²θ',
+     '∫ sec²θ dθ / sec²θ = ∫ dθ = θ + C',
+     '= arctan(x) + C',
+   ], col:BLUE},
+  {title:'x = a secθ  |  √(x²−a²) = a tanθ  (a=1)',
+   triangle:{opp:'√(x²−1)',adj:'1',hyp:'x',angle:'θ'},
+   problem:'∫ 1/(x√(x²−1)) dx',
+   steps:[
+     'x = sec θ  →  dx = sec θ tan θ dθ',
+     '√(x²−1) = tan θ',
+     '∫ sec θ tan θ dθ / (sec θ · tan θ)',
+     '= ∫ dθ = θ + C = arcsec(x) + C',
+   ], col:ORANGE},
+];
+function showTrigSub(i){
+  document.querySelectorAll('[id^=bTS]').forEach((b,j)=>b.classList.toggle('on',j===i));
+  const p=trigsubCases[i];
+  const c=setupCanvas('trigsubCanvas',760,340);if(!c)return;
+  const{ctx,W,H}=c;
+  ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);
+
+  // Left: Triangle diagram
+  const triX=60,triY=200,triW=160,triH=120;
+  ctx.strokeStyle=p.col;ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(triX,triY);ctx.lineTo(triX+triW,triY);
+  ctx.lineTo(triX,triY-triH);ctx.closePath();ctx.stroke();
+  // right angle box
+  ctx.strokeStyle=MUTED;ctx.lineWidth=1;ctx.strokeRect(triX,triY-14,14,14);
+  // labels
+  ctx.fillStyle=p.col;ctx.font='bold 13px monospace';ctx.textAlign='center';
+  ctx.fillText(p.triangle.hyp,triX+triW/2-25,triY-triH/2-10);  // hyp
+  ctx.fillText(p.triangle.opp,triX-20,triY-triH/2+5);          // opp (vertical)
+  ctx.textAlign='center';
+  ctx.fillText(p.triangle.adj,triX+triW/2,triY+16);             // adj (horizontal)
+  // angle label
+  ctx.fillStyle=YELLOW;ctx.font='14px monospace';
+  ctx.fillText('θ',triX+40,triY-16);
+  // title
+  ctx.fillStyle=p.col;ctx.font='bold 12px monospace';ctx.textAlign='center';
+  ctx.fillText(p.title,320,22);
+  // problem
+  ctx.fillStyle=YELLOW;ctx.font='13px monospace';
+  ctx.fillText(p.problem,320,46);
+  // steps
+  p.steps.forEach((s,idx)=>{
+    const y=80+idx*56;
+    ctx.fillStyle=SURFACE;ctx.strokeStyle=p.col+'33';ctx.lineWidth=1;
+    ctx.beginPath();ctx.rect(250,y-18,460,44);ctx.fill();ctx.stroke();
+    ctx.fillStyle=p.col+'cc';ctx.font='bold 9px monospace';ctx.textAlign='left';
+    ctx.fillText('Step '+(idx+1),258,y-3);
+    ctx.fillStyle=ON_SURFACE;ctx.font='12px monospace';
+    ctx.fillText(s,258,y+16);
+  });
+}
+
+// ══ 8.4 PARTIAL FRACTIONS ══
+const partialProblems=[
+  {title:'∫ 1/(x²−1) dx',
+   sub:'= ∫ 1/((x−1)(x+1)) dx',
+   steps:[
+     '1/(x²−1) = A/(x−1) + B/(x+1)',
+     '1 = A(x+1) + B(x−1)',
+     'x=1: 1=2A → A=1/2',
+     'x=−1: 1=−2B → B=−1/2',
+     '= (1/2)∫[1/(x−1) − 1/(x+1)]dx',
+     '= (1/2)ln|x−1| − (1/2)ln|x+1| + C',
+     '= (1/2)ln|(x−1)/(x+1)| + C',
+   ],col:GREEN},
+  {title:'∫ (x+3)/((x+1)(x−2)) dx',
+   sub:'Linear factors, distinct',
+   steps:[
+     '(x+3)/((x+1)(x−2)) = A/(x+1) + B/(x−2)',
+     '(x+3) = A(x−2) + B(x+1)',
+     'x=−1: 2=−3A → A=−2/3',
+     'x=2: 5=3B → B=5/3',
+     '= ∫[−(2/3)/(x+1) + (5/3)/(x−2)]dx',
+     '= −(2/3)ln|x+1| + (5/3)ln|x−2| + C',
+   ],col:BLUE},
+  {title:'∫ 1/(x(x²+1)) dx',
+   sub:'Linear + Irreducible Quadratic',
+   steps:[
+     '1/(x(x²+1)) = A/x + (Bx+C)/(x²+1)',
+     '1 = A(x²+1) + (Bx+C)x',
+     'x=0: 1=A → A=1',
+     'Coefficients: x²: 0=A+B → B=−1',
+     'x¹: 0=C',
+     '= ∫[1/x − x/(x²+1)]dx',
+     '= ln|x| − (1/2)ln(x²+1) + C',
+   ],col:YELLOW},
+  {title:'∫ (x²+2x+3)/((x+1)²(x+2)) dx',
+   sub:'Repeated Linear Factor',
+   steps:[
+     '= A/(x+1) + B/(x+1)² + C/(x+2)',
+     'x²+2x+3 = A(x+1)(x+2)+B(x+2)+C(x+1)²',
+     'x=−1: 2=B → B=2',
+     'x=−2: 3=C → C=3',
+     'Expand & match: A=−2',
+     '= ∫[−2/(x+1)+2/(x+1)²+3/(x+2)]dx',
+     '= −2ln|x+1|−2/(x+1)+3ln|x+2|+C',
+   ],col:ORANGE},
+];
+function showPartial(i){
+  document.querySelectorAll('[id^=bPF]').forEach((b,j)=>b.classList.toggle('on',j===i));
+  const p=partialProblems[i];
+  const c=setupCanvas('partialCanvas',760,360);if(!c)return;
+  const{ctx,W,H}=c;
+  ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);
+  ctx.fillStyle=p.col;ctx.font='bold 14px monospace';ctx.textAlign='center';
+  ctx.fillText(p.title,W/2,26);
+  ctx.fillStyle=MUTED;ctx.font='11px monospace';
+  ctx.fillText(p.sub,W/2,44);
+  const startY=64,rowH=40;
+  p.steps.forEach((s,idx)=>{
+    const y=startY+idx*rowH;
+    ctx.fillStyle=SURFACE;ctx.strokeStyle=p.col+(idx===p.steps.length-1?'88':'33');ctx.lineWidth=idx===p.steps.length-1?1.5:.8;
+    ctx.beginPath();ctx.rect(20,y-20,W-40,32);ctx.fill();ctx.stroke();
+    ctx.fillStyle=idx===p.steps.length-1?p.col:p.col+'88';
+    ctx.font=(idx===p.steps.length-1?'bold ':'')+'9px monospace';ctx.textAlign='left';
+    ctx.fillText('Step '+(idx+1),28,y-5);
+    ctx.fillStyle=idx===p.steps.length-1?(LIGHT?'#000000':'#ffffff'):ON_SURFACE;
+    ctx.font=(idx===p.steps.length-1?'bold ':'')+'12px monospace';
+    ctx.fillText(s,28,y+9);
+  });
+}
+
+// ══ 8.5 IMPROPER ══
+function redrawImproper(){
+  const pVal=parseInt(document.getElementById('impP').value)/100;
+  const bVal=parseInt(document.getElementById('impB').value)/10;
+  document.getElementById('impPVal').textContent='p='+pVal.toFixed(2);
+  document.getElementById('impBVal').textContent='b='+bVal.toFixed(1);
+  const fn=x=>1/Math.pow(x,pVal);
+  const F=b=>pVal===1?Math.log(b):(Math.pow(b,1-pVal)-1)/(1-pVal);
+  const area=F(bVal);
+  const limit=pVal>1?1/(pVal-1):Infinity;
+  const converges=pVal>1;
+  document.getElementById('improperInfo').textContent=
+    '∫₁ᵇ 1/xᵖ dx = '+(pVal===1?'ln(b)':'')+' ≈ '+area.toFixed(4)+
+    '  |  p='+pVal.toFixed(2)+(converges?' > 1 → Converges to 1/(p−1)='+limit.toFixed(4):' ≤ 1 → Diverges (→ ∞)');
+
+  const xMax=Math.min(bVal+0.5,20);
+  const yMax=Math.min(fn(1.01)*1.1,8);
+  const c=setupCanvas('improperCanvas',760,290);if(!c)return;
+  const{ctx,W,H}=c;
+  const{toX,toY}=drawGrid(ctx,W,H,0.5,xMax,0,yMax);
+  // shade area [1, b]
+  ctx.fillStyle=(converges?GREEN:RED)+'28';
+  ctx.beginPath();ctx.moveTo(toX(1),toY(0));
+  const steps=400;
+  for(let i=0;i<=steps;i++){
+    const x=1+i/steps*(bVal-1);
+    const y=fn(x);
+    if(isFinite(y)&&y<=yMax)ctx.lineTo(toX(x),toY(y));
+  }
+  ctx.lineTo(toX(bVal),toY(0));ctx.closePath();ctx.fill();
+  plotFn(ctx,fn,0.8,xMax,W,H,0,yMax,converges?GREEN:RED,2.2);
+  // b line
+  ctx.strokeStyle=YELLOW;ctx.lineWidth=1.5;ctx.setLineDash([5,4]);
+  ctx.beginPath();ctx.moveTo(toX(bVal),0);ctx.lineTo(toX(bVal),H);ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle=YELLOW;ctx.font='11px monospace';ctx.textAlign='center';
+  ctx.fillText('b='+bVal.toFixed(1),toX(bVal),14);
+  lbl(ctx,'f(x) = 1/xᵖ,  p='+pVal.toFixed(2),10,18,converges?GREEN:RED,'left',11);
+  lbl(ctx,converges?'Converges → '+limit.toFixed(3):'Diverges → ∞',W-10,18,converges?GREEN:RED,'right',11);
+}
+
+// ══ QUIZ ══
+const quizData=[
+  {q:'∫ x eˣ dx = ?',
+   opts:['xeˣ+C','eˣ(x−1)+C','eˣ(x+1)+C','x²eˣ/2+C'],ans:1,
+   exp:'IBP: u=x, dv=eˣdx → xeˣ−∫eˣdx = xeˣ−eˣ+C = eˣ(x−1)+C'},
+  {q:'∫ sin³x dx — ขั้นตอนแรกคือ?',
+   opts:['ใช้ Half-Angle','แยก sin²x·sinx แล้วแปลง sin²=1−cos²','u-sub: u=sin x','IBP'],ans:1,
+   exp:'sin³x = sin²x·sinx = (1−cos²x)sinx แล้ว u=cosx, du=−sinx dx'},
+  {q:'เมื่อ Integrand มี √(a²−x²) ควรใช้ Trig Sub อะไร?',
+   opts:['x = a tanθ','x = a secθ','x = a sinθ','x = a cosθ'],ans:2,
+   exp:'√(a²−x²) → x=a sinθ เพราะ √(a²−a²sin²θ) = a cosθ'},
+  {q:'∫ 1/(x²−1) dx = ?',
+   opts:['ln|x²−1|+C','(1/2)ln|(x−1)/(x+1)|+C','arctan(x)+C','2x/(x²−1)²+C'],ans:1,
+   exp:'Partial fractions: 1/(x²−1)=(1/2)[1/(x−1)−1/(x+1)] → (1/2)ln|(x−1)/(x+1)|+C'},
+  {q:'∫₁^∞ 1/x² dx = ?',
+   opts:['∞ (Diverges)','1','2','ln∞'],ans:1,
+   exp:'p=2>1 → Converges: [−1/x]₁^∞ = 0−(−1) = 1'},
+  {q:'p-Integral: ∫₁^∞ 1/xᵖ dx Converges เมื่อ?',
+   opts:['p < 1','p = 1','p > 1','p > 0'],ans:2,
+   exp:'∫₁^∞ 1/xᵖ dx converges iff p>1, diverges iff p≤1'},
+  {q:'∫ ln(x) dx = ? (ใช้ IBP)',
+   opts:['1/x+C','x ln x + x + C','x ln x − x + C','(ln x)²/2+C'],ans:2,
+   exp:'IBP: u=lnx, dv=dx → x lnx − ∫x·(1/x)dx = x lnx − x + C'},
+  {q:'Partial fraction ของ 1/(x(x²+1)) มีรูปแบบ?',
+   opts:['A/x + B/x² + C/(x²+1)','A/x + (Bx+C)/(x²+1)','(Ax+B)/(x(x²+1))','A/x + B/(x+1) + C/(x-1)'],ans:1,
+   exp:'x คือ linear factor → A/x;  x²+1 คือ irreducible quadratic → (Bx+C)/(x²+1)'},
+];
+function initQuiz(){
+  const cont=document.getElementById('quizContainer');cont.innerHTML='';
+  quizData.forEach((q,qi)=>{
+    const d=document.createElement('div');
+    d.style.cssText='background:var(--card);border:1px solid var(--border);border-radius:10px;padding:.95rem 1.2rem;margin-bottom:.8rem';
+    d.innerHTML=`<div style="font-size:.65rem;color:var(--muted);font-weight:700;letter-spacing:1px;margin-bottom:.3rem">ข้อ ${qi+1}/${quizData.length}</div>
+<div style="font-size:.93rem;margin-bottom:.65rem">${q.q}</div>
+${q.opts.map((o,oi)=>`<div class="quiz-opt" id="qo-${qi}-${oi}" onclick="checkAns(${qi},${oi})">${String.fromCharCode(65+oi)}) ${o}</div>`).join('')}
+<div id="qf-${qi}" class="quiz-fb" style="display:none"></div>`;
+    cont.appendChild(d);
+  });
+}
+function checkAns(qi,oi){
+  const q=quizData[qi];
+  for(let i=0;i<q.opts.length;i++){
+    const el=document.getElementById('qo-'+qi+'-'+i);el.onclick=null;
+    if(i===q.ans)el.classList.add('correct');else if(i===oi)el.classList.add('wrong');
+  }
+  const fb=document.getElementById('qf-'+qi);fb.style.display='block';
+  if(oi===q.ans){fb.style.background='#001a10';fb.style.color='var(--green)';fb.textContent='✓ ถูกต้อง! '+q.exp;}
+  else{fb.style.background='#1a0008';fb.style.color='var(--red)';fb.textContent='✗ ไม่ถูกต้อง — '+q.exp;}
+}
+
+window.addEventListener('load',()=>{ drawOverview(); });
+</script>
+</body>
+</html>

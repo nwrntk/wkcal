@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User Management · Calculus Admin</title>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+<style>
+/* ── Variables ─────────────────────────────────────────────────────────────── */
+:root {
+  --bg:       #0a0e1a;
+  --surface:  #111827;
+  --surface2: #1a2235;
+  --border:   #1e2d45;
+  --border2:  #263548;
+  --blue:     #4cc9f0;
+  --blue-dim: #4cc9f018;
+  --green:    #00d4aa;
+  --red:      #e94560;
+  --yellow:   #f59e0b;
+  --purple:   #a78bfa;
+  --text:     #e2e8f0;
+  --text2:    #94a3b8;
+  --muted:    #64748b;
+  --radius:   10px;
+}
+
+/* ── Reset ─────────────────────────────────────────────────────────────────── */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+body {
+  min-height: 100vh;
+  background: var(--bg);
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Topbar ────────────────────────────────────────────────────────────────── */
+.topbar {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 0 1.75rem;
+  height: 58px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 50;
+  backdrop-filter: blur(12px);
+}
+.topbar-logo {
+  display: flex; align-items: center; gap: .65rem;
+  font-size: .95rem; font-weight: 800; letter-spacing: -.2px;
+}
+.topbar-logo-icon {
+  width: 32px; height: 32px;
+  background: linear-gradient(135deg, #0f3460, #1a1a3e);
+  border: 1px solid var(--blue);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .8rem; color: var(--blue);
+}
+.topbar-logo span { color: var(--blue); }
+.topbar-divider { width: 1px; height: 22px; background: var(--border); margin: 0 .25rem; }
+.topbar-title { font-size: .82rem; color: var(--muted); font-weight: 500; }
+.topbar-right { margin-left: auto; display: flex; align-items: center; gap: .6rem; }
+.avatar-chip {
+  display: flex; align-items: center; gap: .5rem;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 8px; padding: .3rem .65rem .3rem .35rem;
+  font-size: .78rem; color: var(--text2); cursor: default;
+}
+.avatar-chip .av {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue), var(--green));
+  display: flex; align-items: center; justify-content: center;
+  font-size: .65rem; font-weight: 700; color: #000;
+}
+
+/* ── Buttons ───────────────────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .4rem;
+  padding: .55rem 1.1rem; border: none; border-radius: var(--radius);
+  font-size: .83rem; font-weight: 600; cursor: pointer;
+  transition: all .15s; white-space: nowrap; text-decoration: none;
+}
+.btn:hover:not(:disabled) { filter: brightness(1.12); transform: translateY(-1px); }
+.btn:active:not(:disabled) { transform: none; filter: brightness(.95); }
+.btn:disabled { opacity: .4; cursor: not-allowed; }
+.btn-primary { background: linear-gradient(135deg, #4cc9f0, #00d4aa); color: #000; font-weight: 700; }
+.btn-danger  { background: var(--red); color: #fff; }
+.btn-ghost   { background: transparent; border: 1px solid var(--border); color: var(--text2); }
+.btn-ghost:hover:not(:disabled) { border-color: var(--border2); color: var(--text); }
+.btn-icon    { padding: .45rem; border-radius: 8px; }
+.btn-sm      { padding: .38rem .75rem; font-size: .76rem; }
+.btn-xs      { padding: .28rem .55rem; font-size: .7rem; border-radius: 6px; }
+
+/* ── Page layout ───────────────────────────────────────────────────────────── */
+.page-wrap { flex: 1; display: flex; flex-direction: column; }
+.container  { max-width: 1180px; margin: 0 auto; width: 100%; padding: 1.5rem 1.75rem; }
+
+/* ── Stat cards ────────────────────────────────────────────────────────────── */
+.stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+.stat-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; padding: 1.1rem 1.25rem;
+  display: flex; flex-direction: column; gap: .3rem;
+}
+.stat-card .sc-label { font-size: .72rem; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; font-weight: 600; }
+.stat-card .sc-value { font-size: 1.8rem; font-weight: 800; line-height: 1; }
+.stat-card .sc-sub   { font-size: .72rem; color: var(--muted); }
+.sc-blue   .sc-value { color: var(--blue); }
+.sc-green  .sc-value { color: var(--green); }
+.sc-purple .sc-value { color: var(--purple); }
+.sc-red    .sc-value { color: var(--red); }
+
+/* ── Tabs ──────────────────────────────────────────────────────────────────── */
+.tabs { display: flex; gap: .25rem; border-bottom: 1px solid var(--border); margin-bottom: 1.5rem; }
+.tab-btn {
+  display: flex; align-items: center; gap: .45rem;
+  padding: .65rem 1.1rem; background: none; border: none;
+  font-size: .83rem; font-weight: 600; color: var(--muted);
+  cursor: pointer; border-bottom: 2px solid transparent;
+  margin-bottom: -1px; transition: color .15s, border-color .15s;
+  border-radius: 6px 6px 0 0;
+}
+.tab-btn:hover { color: var(--text); background: var(--surface2); }
+.tab-btn.active { color: var(--blue); border-bottom-color: var(--blue); background: none; }
+.tab-btn .tab-icon { font-size: .95rem; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* ── Panel card ────────────────────────────────────────────────────────────── */
+.card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 14px; overflow: hidden;
+}
+.card-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 1.25rem; border-bottom: 1px solid var(--border);
+}
+.card-title {
+  font-size: .82rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .6px; color: var(--blue); display: flex; align-items: center; gap: .5rem;
+}
+.card-body { padding: 1.25rem; }
+
+/* ── Form ──────────────────────────────────────────────────────────────────── */
+.form-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+.field { display: flex; flex-direction: column; gap: .4rem; }
+.field label {
+  font-size: .72rem; font-weight: 700; color: var(--muted);
+  text-transform: uppercase; letter-spacing: .4px;
+}
+.input-wrap { position: relative; }
+.field input {
+  width: 100%; background: var(--bg); border: 1px solid var(--border);
+  border-radius: var(--radius); color: var(--text); font-size: .88rem;
+  padding: .62rem .9rem; outline: none;
+  transition: border-color .2s, box-shadow .2s;
+  font-family: inherit;
+}
+.field input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px var(--blue-dim); }
+.field input::placeholder { color: var(--muted); font-size: .82rem; }
+.required-star { color: var(--red); margin-left: 2px; }
+.form-actions { display: flex; gap: .6rem; justify-content: flex-end; margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid var(--border); }
+
+/* ── Search bar ────────────────────────────────────────────────────────────── */
+.search-bar {
+  display: flex; align-items: center; gap: .75rem; flex-wrap: wrap;
+}
+.search-wrap {
+  position: relative; flex: 1; min-width: 200px;
+}
+.search-wrap svg {
+  position: absolute; left: .75rem; top: 50%; transform: translateY(-50%);
+  color: var(--muted); width: 15px; height: 15px; pointer-events: none;
+}
+.search-wrap input {
+  width: 100%; background: var(--bg); border: 1px solid var(--border);
+  border-radius: var(--radius); color: var(--text); font-size: .85rem;
+  padding: .55rem .85rem .55rem 2.25rem; outline: none;
+  transition: border-color .2s; font-family: inherit;
+}
+.search-wrap input:focus { border-color: var(--blue); }
+.filter-select {
+  background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius);
+  color: var(--text); font-size: .82rem; padding: .55rem .8rem;
+  outline: none; cursor: pointer; font-family: inherit;
+}
+
+/* ── Table ─────────────────────────────────────────────────────────────────── */
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: .83rem; }
+thead tr { background: var(--bg); }
+th {
+  padding: .7rem 1rem; text-align: left; color: var(--muted);
+  font-size: .7rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .5px; border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+td { padding: .75rem 1rem; border-bottom: 1px solid var(--border); vertical-align: middle; }
+tbody tr:last-child td { border-bottom: none; }
+tbody tr { transition: background .1s; }
+tbody tr:hover { background: #ffffff03; }
+
+/* ── User avatar ───────────────────────────────────────────────────────────── */
+.user-cell { display: flex; align-items: center; gap: .65rem; }
+.user-av {
+  width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .72rem; font-weight: 700; color: #000;
+}
+.user-av-name { font-weight: 600; font-size: .85rem; }
+.user-av-sub  { font-size: .72rem; color: var(--muted); margin-top: 1px; }
+
+/* ── Badges ────────────────────────────────────────────────────────────────── */
+.badge {
+  display: inline-flex; align-items: center; gap: .3rem;
+  padding: .2rem .6rem; border-radius: 20px;
+  font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .3px;
+}
+.badge::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+.badge-admin  { background: #0f2244; color: var(--blue);   border: 1px solid #1a3a6a; }
+.badge-user   { background: #002a1e; color: var(--green);  border: 1px solid #004a35; }
+.badge-ok     { background: #002a1e; color: var(--green);  border: 1px solid #004a35; }
+.badge-fail   { background: #2a0010; color: var(--red);    border: 1px solid #4a001a; }
+
+/* ── Action buttons in table ───────────────────────────────────────────────── */
+.action-group { display: flex; gap: .35rem; }
+
+/* ── Dropzone ──────────────────────────────────────────────────────────────── */
+.dropzone {
+  border: 2px dashed var(--border);
+  border-radius: 12px; padding: 2.5rem 2rem;
+  text-align: center; cursor: pointer;
+  transition: border-color .2s, background .2s;
+  position: relative;
+}
+.dropzone.drag-over { border-color: var(--blue); background: var(--blue-dim); }
+.dropzone input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+.dz-icon { font-size: 2.5rem; margin-bottom: .75rem; }
+.dz-title { font-size: .95rem; font-weight: 600; margin-bottom: .3rem; }
+.dz-title span { color: var(--blue); }
+.dz-sub { font-size: .75rem; color: var(--muted); }
+.dz-file { font-size: .78rem; color: var(--green); margin-top: .75rem; font-weight: 600; }
+.dz-cols {
+  display: inline-flex; gap: .35rem; margin-top: .75rem; flex-wrap: wrap; justify-content: center;
+}
+.dz-col {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 5px; padding: .15rem .5rem;
+  font-size: .68rem; color: var(--text2); font-family: monospace;
+}
+
+/* ── Preview header ────────────────────────────────────────────────────────── */
+.preview-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: .85rem 1.25rem; background: var(--surface2);
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+}
+.preview-count { font-size: .8rem; color: var(--text2); }
+.preview-count strong { color: var(--blue); }
+
+/* ── Result summary chips ──────────────────────────────────────────────────── */
+.result-bar {
+  display: flex; align-items: center; gap: .75rem;
+  padding: .85rem 1.25rem; background: var(--surface2);
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.rc { padding: .3rem .85rem; border-radius: 20px; font-size: .78rem; font-weight: 700; }
+.rc-ok  { background: #002a1e; color: var(--green); border: 1px solid #004a35; }
+.rc-err { background: #2a0010; color: var(--red);   border: 1px solid #4a001a; }
+
+/* ── Empty state ───────────────────────────────────────────────────────────── */
+.empty-state {
+  text-align: center; padding: 3.5rem 2rem; color: var(--muted);
+}
+.empty-state .es-icon { font-size: 2.5rem; margin-bottom: .75rem; }
+.empty-state .es-text { font-size: .9rem; }
+
+/* ── Toast ─────────────────────────────────────────────────────────────────── */
+.toast-stack {
+  position: fixed; bottom: 1.5rem; right: 1.5rem;
+  display: flex; flex-direction: column; gap: .5rem;
+  z-index: 999; pointer-events: none;
+}
+.toast {
+  display: flex; align-items: flex-start; gap: .65rem;
+  padding: .85rem 1.1rem; border-radius: 10px;
+  font-size: .82rem; max-width: 340px;
+  pointer-events: auto; animation: toastIn .25s ease;
+  box-shadow: 0 8px 30px #00000060;
+}
+@keyframes toastIn {
+  from { opacity: 0; transform: translateX(20px) scale(.96); }
+  to   { opacity: 1; transform: none; }
+}
+.toast-out { animation: toastOut .25s ease forwards; }
+@keyframes toastOut {
+  to { opacity: 0; transform: translateX(20px) scale(.96); }
+}
+.toast-success { background: #002a1e; border: 1px solid #00d4aa55; color: var(--green); }
+.toast-error   { background: #2a0010; border: 1px solid #e9456055; color: var(--red); }
+.toast-icon    { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+.toast-msg     { flex: 1; line-height: 1.4; }
+
+/* ── Modal ─────────────────────────────────────────────────────────────────── */
+.overlay {
+  display: none; position: fixed; inset: 0;
+  background: #00000090; backdrop-filter: blur(4px);
+  align-items: center; justify-content: center; z-index: 200;
+}
+.overlay.show { display: flex; }
+.modal {
+  background: var(--surface); border: 1px solid var(--border2);
+  border-radius: 16px; padding: 1.75rem; width: 380px;
+  max-width: calc(100vw - 2rem);
+  animation: modalIn .2s ease;
+  box-shadow: 0 24px 60px #00000080;
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(.95) translateY(-10px); }
+  to   { opacity: 1; transform: none; }
+}
+.modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; }
+.modal-header h3 { font-size: 1rem; font-weight: 700; }
+.modal-close { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 1.2rem; line-height: 1; padding: .2rem; }
+.modal-close:hover { color: var(--text); }
+.modal-sub { font-size: .78rem; color: var(--muted); margin-bottom: 1rem; }
+.modal-actions { display: flex; gap: .6rem; justify-content: flex-end; margin-top: 1.25rem; }
+
+/* ── Delete confirm modal ──────────────────────────────────────────────────── */
+.del-avatar {
+  width: 52px; height: 52px; border-radius: 50%; margin: 0 auto .75rem;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; font-weight: 700; color: #000;
+}
+.del-info { text-align: center; margin-bottom: 1.25rem; }
+.del-info strong { display: block; font-size: .95rem; }
+.del-info span   { font-size: .78rem; color: var(--muted); }
+.del-warn { background: #2a0010; border: 1px solid #4a001a; border-radius: 8px; padding: .65rem .9rem; font-size: .78rem; color: var(--red); margin-bottom: 1rem; }
+
+/* ── Footer ────────────────────────────────────────────────────────────────── */
+footer {
+  text-align: center; padding: 1.1rem;
+  font-size: .72rem; color: var(--muted);
+  border-top: 1px solid var(--border);
+  margin-top: auto;
+}
+
+/* ── Skeleton loader ───────────────────────────────────────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: -600px 0; }
+  100% { background-position:  600px 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg, var(--surface2) 25%, #2a3a52 50%, var(--surface2) 75%);
+  background-size: 600px 100%;
+  animation: shimmer 1.4s infinite;
+  border-radius: 4px; display: inline-block;
+}
+
+/* ── Responsive ────────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .form-grid { grid-template-columns: 1fr 1fr; }
+  .stats-row { grid-template-columns: 1fr 1fr; }
+  .topbar-title, .topbar-divider { display: none; }
+  .container { padding: 1rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── Topbar ──────────────────────────────────────────────────────────────── -->
+<header class="topbar">
+  <div class="topbar-logo">
+    <div class="topbar-logo-icon">∫</div>
+    <span>Calculus<span>·</span>Admin</span>
+  </div>
+  <div class="topbar-divider"></div>
+  <span class="topbar-title">User Management</span>
+  <div class="topbar-right">
+    <div class="avatar-chip">
+      <div class="av" id="adminAv">A</div>
+      <span id="adminName">—</span>
+    </div>
+    <button class="btn btn-ghost btn-sm" onclick="location.href='/dashboard.html'">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      Dashboard
+    </button>
+    <button class="btn btn-danger btn-sm" onclick="logout()">Sign Out</button>
+  </div>
+</header>
+
+<!-- ── Page ────────────────────────────────────────────────────────────────── -->
+<div class="page-wrap">
+<div class="container">
+
+  <!-- Stat cards -->
+  <div class="stats-row">
+    <div class="stat-card sc-blue">
+      <div class="sc-label">Total Users</div>
+      <div class="sc-value" id="statTotal">—</div>
+      <div class="sc-sub">registered accounts</div>
+    </div>
+    <div class="stat-card sc-green">
+      <div class="sc-label">Students</div>
+      <div class="sc-value" id="statUsers">—</div>
+      <div class="sc-sub">role: user</div>
+    </div>
+    <div class="stat-card sc-purple">
+      <div class="sc-label">Admins</div>
+      <div class="sc-value" id="statAdmins">—</div>
+      <div class="sc-sub">role: admin</div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs" id="tabBar">
+    <button class="tab-btn active" data-tab="users">
+      <span class="tab-icon">👥</span> All Users
+    </button>
+    <button class="tab-btn" data-tab="create">
+      <span class="tab-icon">✚</span> Create User
+    </button>
+    <button class="tab-btn" data-tab="import">
+      <span class="tab-icon">📥</span> Import Excel
+    </button>
+  </div>
+
+  <!-- ── Tab: Users ──────────────────────────────────────────────────────── -->
+  <div class="tab-panel active" id="tab-users">
+    <div class="card">
+      <div class="card-header">
+        <div class="search-bar" style="flex:1;margin-right:1rem;">
+          <div class="search-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="search" id="searchInput" placeholder="Search username, name, nickname…" oninput="filterTable()" autocomplete="off" name="user-search">
+          </div>
+          <select class="filter-select" id="roleFilter" onchange="filterTable()">
+            <option value="">All Roles</option>
+            <option value="ADMIN">Admin</option>
+            <option value="USER">User</option>
+          </select>
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="loadUsers()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10"/><path d="M20.49 15a9 9 0 0 1-14.85 3.36L1 14"/></svg>
+          Refresh
+        </button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Nickname</th>
+              <th>Role</th>
+              <th>Created</th>
+              <th style="text-align:right;">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="userTableBody">
+            <tr><td colspan="5"><div class="empty-state"><div class="es-icon">⏳</div><div class="es-text">Loading users…</div></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Tab: Create ─────────────────────────────────────────────────────── -->
+  <div class="tab-panel" id="tab-create">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          New Account
+        </div>
+      </div>
+      <div class="card-body">
+        <form id="createForm" autocomplete="off">
+          <div class="form-grid">
+            <div class="field">
+              <label>Username <span class="required-star">*</span></label>
+              <input type="text" id="newUsername" placeholder="e.g. student01" required>
+            </div>
+            <div class="field">
+              <label>Password <span class="required-star">*</span></label>
+              <input type="password" id="newPassword" placeholder="Min 8 characters" required>
+            </div>
+            <div class="field">
+              <label>Full Name</label>
+              <input type="text" id="newName" placeholder="e.g. สมชาย ใจดี">
+            </div>
+            <div class="field">
+              <label>Nickname</label>
+              <input type="text" id="newNickName" placeholder="e.g. ชาย">
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn btn-ghost" onclick="document.getElementById('createForm').reset()">Clear</button>
+            <button type="submit" class="btn btn-primary" id="createBtn">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Create User
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Tab: Import ─────────────────────────────────────────────────────── -->
+  <div class="tab-panel" id="tab-import">
+    <div class="card" style="margin-bottom:1rem;">
+      <div class="card-header">
+        <div class="card-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Upload File
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="dropzone" id="dropzone">
+          <input type="file" id="fileInput" accept=".xlsx,.xls,.csv">
+          <div class="dz-icon">📊</div>
+          <div class="dz-title">Drop Excel / CSV here or <span>browse file</span></div>
+          <div class="dz-sub">Supported: .xlsx · .xls · .csv</div>
+          <div class="dz-cols">
+            <span class="dz-col">username</span>
+            <span class="dz-col">password</span>
+            <span class="dz-col">name</span>
+            <span class="dz-col">nick_name</span>
+          </div>
+          <div class="dz-file" id="fileName"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Preview -->
+    <div class="card" id="previewCard" style="display:none;">
+      <div class="card-header">
+        <div class="card-title">Preview</div>
+        <div style="display:flex;gap:.5rem;">
+          <button class="btn btn-ghost btn-sm" onclick="clearImport()">✕ Clear</button>
+          <button class="btn btn-primary btn-sm" id="importBtn" onclick="importUsers()">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="3" x2="12" y2="21"/></svg>
+            Import All
+          </button>
+        </div>
+      </div>
+      <div class="preview-header">
+        <span class="preview-count"><strong id="previewCount">0</strong> rows ready to import</span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>#</th><th>Username</th><th>Password</th><th>Full Name</th><th>Nickname</th></tr></thead>
+          <tbody id="previewBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Result -->
+    <div class="card" id="resultCard" style="display:none;">
+      <div class="card-header">
+        <div class="card-title">Import Result</div>
+        <div style="display:flex;gap:.5rem;">
+          <button class="btn btn-primary btn-sm" onclick="switchTabById('users')">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+            View All Users
+          </button>
+          <button class="btn btn-ghost btn-sm" onclick="clearImport()">Import Another</button>
+        </div>
+      </div>
+      <div class="result-bar" id="resultBar"></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Username</th><th>Full Name</th><th>Nickname</th><th>Status</th></tr></thead>
+          <tbody id="resultBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /container -->
+</div><!-- /page-wrap -->
+
+<footer>&copy; 2026 Dr.Woranidtha Krungseanmuang</footer>
+
+<!-- ── Toast stack ────────────────────────────────────────────────────────── -->
+<div class="toast-stack" id="toastStack"></div>
+
+<!-- ── Reset Password Modal ──────────────────────────────────────────────── -->
+<div class="overlay" id="pwOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Reset Password</h3>
+      <button class="modal-close" onclick="closePwModal()">✕</button>
+    </div>
+    <p class="modal-sub" id="pwModalUser"></p>
+    <div class="field">
+      <label>New Password <span class="required-star">*</span></label>
+      <input type="password" id="newPwInput" placeholder="Min 8 characters">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost btn-sm" onclick="closePwModal()">Cancel</button>
+      <button class="btn btn-primary btn-sm" onclick="submitResetPw()">Save Password</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Edit User Modal ────────────────────────────────────────────────────── -->
+<div class="overlay" id="editOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Edit User</h3>
+      <button class="modal-close" onclick="closeEditModal()">✕</button>
+    </div>
+    <p class="modal-sub" id="editModalUser"></p>
+    <div style="display:flex;flex-direction:column;gap:.85rem;">
+      <div class="field">
+        <label>Full Name</label>
+        <input type="text" id="editName" placeholder="e.g. สมชาย ใจดี">
+      </div>
+      <div class="field">
+        <label>Nickname</label>
+        <input type="text" id="editNickName" placeholder="e.g. ชาย">
+      </div>
+      <div class="field">
+        <label>Role</label>
+        <select id="editRole" style="background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);font-size:.88rem;padding:.62rem .9rem;outline:none;font-family:inherit;width:100%;cursor:pointer;">
+          <option value="USER">USER — Student</option>
+          <option value="ADMIN">ADMIN — Administrator</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost btn-sm" onclick="closeEditModal()">Cancel</button>
+      <button class="btn btn-primary btn-sm" onclick="submitEdit()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Delete Confirm Modal ───────────────────────────────────────────────── -->
+<div class="overlay" id="delOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Delete User</h3>
+      <button class="modal-close" onclick="closeDelModal()">✕</button>
+    </div>
+    <div class="del-info">
+      <div class="del-avatar" id="delAvatar"></div>
+      <strong id="delUsername"></strong>
+      <span id="delName"></span>
+    </div>
+    <div class="del-warn">⚠ This action is permanent and cannot be undone. All data for this user will be removed.</div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost btn-sm" onclick="closeDelModal()">Cancel</button>
+      <button class="btn btn-danger btn-sm" onclick="confirmDelete()">Delete User</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Utils ────────────────────────────────────────────────────────────────────
+const esc = s => String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const token = () => sessionStorage.getItem('access_token');
+
+const COLORS = ['#4cc9f0','#00d4aa','#a78bfa','#f59e0b','#e94560','#38bdf8'];
+const avatarColor = str => COLORS[((str || '?').charCodeAt(0)) % COLORS.length];
+const avatarInitial = str => (str || '?')[0].toUpperCase();
+
+// ── Auth guard ────────────────────────────────────────────────────────────────
+(function guard() {
+  const t = token();
+  if (!t) return location.replace('/login.html');
+  try {
+    const p = JSON.parse(atob(t.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')));
+    if (p.exp && p.exp * 1000 < Date.now()) return location.replace('/login.html');
+    if (p.role !== 'ADMIN') return location.replace('/dashboard.html');
+    document.getElementById('adminName').textContent = p.username;
+    document.getElementById('adminAv').textContent = avatarInitial(p.username);
+    document.getElementById('adminAv').style.background = avatarColor(p.username);
+  } catch { location.replace('/login.html'); }
+})();
+
+async function logout() {
+  await fetch('/api/auth/logout', { method:'POST', credentials:'include' }).catch(()=>{});
+  sessionStorage.clear();
+  location.replace('/login.html');
+}
+
+// ── Toast ─────────────────────────────────────────────────────────────────────
+function toast(msg, type = 'success') {
+  const stack = document.getElementById('toastStack');
+  const el = document.createElement('div');
+  el.className = `toast toast-${type}`;
+  el.innerHTML = `<span class="toast-icon">${type === 'success' ? '✓' : '✕'}</span><span class="toast-msg">${esc(msg)}</span>`;
+  stack.appendChild(el);
+  setTimeout(() => {
+    el.classList.add('toast-out');
+    setTimeout(() => el.remove(), 280);
+  }, 3800);
+}
+
+// ── Tabs ──────────────────────────────────────────────────────────────────────
+function switchTab(id, btn) {
+  if (document.getElementById('tab-' + id).classList.contains('active')) return;
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  if (btn) btn.classList.add('active');
+  if (id === 'users') loadUsers();
+}
+function switchTabById(id) {
+  const btn = document.querySelector(`#tabBar [data-tab="${id}"]`);
+  const alreadyActive = document.getElementById('tab-' + id).classList.contains('active');
+  switchTab(id, btn);
+  if (alreadyActive && id === 'users') loadUsers();
+}
+document.getElementById('tabBar').addEventListener('click', e => {
+  const btn = e.target.closest('[data-tab]');
+  if (btn) switchTab(btn.dataset.tab, btn);
+});
+
+// ── API ───────────────────────────────────────────────────────────────────────
+async function api(method, path, body, _retried = false) {
+  const res = await fetch(path, {
+    method, credentials: 'include', cache: 'no-store',
+    headers: { 'Content-Type':'application/json', 'Authorization':`Bearer ${token()}` },
+    body: body ? JSON.stringify(body) : undefined,
+  });
+
+  // Token expired — try silent refresh once
+  if (res.status === 401 && !_retried) {
+    const r = await fetch('/api/auth/refresh', { method:'POST', credentials:'include' });
+    if (r.ok) {
+      const d = await r.json();
+      sessionStorage.setItem('access_token', d.data.accessToken);
+      return api(method, path, body, true);
+    }
+    sessionStorage.clear();
+    location.replace('/login.html');
+    return { success: false };
+  }
+
+  return res.json();
+}
+
+// ── Load & render users ───────────────────────────────────────────────────────
+let allUsers = [];
+let _usersLoadedOnce = false;  // once true, never blank the table
+let _loadingUsers    = false;  // concurrency guard
+let _pendingRefresh  = false;  // queued refresh while one is in-flight
+
+async function loadUsers() {
+  console.trace('loadUsers called');  // shows call-stack in browser DevTools (F12 → Console)
+
+  if (_loadingUsers) { _pendingRefresh = true; return; }
+  _loadingUsers = true;
+
+  const tbody  = document.getElementById('userTableBody');
+  const hadData = _usersLoadedOnce || allUsers.length > 0;
+  if (!hadData) {
+    tbody.innerHTML = `<tr><td colspan="5"><div class="empty-state"><div class="es-icon">⏳</div><div class="es-text">Loading…</div></div></td></tr>`;
+  }
+  try {
+    const data = await api('GET', '/api/users');
+    if (!data || !data.success) {
+      if (!hadData) {
+        tbody.innerHTML = '<tr><td colspan="5"><div class="empty-state"><div class="es-icon">⚠️</div><div class="es-text">Failed to load users</div><button class="btn btn-ghost btn-sm" style="margin-top:.75rem" onclick="loadUsers()">Try Again</button></div></td></tr>';
+      } else {
+        toast('Failed to refresh user list', 'error');
+      }
+      return;
+    }
+    // Only update allUsers when we receive a valid array — never reset to [] on bad data
+    if (Array.isArray(data.data)) {
+      allUsers = data.data;
+      _usersLoadedOnce = true;
+    }
+    updateStats();
+    filterTable();
+  } catch (err) {
+    console.error('loadUsers error:', err);
+    if (!hadData) {
+      tbody.innerHTML = '<tr><td colspan="5"><div class="empty-state"><div class="es-icon">⚠️</div><div class="es-text">Network error — server may be offline</div><button class="btn btn-ghost btn-sm" style="margin-top:.75rem" onclick="loadUsers()">Try Again</button></div></td></tr>';
+    } else {
+      toast('Network error — could not refresh users', 'error');
+    }
+  } finally {
+    _loadingUsers = false;
+    if (_pendingRefresh) { _pendingRefresh = false; loadUsers(); }
+  }
+}
+
+function updateStats() {
+  document.getElementById('statTotal').textContent  = allUsers.length;
+  document.getElementById('statUsers').textContent  = allUsers.filter(u => u.role === 'USER').length;
+  document.getElementById('statAdmins').textContent = allUsers.filter(u => u.role === 'ADMIN').length;
+}
+
+function safeDate(val) {
+  try {
+    const d = new Date(val);
+    if (isNaN(d.getTime())) return '—';
+    return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+  } catch { return '—'; }
+}
+
+function filterTable() {
+  try {
+    const q    = document.getElementById('searchInput').value.toLowerCase();
+    const role = document.getElementById('roleFilter').value.trim();
+    const list = Array.isArray(allUsers) ? allUsers : [];
+    const rows = list.filter(u => {
+      const matchQ = !q || [u.username, u.name, u.nick_name, u.email].some(v => (v||'').toLowerCase().includes(q));
+      const matchR = !role || (u.role || 'USER').trim() === role;
+      return matchQ && matchR;
+    });
+    rows.sort((a, b) => {
+      const ra = (a.role || 'USER').trim();
+      const rb = (b.role || 'USER').trim();
+      if (ra !== rb) return ra === 'ADMIN' ? -1 : 1;
+      return (a.username || '').localeCompare(b.username || '');
+    });
+    renderTable(rows);
+  } catch (err) {
+    console.error('filterTable error:', err);
+  }
+}
+
+function renderTable(users) {
+  const tbody = document.getElementById('userTableBody');
+  if (!users.length) {
+    tbody.innerHTML = `<tr><td colspan="5"><div class="empty-state"><div class="es-icon">🔍</div><div class="es-text">No users match your search</div></div></td></tr>`;
+    return;
+  }
+  const rows = users.map(u => {
+    try {
+      const uname = u.username || '';
+      const color = avatarColor(uname);
+      const init  = avatarInitial(uname);
+      const role  = (u.role || 'USER').trim();
+      return `
+      <tr>
+        <td>
+          <div class="user-cell">
+            <div class="user-av" style="background:${color}">${init}</div>
+            <div>
+              <div class="user-av-name">${esc(uname)}</div>
+              <div class="user-av-sub">${esc(u.name || u.email || '—')}</div>
+            </div>
+          </div>
+        </td>
+        <td style="color:var(--text2)">${esc(u.nick_name || '—')}</td>
+        <td><span class="badge badge-${role.toLowerCase()}">${role}</span></td>
+        <td style="color:var(--muted);font-size:.77rem;">${safeDate(u.createdAt)}</td>
+        <td>
+          <div class="action-group" style="justify-content:flex-end;">
+            <button class="btn btn-ghost btn-xs tbl-edit"
+              data-id="${esc(u.id)}" data-username="${esc(uname)}"
+              data-name="${esc(u.name||'')}" data-nick="${esc(u.nick_name||'')}" data-role="${role}">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              Edit
+            </button>
+            <button class="btn btn-ghost btn-xs tbl-pw"
+              data-id="${esc(u.id)}" data-username="${esc(uname)}">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              Reset PW
+            </button>
+            <button class="btn btn-danger btn-xs tbl-del"
+              data-id="${esc(u.id)}" data-username="${esc(uname)}" data-name="${esc(u.name||'')}">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>
+              Delete
+            </button>
+          </div>
+        </td>
+      </tr>`;
+    } catch (err) {
+      console.error('Row render failed for user:', u, err);
+      return `<tr><td colspan="5" style="color:var(--muted);font-size:.75rem;padding:.5rem 1rem">⚠ Error rendering row for "${esc(u.username || u.id || '?')}"</td></tr>`;
+    }
+  });
+  tbody.innerHTML = rows.join('');
+}
+
+// ── Create user ───────────────────────────────────────────────────────────────
+document.getElementById('createForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const btn = document.getElementById('createBtn');
+  btn.disabled = true; btn.textContent = 'Creating…';
+  const data = await api('POST', '/api/users', {
+    username:  document.getElementById('newUsername').value.trim(),
+    password:  document.getElementById('newPassword').value,
+    name:      document.getElementById('newName').value.trim(),
+    nick_name: document.getElementById('newNickName').value.trim(),
+  });
+  btn.disabled = false;
+  btn.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Create User`;
+  if (data.success) {
+    toast(`User "${data.data.username}" created`, 'success');
+    e.target.reset();
+    switchTabById('users');
+  } else {
+    toast(data.message || 'Failed to create user', 'error');
+  }
+});
+
+// ── Delete modal ──────────────────────────────────────────────────────────────
+let _delId = null;
+function openDelModal(id, username, name) {
+  _delId = id;
+  const color = avatarColor(username);
+  document.getElementById('delAvatar').style.background = color;
+  document.getElementById('delAvatar').textContent = avatarInitial(username);
+  document.getElementById('delUsername').textContent = username;
+  document.getElementById('delName').textContent = name || '';
+  document.getElementById('delOverlay').classList.add('show');
+}
+function closeDelModal() { document.getElementById('delOverlay').classList.remove('show'); _delId = null; }
+async function confirmDelete() {
+  try {
+    const data = await api('DELETE', `/api/users/${_delId}`);
+    closeDelModal();
+    if (data && data.success) { toast('User deleted', 'success'); loadUsers(); }
+    else toast((data && data.message) || 'Failed to delete', 'error');
+  } catch (err) {
+    console.error('confirmDelete error:', err);
+    closeDelModal();
+    toast('Network error — could not delete user', 'error');
+  }
+}
+
+// ── Reset password modal ──────────────────────────────────────────────────────
+let _pwId = null;
+function openPwModal(id, username) {
+  _pwId = id;
+  document.getElementById('pwModalUser').textContent = `Resetting password for: ${username}`;
+  document.getElementById('newPwInput').value = '';
+  document.getElementById('pwOverlay').classList.add('show');
+  setTimeout(() => document.getElementById('newPwInput').focus(), 50);
+}
+function closePwModal() { document.getElementById('pwOverlay').classList.remove('show'); _pwId = null; }
+async function submitResetPw() {
+  const pw = document.getElementById('newPwInput').value;
+  if (!pw || pw.length < 8) { toast('Password must be at least 8 characters', 'error'); return; }
+  const data = await api('PATCH', `/api/users/${_pwId}/password`, { password: pw });
+  if (data.success) { toast('Password reset successfully', 'success'); closePwModal(); }
+  else toast(data.message || 'Failed', 'error');
+}
+
+// close modals on overlay click
+document.getElementById('pwOverlay').addEventListener('click', e => { if (e.target === e.currentTarget) closePwModal(); });
+document.getElementById('delOverlay').addEventListener('click', e => { if (e.target === e.currentTarget) closeDelModal(); });
+
+// ── Excel import ──────────────────────────────────────────────────────────────
+let parsedRows = [];
+
+const dropzone  = document.getElementById('dropzone');
+const fileInput = document.getElementById('fileInput');
+
+dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('drag-over'); });
+dropzone.addEventListener('dragleave', () => dropzone.classList.remove('drag-over'));
+dropzone.addEventListener('drop', e => {
+  e.preventDefault(); dropzone.classList.remove('drag-over');
+  if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+});
+fileInput.addEventListener('change', () => { if (fileInput.files[0]) handleFile(fileInput.files[0]); });
+
+function handleFile(file) {
+  document.getElementById('fileName').textContent = '📎 ' + file.name;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const wb  = XLSX.read(e.target.result, { type:'array' });
+    const ws  = wb.Sheets[wb.SheetNames[0]];
+    const raw = XLSX.utils.sheet_to_json(ws, { defval:'' });
+    parsedRows = raw.map(r => ({
+      username:  String(r.username  || r.Username  || r.USER      || '').trim(),
+      password:  String(r.password  || r.Password  || r.PASS      || '').trim(),
+      name:      String(r.name      || r.Name      || r.NAME      || '').trim(),
+      nick_name: String(r.nick_name || r.Nick_Name || r.NICK_NAME || r.nickname || r.Nickname || '').trim(),
+    })).filter(r => r.username);
+    renderPreview();
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+function renderPreview() {
+  document.getElementById('previewCount').textContent = parsedRows.length;
+  document.getElementById('previewBody').innerHTML = parsedRows.map((r, i) => `
+    <tr>
+      <td style="color:var(--muted)">${i+1}</td>
+      <td><strong>${esc(r.username)}</strong></td>
+      <td style="color:var(--muted)">${r.password ? '••••••••' : `<span style="color:var(--red);font-weight:600">⚠ missing</span>`}</td>
+      <td>${esc(r.name || '—')}</td>
+      <td>${esc(r.nick_name || '—')}</td>
+    </tr>`).join('');
+  document.getElementById('previewCard').style.display = 'block';
+  document.getElementById('resultCard').style.display  = 'none';
+}
+
+function clearImport() {
+  parsedRows = []; fileInput.value = '';
+  document.getElementById('fileName').textContent = '';
+  document.getElementById('previewCard').style.display = 'none';
+  document.getElementById('resultCard').style.display  = 'none';
+}
+
+async function importUsers() {
+  if (!parsedRows.length) return;
+  const btn = document.getElementById('importBtn');
+  btn.disabled = true; btn.textContent = 'Importing…';
+  const data = await api('POST', '/api/users/bulk', { users: parsedRows });
+  btn.disabled = false;
+  btn.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="3" x2="12" y2="21"/></svg> Import All`;
+  if (!data.success) { toast(data.message || 'Import failed', 'error'); return; }
+
+  const { created, failed } = data.data;
+  document.getElementById('resultBar').innerHTML =
+    `<span class="rc rc-ok">✓ ${created.length} created</span>` +
+    (failed.length ? `<span class="rc rc-err">✕ ${failed.length} failed</span>` : '');
+
+  const all = [
+    ...created.map(u => ({ username:u.username, name:u.name, nick_name:u.nick_name, ok:true,  reason:'' })),
+    ...failed.map(f  => ({ username:f.username, name:'',     nick_name:'',           ok:false, reason:f.reason })),
+  ];
+  document.getElementById('resultBody').innerHTML = all.map(r => `
+    <tr>
+      <td><strong>${esc(r.username)}</strong></td>
+      <td>${esc(r.name || '—')}</td>
+      <td>${esc(r.nick_name || '—')}</td>
+      <td><span class="badge ${r.ok ? 'badge-ok' : 'badge-fail'}">${r.ok ? 'Created' : esc(r.reason)}</span></td>
+    </tr>`).join('');
+
+  document.getElementById('previewCard').style.display = 'none';
+  document.getElementById('resultCard').style.display  = 'block';
+  if (created.length) {
+    toast(`Imported ${created.length} user(s) successfully`, 'success');
+    // switchTabById already calls loadUsers() — no separate loadUsers() needed
+    setTimeout(() => {
+      switchTabById('users');
+    }, 1800);
+  }
+  if (failed.length) toast(`${failed.length} row(s) failed — check result table`, 'error');
+}
+
+// ── Edit user modal ───────────────────────────────────────────────────────────
+let _editId = null;
+function openEditModal(id, username, name, nickName, role) {
+  _editId = id;
+  document.getElementById('editModalUser').textContent = `Editing: ${username}`;
+  document.getElementById('editName').value     = name;
+  document.getElementById('editNickName').value = nickName;
+  document.getElementById('editRole').value     = role;
+  document.getElementById('editOverlay').classList.add('show');
+}
+function closeEditModal() { document.getElementById('editOverlay').classList.remove('show'); _editId = null; }
+async function submitEdit() {
+  const data = await api('PATCH', `/api/users/${_editId}`, {
+    name:      document.getElementById('editName').value.trim(),
+    nick_name: document.getElementById('editNickName').value.trim(),
+    role:      document.getElementById('editRole').value,
+  });
+  if (data.success) { toast('User updated successfully', 'success'); closeEditModal(); loadUsers(); }
+  else toast(data.message || 'Failed to update', 'error');
+}
+document.getElementById('editOverlay').addEventListener('click', e => { if (e.target === e.currentTarget) closeEditModal(); });
+
+// ── Table button delegation — bound to static #tab-users, not replaced tbody ──
+document.getElementById('tab-users').addEventListener('click', e => {
+  const editBtn = e.target.closest('.tbl-edit');
+  const pwBtn   = e.target.closest('.tbl-pw');
+  const delBtn  = e.target.closest('.tbl-del');
+  if (!editBtn && !pwBtn && !delBtn) return;
+  if (editBtn) {
+    const d = editBtn.dataset;
+    openEditModal(d.id, d.username, d.name, d.nick, d.role);
+  } else if (pwBtn) {
+    openPwModal(pwBtn.dataset.id, pwBtn.dataset.username);
+  } else if (delBtn) {
+    openDelModal(delBtn.dataset.id, delBtn.dataset.username, delBtn.dataset.name);
+  }
+});
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+loadUsers();
+</script>
+</body>
+</html>

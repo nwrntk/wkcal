@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//d/d/nell_aj/mywork/**)",
+      "Bash(pkill -f \"node src/app.js\")",
+      "PowerShell($c = Get-NetTCPConnection -LocalPort 3000 -State Listen -ErrorAction SilentlyContinue; if \\($c\\) { $c | ForEach-Object { Stop-Process -Id $_.OwningProcess -Force -ErrorAction SilentlyContinue } }; Start-Sleep -Seconds 1; if \\(Get-NetTCPConnection -LocalPort 3000 -State Listen -ErrorAction SilentlyContinue\\) { \"still bound\" } else { \"port 3000 free - test server stopped\" })"
+    ]
+  }
+}

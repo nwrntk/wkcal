@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(start \"\" \"d:\\\\nell_aj\\\\mywork\\\\Calculus\\\\index.html\")",
+      "WebFetch(domain:www.9arm.co)",
+      "Bash(npm install *)",
+      "Bash(npm run *)",
+      "Bash(curl -s http://localhost:3000/api/health)",
+      "Bash(npx prisma *)",
+      "Bash(taskkill /F /IM node.exe)",
+      "Bash(Test-Path \"d:\\\\nell_aj\\\\mywork\\\\Calculus\\\\ch5.html\")",
+      "Bash(cd /d/nell_aj/mywork/Calculus/backend && cat .env 2>/dev/null | grep -iE \"EXPIRES|CORS|NODE_ENV|PORT\" || echo \"no .env\"; echo \"---ENV FILES---\"; ls -la .env* 2>/dev/null)",
+      "Read(//d/d/nell_aj/mywork/Calculus/backend/**)"
+    ]
+  }
+}

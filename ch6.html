@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter VI — Applications of Integrals · Thomas Calculus</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script>
+  window.CURRENT_CH  = 6;
+  window.CURRENT_SEC = 'overview';
+  window._ch6Sections = ['overview','area','disk','shell','arclength','surface','quiz'];
+</script>
+</head>
+<body class="sb-open">
+<aside id="sidebar"></aside>
+<button id="toggleBtn" onclick="toggleSidebar()" title="Toggle sidebar (S)">☰</button>
+<main id="main">
+
+  <div class="topbar">
+    <div class="topbar-crumb">Chapter VI &nbsp;›&nbsp; <span id="crumbSec">Applications of Integrals</span></div>
+    <div class="topbar-right">
+      <span class="kb-hint">S sidebar</span>
+      <span class="kb-hint">← → navigate</span>
+      <span class="kb-hint">F fullscreen</span>
+    </div>
+  </div>
+
+  <!-- ══ OVERVIEW ══ -->
+  <div id="page-overview" class="page active">
+  <div class="container">
+    <div class="hero">
+      <div class="badge">Thomas Calculus · Chapter VI</div>
+      <h1><span class="hl">Applications</span> of Integrals</h1>
+      <p>นำ Integral ไปใช้คำนวณพื้นที่ระหว่างกราฟ, ปริมาตรของ Solid of Revolution, ความยาวส่วนโค้ง และพื้นที่ผิว</p>
+    </div>
+    <div class="section-grid">
+      <div class="section-card" onclick="showSec('area')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 14 Q6 4 10 8 Q14 12 18 4"/><path d="M2 16 Q6 8 10 12 Q14 16 18 8" opacity=".5"/><path d="M5 13 Q7 8 10 9 Q13 10 15 6" fill="currentColor" opacity=".15" stroke="none"/></svg></div>
+        <h3>6.1 Area Between Curves</h3><p>∫[f(x)−g(x)]dx — พื้นที่ระหว่างสองกราฟ</p>
+      </div>
+      <div class="section-card" onclick="showSec('disk')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><ellipse cx="10" cy="10" rx="7" ry="4"/><ellipse cx="10" cy="10" rx="4" ry="2" stroke-dasharray="3 2"/></svg></div>
+        <h3>6.2 Disk &amp; Washer Method</h3><p>V = π∫[f²−g²]dx — หมุนรอบแกน</p>
+      </div>
+      <div class="section-card" onclick="showSec('shell')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 4 V16"/><rect x="6" y="6" width="3" height="10" opacity=".7"/><path d="M10 4 V16 M14 4 V16" opacity=".35"/></svg></div>
+        <h3>6.3 Shell Method</h3><p>V = 2π∫x·f(x)dx — กระบอกบาง</p>
+      </div>
+      <div class="section-card" onclick="showSec('arclength')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 15 Q7 5 12 9 Q16 13 17 6"/><path d="M3 15 L7 9 L12 9 L17 6" stroke-dasharray="2 1.5" opacity=".5"/></svg></div>
+        <h3>6.4 Arc Length</h3><p>L = ∫√(1+[f']²)dx — ความยาวส่วนโค้ง</p>
+      </div>
+      <div class="section-card" onclick="showSec('surface')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 14 Q8 4 17 6"/><ellipse cx="5" cy="14" rx="2" ry="1.2" opacity=".6"/><ellipse cx="10" cy="9" rx="3" ry="1.6" opacity=".7"/><ellipse cx="16" cy="7" rx="1.5" ry=".9" opacity=".5"/></svg></div>
+        <h3>6.5 Surface Area</h3><p>S = 2π∫f(x)√(1+[f']²)dx</p>
+      </div>
+      <div class="section-card" onclick="showSec('quiz')">
+        <div class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="10" cy="10" r="8" opacity=".35"/><path d="M8 8 Q8 5.5 10 5.5 Q12 5.5 12 7.5 Q12 9.5 10 10 L10 11.5"/><circle cx="10" cy="14" r=".8" fill="currentColor" stroke="none"/></svg></div>
+        <h3>แบบฝึกหัด</h3><p>ทดสอบความเข้าใจ 8 ข้อ</p>
+      </div>
+    </div>
+
+    <div class="cs" style="margin-top:1.8rem">
+      <h2>สูตรสำคัญ</h2>
+      <div class="grid2">
+        <div class="def-box"><div class="lbl">พื้นที่ระหว่างกราฟ</div>
+          <div class="formula">A = &#x222B;<sub>a</sub><sup>b</sup> [f(x) &#x2212; g(x)] dx</div>
+          <p style="font-size:.83rem;color:#94a3b8">f(x) ≥ g(x) บน [a,b]</p>
+        </div>
+        <div class="def-box"><div class="lbl">ปริมาตร (Disk Method)</div>
+          <div class="formula">V = &pi;&#x222B;<sub>a</sub><sup>b</sup> [f(x)]&sup2; dx</div>
+          <p style="font-size:.83rem;color:#94a3b8">หมุนรอบแกน x</p>
+        </div>
+        <div class="def-box"><div class="lbl">ปริมาตร (Shell Method)</div>
+          <div class="formula">V = 2&pi;&#x222B;<sub>a</sub><sup>b</sup> x&middot;f(x) dx</div>
+          <p style="font-size:.83rem;color:#94a3b8">หมุนรอบแกน y</p>
+        </div>
+        <div class="def-box"><div class="lbl">ความยาวส่วนโค้ง</div>
+          <div class="formula">L = &#x222B;<sub>a</sub><sup>b</sup> &radic;(1 + [f'(x)]&sup2;) dx</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs">
+      <h2>ภาพรวม — พื้นที่ระหว่างสองกราฟ</h2>
+      <div class="canvas-wrap"><canvas id="overviewCanvas" width="760" height="220"></canvas></div>
+    </div>
+
+    <div class="page-nav">
+      <a class="page-nav-btn" href="ch5.html">&#x2190; Chapter V: Integrals</a>
+      <span class="page-nav-ctr">1 / 7</span>
+      <button class="page-nav-btn" onclick="showSec('area')">6.1 Area Between Curves &#x2192;</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ 6.1 AREA ══ -->
+  <div id="page-area" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>6.1 Area Between Curves</h2>
+      <div class="thm-box">
+        <div class="lbl">สูตร — Area Between Curves</div>
+        <p>ถ้า f(x) ≥ g(x) บน [a, b] แล้ว</p>
+        <div class="formula">A = &#x222B;<sub>a</sub><sup>b</sup> [f(x) &#x2212; g(x)] dx</div>
+        <p style="font-size:.84rem;color:#94a3b8;margin-top:.3rem">ถ้ากราฟตัดกัน ให้หาจุดตัดก่อน แล้วแบ่ง Integral ตามช่วง</p>
+      </div>
+
+      <div class="grid2" style="margin-top:.7rem">
+        <div class="ex-box"><div class="lbl">ตัวอย่าง 1</div>
+          <p style="font-size:.84rem;line-height:1.9">หาพื้นที่ระหว่าง f(x)=x² และ g(x)=x<br>
+          จุดตัด: x²=x → x=0, x=1<br>
+          A = ∫₀¹ (x−x²) dx = [x²/2−x³/3]₀¹ = <strong style="color:var(--green)">1/6</strong></p>
+        </div>
+        <div class="ex-box"><div class="lbl">ตัวอย่าง 2 (หลายช่วง)</div>
+          <p style="font-size:.84rem;line-height:1.9">f(x)=cos x, g(x)=sin x บน [0,π]<br>
+          จุดตัด: x=π/4<br>
+          A = ∫₀^(π/4)(cos−sin)dx + ∫_(π/4)^π(sin−cos)dx</p>
+        </div>
+      </div>
+
+      <div class="canvas-wrap" style="margin-top:1rem">
+        <h4>Area Between Curves — เลื่อน a, b และเลือกคู่ฟังก์ชัน</h4>
+        <canvas id="areaCanvas" width="760" height="300"></canvas>
+        <div class="controls">
+          <button class="btn on" id="bAr0" onclick="setAreaFn(0)">x vs x²</button>
+          <button class="btn"    id="bAr1" onclick="setAreaFn(1)">sin vs cos</button>
+          <button class="btn"    id="bAr2" onclick="setAreaFn(2)">x² vs x³</button>
+          <button class="btn"    id="bAr3" onclick="setAreaFn(3)">√x vs x²</button>
+          <span class="ctrl-label" style="margin-left:.5rem">a=</span>
+          <input type="range" id="areaA" min="0" max="40" value="0" oninput="redrawArea()">
+          <span id="areaAVal" style="color:var(--blue);font-family:monospace;min-width:40px"></span>
+          <span class="ctrl-label">b=</span>
+          <input type="range" id="areaB" min="10" max="50" value="30" oninput="redrawArea()">
+          <span id="areaBVal" style="color:var(--blue);font-family:monospace;min-width:40px"></span>
+        </div>
+        <div id="areaInfo" style="text-align:center;font-family:monospace;font-size:.84rem;color:var(--green);margin-top:.4rem"></div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('overview')">&#x2190; ภาพรวม</button>
+      <span class="page-nav-ctr">2 / 7</span>
+      <button class="page-nav-btn" onclick="showSec('disk')">6.2 Disk &amp; Washer &#x2192;</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ 6.2 DISK / WASHER ══ -->
+  <div id="page-disk" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>6.2 Volume: Disk and Washer Method</h2>
+      <div class="grid2">
+        <div class="thm-box"><div class="lbl">Disk Method (หมุนรอบแกน x)</div>
+          <div class="formula">V = &pi;&#x222B;<sub>a</sub><sup>b</sup> [f(x)]&sup2; dx</div>
+          <p style="font-size:.83rem;color:#94a3b8;margin-top:.3rem">แต่ละแผ่นบางๆ เป็นวงกลมรัศมี f(x)</p>
+        </div>
+        <div class="thm-box"><div class="lbl">Washer Method (มีรู)</div>
+          <div class="formula">V = &pi;&#x222B;<sub>a</sub><sup>b</sup> [f(x)&sup2; &#x2212; g(x)&sup2;] dx</div>
+          <p style="font-size:.83rem;color:#94a3b8;margin-top:.3rem">Washer = Disk ใหญ่ − Disk เล็ก</p>
+        </div>
+      </div>
+
+      <div class="grid2" style="margin-top:.7rem">
+        <div class="ex-box"><div class="lbl">ตัวอย่าง Disk</div>
+          <p style="font-size:.84rem;line-height:1.9">f(x)=√x หมุนรอบแกน x บน [0,4]<br>
+          V = π∫₀⁴ x dx = π[x²/2]₀⁴ = <strong style="color:var(--green)">8π ≈ 25.13</strong></p>
+        </div>
+        <div class="ex-box"><div class="lbl">ตัวอย่าง Washer</div>
+          <p style="font-size:.84rem;line-height:1.9">f(x)=√x, g(x)=x บน [0,1]<br>
+          V = π∫₀¹(x−x²)dx = π[x²/2−x³/3]₀¹ = <strong style="color:var(--green)">π/6</strong></p>
+        </div>
+      </div>
+
+      <div class="canvas-wrap" style="margin-top:1rem">
+        <h4>Disk &amp; Washer Visualizer — หน้าตัด 2D (แกน x อยู่แนวนอน)</h4>
+        <canvas id="diskCanvas" width="760" height="320"></canvas>
+        <div class="controls">
+          <button class="btn on" id="bDsk0" onclick="setDiskFn(0)">Disk: f=√x</button>
+          <button class="btn"    id="bDsk1" onclick="setDiskFn(1)">Disk: f=x²</button>
+          <button class="btn"    id="bDsk2" onclick="setDiskFn(2)">Washer: f=√x, g=x</button>
+          <button class="btn"    id="bDsk3" onclick="setDiskFn(3)">Washer: f=2, g=x</button>
+          <span class="ctrl-label" style="margin-left:.5rem">x =</span>
+          <input type="range" id="diskX" min="5" max="95" value="50" oninput="redrawDisk()">
+          <span id="diskXVal" style="color:var(--yellow);font-family:monospace;min-width:50px"></span>
+        </div>
+        <div id="diskInfo" style="text-align:center;font-family:monospace;font-size:.84rem;color:var(--green);margin-top:.4rem"></div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('area')">&#x2190; 6.1 Area</button>
+      <span class="page-nav-ctr">3 / 7</span>
+      <button class="page-nav-btn" onclick="showSec('shell')">6.3 Shell Method &#x2192;</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ 6.3 SHELL ══ -->
+  <div id="page-shell" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>6.3 The Shell Method</h2>
+      <div class="thm-box">
+        <div class="lbl">Shell Method (หมุนรอบแกน y)</div>
+        <div class="formula">V = 2&pi;&#x222B;<sub>a</sub><sup>b</sup> x &middot; f(x) dx</div>
+        <p style="font-size:.84rem;color:#94a3b8;margin-top:.3rem">แต่ละ Shell คือกระบอกบางรัศมี x สูง f(x) ความหนา dx</p>
+      </div>
+
+      <div class="grid2" style="margin-top:.7rem">
+        <div class="ex-box"><div class="lbl">เปรียบเทียบ Disk vs Shell</div>
+          <p style="font-size:.84rem;line-height:1.9"><strong style="color:var(--blue)">Disk/Washer</strong> — หมุนรอบแกน x, slice ⊥ แกน x<br>
+          <strong style="color:var(--green)">Shell</strong> — หมุนรอบแกน y, slice ∥ แกน y<br>
+          ให้ผลลัพธ์เดียวกัน แต่บางกรณี Shell ง่ายกว่า</p>
+        </div>
+        <div class="ex-box"><div class="lbl">ตัวอย่าง Shell</div>
+          <p style="font-size:.84rem;line-height:1.9">f(x)=x−x² หมุนรอบแกน y บน [0,1]<br>
+          V = 2π∫₀¹ x(x−x²)dx = 2π∫₀¹(x²−x³)dx<br>
+          = 2π[x³/3−x⁴/4]₀¹ = <strong style="color:var(--green)">2π/12 = π/6</strong></p>
+        </div>
+      </div>
+
+      <div class="canvas-wrap" style="margin-top:1rem">
+        <h4>Shell Method — กระบอกบาง (Shell) ที่รัศมี x</h4>
+        <canvas id="shellCanvas" width="760" height="310"></canvas>
+        <div class="controls">
+          <button class="btn on" id="bSh0" onclick="setShellFn(0)">f=x−x²</button>
+          <button class="btn"    id="bSh1" onclick="setShellFn(1)">f=sin(x)</button>
+          <button class="btn"    id="bSh2" onclick="setShellFn(2)">f=√x</button>
+          <span class="ctrl-label" style="margin-left:.5rem">Shell at x =</span>
+          <input type="range" id="shellX" min="5" max="90" value="40" oninput="redrawShell()">
+          <span id="shellXVal" style="color:var(--yellow);font-family:monospace;min-width:50px"></span>
+        </div>
+        <div id="shellInfo" style="text-align:center;font-family:monospace;font-size:.84rem;color:var(--green);margin-top:.4rem"></div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('disk')">&#x2190; 6.2 Disk &amp; Washer</button>
+      <span class="page-nav-ctr">4 / 7</span>
+      <button class="page-nav-btn" onclick="showSec('arclength')">6.4 Arc Length &#x2192;</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ 6.4 ARC LENGTH ══ -->
+  <div id="page-arclength" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>6.4 Arc Length</h2>
+      <div class="thm-box">
+        <div class="lbl">สูตร Arc Length</div>
+        <div class="formula">L = &#x222B;<sub>a</sub><sup>b</sup> &radic;(1 + [f'(x)]&sup2;) dx</div>
+        <p style="font-size:.84rem;color:#94a3b8;margin-top:.3rem">มาจาก Pythagoras: ds = √(dx² + dy²) = √(1+(dy/dx)²) dx</p>
+      </div>
+
+      <div class="grid2" style="margin-top:.7rem">
+        <div class="ex-box"><div class="lbl">ที่มาของสูตร</div>
+          <p style="font-size:.84rem;line-height:1.9">แบ่งเส้นโค้งเป็น n ส่วนสั้นๆ<br>
+          Δs ≈ √(Δx² + Δy²) = √(1+(Δy/Δx)²)·Δx<br>
+          L = lim Σ Δs = ∫√(1+[f']²)dx</p>
+        </div>
+        <div class="ex-box"><div class="lbl">ตัวอย่าง</div>
+          <p style="font-size:.84rem;line-height:1.9">f(x)=x^(3/2), [0,4]<br>
+          f'(x)=(3/2)√x<br>
+          L = ∫₀⁴ √(1+(9x/4))dx = <strong style="color:var(--green)">≈ 9.073</strong></p>
+        </div>
+      </div>
+
+      <div class="canvas-wrap" style="margin-top:1rem">
+        <h4>Arc Length Approximation — n ส่วนตรง</h4>
+        <canvas id="arcCanvas" width="760" height="290"></canvas>
+        <div class="controls">
+          <button class="btn on" id="bArc0" onclick="setArcFn(0)">f=x^(3/2)</button>
+          <button class="btn"    id="bArc1" onclick="setArcFn(1)">f=sin(x)</button>
+          <button class="btn"    id="bArc2" onclick="setArcFn(2)">f=x²/4</button>
+          <span class="ctrl-label" style="margin-left:.5rem">n =</span>
+          <input type="range" id="arcN" min="1" max="30" value="6" oninput="redrawArc()">
+          <span id="arcNVal" style="color:var(--yellow);font-family:monospace;min-width:30px"></span>
+        </div>
+        <div id="arcInfo" style="text-align:center;font-family:monospace;font-size:.84rem;color:var(--green);margin-top:.4rem"></div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('shell')">&#x2190; 6.3 Shell Method</button>
+      <span class="page-nav-ctr">5 / 7</span>
+      <button class="page-nav-btn" onclick="showSec('surface')">6.5 Surface Area &#x2192;</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ 6.5 SURFACE AREA ══ -->
+  <div id="page-surface" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>6.5 Area of a Surface of Revolution</h2>
+      <div class="thm-box">
+        <div class="lbl">สูตร Surface Area (หมุนรอบแกน x)</div>
+        <div class="formula">S = 2&pi;&#x222B;<sub>a</sub><sup>b</sup> f(x) &radic;(1 + [f'(x)]&sup2;) dx</div>
+        <p style="font-size:.84rem;color:#94a3b8;margin-top:.3rem">f(x) = รัศมีจากแกน, √(1+[f']²)dx = ความยาวส่วนเล็กของเส้นโค้ง</p>
+      </div>
+      <div class="thm-box" style="margin-top:.6rem">
+        <div class="lbl">หมุนรอบแกน y</div>
+        <div class="formula">S = 2&pi;&#x222B;<sub>a</sub><sup>b</sup> x &radic;(1 + [f'(x)]&sup2;) dx</div>
+      </div>
+
+      <div class="grid2" style="margin-top:.7rem">
+        <div class="ex-box"><div class="lbl">ตัวอย่าง — Sphere</div>
+          <p style="font-size:.84rem;line-height:1.9">f(x)=√(r²−x²) หมุนรอบแกน x<br>
+          f'(x)=−x/√(r²−x²)<br>
+          1+[f']² = r²/(r²−x²)<br>
+          S = 2π∫₋ᵣʳ √(r²−x²)·(r/√(r²−x²))dx<br>
+          = 2πr∫₋ᵣʳ dx = <strong style="color:var(--green)">4πr²</strong> ✓</p>
+        </div>
+        <div class="ex-box"><div class="lbl">ตัวอย่าง — Cone</div>
+          <p style="font-size:.84rem;line-height:1.9">f(x)=x หมุนรอบแกน x บน [0,h]<br>
+          f'(x)=1, √(1+1)=√2<br>
+          S = 2π∫₀ʰ x·√2 dx = 2π√2·h²/2<br>
+          = <strong style="color:var(--green)">π√2·h²</strong></p>
+        </div>
+      </div>
+
+      <div class="canvas-wrap" style="margin-top:1rem">
+        <h4>Surface Area — แถบพื้นผิวหมุน (2D cross section)</h4>
+        <canvas id="surfaceCanvas" width="760" height="290"></canvas>
+        <div class="controls">
+          <button class="btn on" id="bSurf0" onclick="setSurfFn(0)">f=√x</button>
+          <button class="btn"    id="bSurf1" onclick="setSurfFn(1)">f=x</button>
+          <button class="btn"    id="bSurf2" onclick="setSurfFn(2)">f=sin(x)</button>
+          <span class="ctrl-label" style="margin-left:.5rem">Bands n =</span>
+          <input type="range" id="surfN" min="2" max="20" value="8" oninput="redrawSurface()">
+          <span id="surfNVal" style="color:var(--yellow);font-family:monospace;min-width:30px"></span>
+        </div>
+        <div id="surfInfo" style="text-align:center;font-family:monospace;font-size:.84rem;color:var(--green);margin-top:.4rem"></div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('arclength')">&#x2190; 6.4 Arc Length</button>
+      <span class="page-nav-ctr">6 / 7</span>
+      <button class="page-nav-btn" onclick="showSec('quiz')">แบบฝึกหัด &#x2192;</button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ QUIZ ══ -->
+  <div id="page-quiz" class="page">
+  <div class="container">
+    <div class="cs">
+      <h2>แบบฝึกหัด — Chapter 6: Applications of Integrals</h2>
+      <p style="color:#94a3b8;margin-bottom:1.2rem">เลือกคำตอบที่ถูกต้อง — ระบบจะแสดงคำอธิบายทันที</p>
+      <div id="quizContainer"></div>
+    </div>
+    <div class="page-nav">
+      <button class="page-nav-btn" onclick="showSec('surface')">&#x2190; 6.5 Surface Area</button>
+      <span class="page-nav-ctr">7 / 7</span>
+      <a class="page-nav-btn" href="ch7.html">Chapter VII: Transcendental Functions &#x2192;</a>
+    </div>
+  </div>
+  </div>
+
+</main>
+<script src="sidebar.js"></script>
+<script>
+// ══ CANVAS HELPERS ══
+// Theme-aware palette (see theme.js) — let + applyCanvasTheme() so colors follow
+// the light/dark toggle; draw functions read the live bindings.
+let BG,GRID,AXIS,BLUE,GREEN,YELLOW,RED,PURPLE,MUTED,ORANGE,SURFACE,ON_SURFACE;
+function applyCanvasTheme(){ const t=window.CanvasTheme.get();
+  BG=t.BG;GRID=t.GRID;AXIS=t.AXIS;BLUE=t.BLUE;GREEN=t.GREEN;YELLOW=t.YELLOW;
+  RED=t.RED;PURPLE=t.PURPLE;MUTED=t.MUTED;ORANGE=t.ORANGE;SURFACE=t.SURFACE;ON_SURFACE=t.ON_SURFACE; }
+applyCanvasTheme();
+window._redrawCanvases=function(){ applyCanvasTheme(); initSec(window.CURRENT_SEC||'overview'); };
+
+function setupCanvas(id,W,H){
+  const cv=document.getElementById(id);if(!cv)return null;
+  const dpr=Math.min(window.devicePixelRatio||1,2);
+  cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+'px';cv.style.height=H+'px';
+  const ctx=cv.getContext('2d');ctx.scale(dpr,dpr);return{ctx,W,H};
+}
+function drawGrid(ctx,W,H,xMin,xMax,yMin,yMax){
+  ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);
+  const toX=x=>(x-xMin)/(xMax-xMin)*W, toY=y=>H-(y-yMin)/(yMax-yMin)*H;
+  const xs=Math.abs(xMax-xMin)>15?5:Math.abs(xMax-xMin)>8?2:1;
+  const ys=Math.abs(yMax-yMin)>15?5:Math.abs(yMax-yMin)>8?2:1;
+  ctx.strokeStyle=GRID;ctx.lineWidth=.5;
+  for(let x=Math.ceil(xMin/xs)*xs;x<=xMax;x+=xs){ctx.beginPath();ctx.moveTo(toX(x),0);ctx.lineTo(toX(x),H);ctx.stroke();}
+  for(let y=Math.ceil(yMin/ys)*ys;y<=yMax;y+=ys){ctx.beginPath();ctx.moveTo(0,toY(y));ctx.lineTo(W,toY(y));ctx.stroke();}
+  ctx.strokeStyle=AXIS;ctx.lineWidth=1.5;
+  if(yMin<=0&&yMax>=0){ctx.beginPath();ctx.moveTo(0,toY(0));ctx.lineTo(W,toY(0));ctx.stroke();}
+  if(xMin<=0&&xMax>=0){ctx.beginPath();ctx.moveTo(toX(0),0);ctx.lineTo(toX(0),H);ctx.stroke();}
+  ctx.fillStyle=MUTED;ctx.font='10px monospace';ctx.textAlign='center';
+  for(let x=Math.ceil(xMin/xs)*xs;x<=xMax;x+=xs)if(x!==0)ctx.fillText(x.toFixed(xs<1?1:0),toX(x),toY(0)+13);
+  ctx.textAlign='right';
+  for(let y=Math.ceil(yMin/ys)*ys;y<=yMax;y+=ys)if(y!==0)ctx.fillText(y.toFixed(ys<1?1:0),toX(0)-3,toY(y)+4);
+  return{toX,toY};
+}
+function plotFn(ctx,fn,xMin,xMax,W,H,yMin,yMax,col,lw=2){
+  const toX=x=>(x-xMin)/(xMax-xMin)*W,toY=y=>H-(y-yMin)/(yMax-yMin)*H;
+  ctx.strokeStyle=col;ctx.lineWidth=lw;ctx.beginPath();let ok=false;
+  for(let i=0;i<=W*2;i++){
+    const x=xMin+i/(W*2)*(xMax-xMin);let y;
+    try{y=fn(x);}catch{ok=false;continue;}
+    if(!isFinite(y)||Math.abs(y)>1e6){ok=false;continue;}
+    const px=toX(x),py=toY(y);
+    if(!ok){ctx.moveTo(px,py);ok=true;}else ctx.lineTo(px,py);
+  }ctx.stroke();
+}
+function dot(ctx,x,y,r,col,fill=true){
+  ctx.beginPath();ctx.arc(x,y,r,0,2*Math.PI);
+  if(fill){ctx.fillStyle=col;ctx.fill();}
+  else{ctx.strokeStyle=col;ctx.lineWidth=2;ctx.fillStyle=BG;ctx.fill();ctx.stroke();}
+}
+function lbl(ctx,text,x,y,col,align='center',sz=11){
+  ctx.fillStyle=col;ctx.font=sz+'px monospace';ctx.textAlign=align;ctx.fillText(text,x,y);
+}
+function dashLine(ctx,x1,y1,x2,y2,col,dash=[5,4]){
+  ctx.strokeStyle=col;ctx.lineWidth=1.2;ctx.setLineDash(dash);
+  ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();ctx.setLineDash([]);
+}
+function numInt(f,a,b,n=400){
+  const h=(b-a)/n;let s=0;
+  for(let i=0;i<n;i++)s+=f(a+(i+.5)*h)*h;
+  return s;
+}
+
+// ══ NAVIGATION ══
+const CRUMBS={
+  overview:'Applications of Integrals',area:'6.1 Area Between Curves',
+  disk:'6.2 Disk & Washer Method',shell:'6.3 Shell Method',
+  arclength:'6.4 Arc Length',surface:'6.5 Surface Area',quiz:'แบบฝึกหัด'
+};
+window.showSec=function(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.getElementById('crumbSec').textContent=CRUMBS[id]||id;
+  window.CURRENT_SEC=id;
+  if(window.setSidebarSec)setSidebarSec(id);
+  document.getElementById('main').scrollTop=0;
+  setTimeout(()=>initSec(id),60);
+};
+function initSec(id){
+  if(id==='overview')  drawOverview();
+  if(id==='area')      initArea();
+  if(id==='disk')      initDisk();
+  if(id==='shell')     initShell();
+  if(id==='arclength') initArc();
+  if(id==='surface')   initSurface();
+  if(id==='quiz')      initQuiz();
+}
+
+// ══ OVERVIEW ══
+function drawOverview(){
+  const c=setupCanvas('overviewCanvas',760,220);if(!c)return;
+  const{ctx,W,H}=c;
+  const f=x=>-0.3*x*x+2*x+0.5, g=x=>0.4*x+0.3;
+  const{toX,toY}=drawGrid(ctx,W,H,-0.5,7,-0.5,5);
+  const a=0.3,b=5.8;
+  ctx.fillStyle=GREEN+'28';ctx.beginPath();
+  ctx.moveTo(toX(a),toY(g(a)));
+  for(let i=0;i<=200;i++){const x=a+i/200*(b-a);ctx.lineTo(toX(x),toY(f(x)));}
+  for(let i=200;i>=0;i--){const x=a+i/200*(b-a);ctx.lineTo(toX(x),toY(g(x)));}
+  ctx.closePath();ctx.fill();
+  plotFn(ctx,f,-0.5,7,W,H,-0.5,5,BLUE,2.5);
+  plotFn(ctx,g,-0.5,7,W,H,-0.5,5,RED,2);
+  dashLine(ctx,toX(a),0,toX(a),H,YELLOW+'99');
+  dashLine(ctx,toX(b),0,toX(b),H,YELLOW+'99');
+  lbl(ctx,'f(x)',toX(3),toY(f(3))-14,BLUE,'center',12);
+  lbl(ctx,'g(x)',toX(4.5),toY(g(4.5))-14,RED,'center',12);
+  lbl(ctx,'A = ∫[f−g]dx',W/2,H-8,GREEN,'center',11);
+}
+
+// ══ 6.1 AREA ══
+const areaFns=[
+  {f:x=>x,  g:x=>x*x,    a:0,b:1,    exact:1/6,     xMin:-.2,xMax:1.3,yMin:-.2,yMax:1.3, lbl:'f=x, g=x²'},
+  {f:x=>Math.cos(x),g:x=>Math.sin(x),a:0,b:Math.PI,  exact:2*Math.sqrt(2), xMin:-.2,xMax:Math.PI+.2,yMin:-1.3,yMax:1.3,lbl:'f=cos(x), g=sin(x)'},
+  {f:x=>x*x,g:x=>x*x*x,  a:0,b:1,    exact:1/12,    xMin:-.1,xMax:1.2,yMin:-.1,yMax:1.2, lbl:'f=x², g=x³'},
+  {f:x=>Math.sqrt(x),g:x=>x*x,a:0,b:1,exact:1/3,    xMin:-.1,xMax:1.2,yMin:-.1,yMax:1.2, lbl:'f=√x, g=x²'},
+];
+let aFnIdx=0;
+function setAreaFn(i){aFnIdx=i;document.querySelectorAll('[id^=bAr]').forEach((b,j)=>b.classList.toggle('on',j===i));redrawArea();}
+function initArea(){aFnIdx=0;document.querySelectorAll('[id^=bAr]').forEach((b,j)=>b.classList.toggle('on',j===0));redrawArea();}
+function redrawArea(){
+  const d=areaFns[aFnIdx];
+  const ta=parseInt(document.getElementById('areaA').value)/100;
+  const tb=parseInt(document.getElementById('areaB').value)/100;
+  const span=d.b-d.a;
+  const av=Math.max(d.a,d.a+span*ta);
+  const bv=Math.min(d.b,d.a+span*tb);
+  const lo=Math.min(av,bv),hi=Math.max(av,bv);
+  document.getElementById('areaAVal').textContent=lo.toFixed(2);
+  document.getElementById('areaBVal').textContent=hi.toFixed(2);
+  const area=numInt(x=>Math.abs(d.f(x)-d.g(x)),lo,hi);
+  document.getElementById('areaInfo').textContent=
+    'A = ∫['+lo.toFixed(2)+','+hi.toFixed(2)+'] |f−g| dx ≈ '+area.toFixed(5)+
+    '  |  Exact (full): '+d.exact.toFixed(5);
+  const c=setupCanvas('areaCanvas',760,300);if(!c)return;
+  const{ctx,W,H}=c;
+  const{toX,toY}=drawGrid(ctx,W,H,d.xMin,d.xMax,d.yMin,d.yMax);
+  // shade between curves
+  ctx.fillStyle=GREEN+'28';ctx.beginPath();
+  ctx.moveTo(toX(lo),toY(d.f(lo)));
+  for(let i=0;i<=200;i++){const x=lo+i/200*(hi-lo);ctx.lineTo(toX(x),toY(d.f(x)));}
+  for(let i=200;i>=0;i--){const x=lo+i/200*(hi-lo);ctx.lineTo(toX(x),toY(d.g(x)));}
+  ctx.closePath();ctx.fill();
+  plotFn(ctx,d.f,d.xMin,d.xMax,W,H,d.yMin,d.yMax,BLUE,2.2);
+  plotFn(ctx,d.g,d.xMin,d.xMax,W,H,d.yMin,d.yMax,RED,2.2);
+  dashLine(ctx,toX(lo),0,toX(lo),H,YELLOW+'99');
+  dashLine(ctx,toX(hi),0,toX(hi),H,YELLOW+'99');
+  lbl(ctx,d.lbl.split(', ')[0],10,18,BLUE,'left',11);
+  lbl(ctx,d.lbl.split(', ')[1],10,32,RED,'left',11);
+}
+
+// ══ 6.2 DISK/WASHER ══
+const diskFns=[
+  {f:x=>Math.sqrt(x),g:null,a:0,b:4,xMin:-.3,xMax:4.5,yMin:-2.5,yMax:2.5,lbl:'Disk: f=√x, [0,4]',
+   vol:()=>Math.PI*numInt(x=>x,0,4),method:'Disk'},
+  {f:x=>x*x/4,g:null,a:0,b:3,xMin:-.3,xMax:3.5,yMin:-2.5,yMax:2.5,lbl:'Disk: f=x²/4, [0,3]',
+   vol:()=>Math.PI*numInt(x=>(x*x/4)**2,0,3),method:'Disk'},
+  {f:x=>Math.sqrt(x),g:x=>x,a:0,b:1,xMin:-.2,xMax:1.4,yMin:-1.2,yMax:1.2,lbl:'Washer: f=√x, g=x',
+   vol:()=>Math.PI*numInt(x=>x-x*x,0,1),method:'Washer'},
+  {f:x=>2,g:x=>x,a:0,b:2,xMin:-.3,xMax:2.5,yMin:-2.5,yMax:2.5,lbl:'Washer: f=2, g=x',
+   vol:()=>Math.PI*numInt(x=>4-x*x,0,2),method:'Washer'},
+];
+let dFnIdx=0;
+function setDiskFn(i){dFnIdx=i;document.querySelectorAll('[id^=bDsk]').forEach((b,j)=>b.classList.toggle('on',j===i));redrawDisk();}
+function initDisk(){dFnIdx=0;document.querySelectorAll('[id^=bDsk]').forEach((b,j)=>b.classList.toggle('on',j===0));redrawDisk();}
+function redrawDisk(){
+  const d=diskFns[dFnIdx];
+  const t=parseInt(document.getElementById('diskX').value)/100;
+  const xVal=d.a+(d.b-d.a)*t;
+  document.getElementById('diskXVal').textContent='x='+xVal.toFixed(3);
+  const R=Math.abs(d.f(xVal)),r=d.g?Math.abs(d.g(xVal)):0;
+  const vol=d.vol();
+  document.getElementById('diskInfo').textContent=
+    d.method+' at x='+xVal.toFixed(2)+': R='+R.toFixed(3)+(d.g?', r='+r.toFixed(3):'')+
+    '  |  Total V ≈ '+vol.toFixed(4)+' ≈ '+( vol/Math.PI).toFixed(4)+'π';
+  const c=setupCanvas('diskCanvas',760,320);if(!c)return;
+  const{ctx,W,H}=c;
+  const{toX,toY}=drawGrid(ctx,W,H,d.xMin,d.xMax,d.yMin,d.yMax);
+  // shade upper region
+  ctx.fillStyle=BLUE+'18';ctx.beginPath();
+  ctx.moveTo(toX(d.a),toY(0));
+  for(let i=0;i<=200;i++){const x=d.a+i/200*(d.b-d.a);ctx.lineTo(toX(x),toY(d.f(x)));}
+  ctx.lineTo(toX(d.b),toY(0));ctx.closePath();ctx.fill();
+  if(d.g){
+    ctx.fillStyle=BG;ctx.beginPath();
+    ctx.moveTo(toX(d.a),toY(0));
+    for(let i=0;i<=200;i++){const x=d.a+i/200*(d.b-d.a);ctx.lineTo(toX(x),toY(d.g(x)));}
+    ctx.lineTo(toX(d.b),toY(0));ctx.closePath();ctx.fill();
+  }
+  // mirror below x-axis
+  ctx.fillStyle=BLUE+'18';ctx.beginPath();
+  ctx.moveTo(toX(d.a),toY(0));
+  for(let i=0;i<=200;i++){const x=d.a+i/200*(d.b-d.a);ctx.lineTo(toX(x),toY(-d.f(x)));}
+  ctx.lineTo(toX(d.b),toY(0));ctx.closePath();ctx.fill();
+  if(d.g){
+    ctx.fillStyle=BG;ctx.beginPath();
+    ctx.moveTo(toX(d.a),toY(0));
+    for(let i=0;i<=200;i++){const x=d.a+i/200*(d.b-d.a);ctx.lineTo(toX(x),toY(-d.g(x)));}
+    ctx.lineTo(toX(d.b),toY(0));ctx.closePath();ctx.fill();
+  }
+  plotFn(ctx,d.f,d.xMin,d.xMax,W,H,d.yMin,d.yMax,BLUE,2);
+  plotFn(ctx,x=>-d.f(x),d.xMin,d.xMax,W,H,d.yMin,d.yMax,BLUE,2);
+  if(d.g){
+    plotFn(ctx,d.g,d.xMin,d.xMax,W,H,d.yMin,d.yMax,GREEN,1.5);
+    plotFn(ctx,x=>-d.g(x),d.xMin,d.xMax,W,H,d.yMin,d.yMax,GREEN,1.5);
+  }
+  // draw disk/washer at xVal
+  const cx2=toX(xVal),yc=toY(0);
+  const rPx=Math.abs(toY(R)-yc),rHPx=d.g?Math.abs(toY(r)-yc):0;
+  ctx.strokeStyle=YELLOW;ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(cx2,yc-rPx);ctx.lineTo(cx2,yc+rPx);ctx.stroke();
+  if(rHPx>0){ctx.strokeStyle=RED;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(cx2,yc-rHPx);ctx.lineTo(cx2,yc+rHPx);ctx.stroke();}
+  dashLine(ctx,toX(d.a),toY(0),cx2,toY(0),MUTED+'66');
+  lbl(ctx,d.lbl,10,18,BLUE,'left',11);
+  lbl(ctx,'R='+R.toFixed(2),cx2+6,yc-rPx/2,YELLOW,'left',10);
+  if(d.g&&rHPx>0)lbl(ctx,'r='+r.toFixed(2),cx2+6,yc-rHPx/2,RED,'left',10);
+}
+
+// ══ 6.3 SHELL ══
+const shellFns=[
+  {f:x=>x-x*x,a:0,b:1,xMin:-.1,xMax:1.2,yMin:-.05,yMax:.35,lbl:'f=x−x², หมุนรอบแกน y',exact:Math.PI/6},
+  {f:x=>Math.sin(x),a:0,b:Math.PI,xMin:-.3,xMax:Math.PI+.3,yMin:-.1,yMax:1.2,lbl:'f=sin(x), หมุนรอบแกน y',exact:2*Math.PI*Math.PI},
+  {f:x=>Math.sqrt(x),a:0,b:4,xMin:-.3,xMax:4.5,yMin:-.1,yMax:2.2,lbl:'f=√x, หมุนรอบแกน y',exact:2*Math.PI*numInt(x=>x*Math.sqrt(x),0,4)},
+];
+let shFnIdx=0;
+function setShellFn(i){shFnIdx=i;document.querySelectorAll('[id^=bSh]').forEach((b,j)=>b.classList.toggle('on',j===i));redrawShell();}
+function initShell(){shFnIdx=0;document.querySelectorAll('[id^=bSh]').forEach((b,j)=>b.classList.toggle('on',j===0));redrawShell();}
+function redrawShell(){
+  const d=shellFns[shFnIdx];
+  const t=parseInt(document.getElementById('shellX').value)/100;
+  const xShell=d.a+(d.b-d.a)*t;
+  document.getElementById('shellXVal').textContent='x='+xShell.toFixed(3);
+  const fx=d.f(xShell);
+  const vol=2*Math.PI*numInt(x=>x*d.f(x),d.a,d.b);
+  document.getElementById('shellInfo').textContent=
+    'Shell radius='+xShell.toFixed(3)+', height='+fx.toFixed(3)+
+    '  |  V = 2π∫x·f(x)dx ≈ '+vol.toFixed(4)+' ≈ '+(vol/Math.PI).toFixed(4)+'π';
+  const c=setupCanvas('shellCanvas',760,310);if(!c)return;
+  const{ctx,W,H}=c;
+  const{toX,toY}=drawGrid(ctx,W,H,d.xMin,d.xMax,d.yMin,d.yMax);
+  // shade region
+  ctx.fillStyle=BLUE+'18';ctx.beginPath();
+  ctx.moveTo(toX(d.a),toY(0));
+  for(let i=0;i<=200;i++){const x=d.a+i/200*(d.b-d.a);ctx.lineTo(toX(x),toY(d.f(x)));}
+  ctx.lineTo(toX(d.b),toY(0));ctx.closePath();ctx.fill();
+  plotFn(ctx,d.f,d.xMin,d.xMax,W,H,d.yMin,d.yMax,BLUE,2.2);
+  // draw shell rectangle
+  const dx=(d.b-d.a)*0.025;
+  const rx=toX(Math.max(d.a,xShell-dx/2)), rw=Math.max(2,toX(xShell+dx/2)-rx);
+  const ry=toY(Math.max(0,fx)), rh=Math.abs(toY(0)-toY(fx));
+  ctx.fillStyle=YELLOW+'40';ctx.fillRect(rx,ry,rw,rh);
+  ctx.strokeStyle=YELLOW;ctx.lineWidth=2;ctx.strokeRect(rx,ry,rw,rh);
+  // label: radius arrow along x-axis
+  ctx.strokeStyle=GREEN;ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.moveTo(toX(0),toY(0)+10);ctx.lineTo(toX(xShell),toY(0)+10);ctx.stroke();
+  lbl(ctx,'r='+xShell.toFixed(2),toX(xShell/2),toY(0)+22,GREEN,'center',9);
+  lbl(ctx,'h='+fx.toFixed(3),toX(xShell)+8,toY(fx/2),YELLOW,'left',9);
+  lbl(ctx,d.lbl,10,18,BLUE,'left',11);
+}
+
+// ══ 6.4 ARC LENGTH ══
+const arcFns=[
+  {f:x=>Math.pow(x,1.5),fp:x=>1.5*Math.sqrt(x),a:0,b:4,xMin:-.3,xMax:4.5,yMin:-.5,yMax:8.5,lbl:'f=x^(3/2)'},
+  {f:x=>Math.sin(x),fp:x=>Math.cos(x),a:0,b:Math.PI,xMin:-.3,xMax:Math.PI+.3,yMin:-.2,yMax:1.3,lbl:'f=sin(x), [0,π]'},
+  {f:x=>x*x/4,fp:x=>x/2,a:0,b:4,xMin:-.3,xMax:4.5,yMin:-.3,yMax:4.5,lbl:'f=x²/4'},
+];
+let arcFnIdx=0;
+function setArcFn(i){arcFnIdx=i;document.querySelectorAll('[id^=bArc]').forEach((b,j)=>b.classList.toggle('on',j===i));redrawArc();}
+function initArc(){arcFnIdx=0;document.querySelectorAll('[id^=bArc]').forEach((b,j)=>b.classList.toggle('on',j===0));redrawArc();}
+function redrawArc(){
+  const d=arcFns[arcFnIdx];
+  const n=parseInt(document.getElementById('arcN').value);
+  document.getElementById('arcNVal').textContent=n;
+  const c=setupCanvas('arcCanvas',760,290);if(!c)return;
+  const{ctx,W,H}=c;
+  const{toX,toY}=drawGrid(ctx,W,H,d.xMin,d.xMax,d.yMin,d.yMax);
+  // true arc
+  plotFn(ctx,d.f,d.xMin,d.xMax,W,H,d.yMin,d.yMax,BLUE+'66',1.5);
+  // approximate with n segments
+  const pts=[];
+  for(let i=0;i<=n;i++){pts.push({x:d.a+i/n*(d.b-d.a)});}
+  pts.forEach(p=>{p.y=d.f(p.x);});
+  let approxLen=0;
+  ctx.strokeStyle=YELLOW;ctx.lineWidth=2;ctx.beginPath();
+  pts.forEach((p,i)=>{
+    if(i===0){ctx.moveTo(toX(p.x),toY(p.y));}
+    else{
+      ctx.lineTo(toX(p.x),toY(p.y));
+      const pp=pts[i-1];
+      approxLen+=Math.sqrt((p.x-pp.x)**2+(p.y-pp.y)**2);
+    }
+    dot(ctx,toX(p.x),toY(p.y),3,YELLOW);
+  });
+  ctx.stroke();
+  const exact=numInt(x=>Math.sqrt(1+d.fp(x)**2),d.a,d.b,800);
+  document.getElementById('arcInfo').textContent=
+    'n='+n+' segments: approx L = '+approxLen.toFixed(5)+
+    '  |  Exact L = ∫√(1+[f\']²)dx ≈ '+exact.toFixed(5)+
+    '  |  Error = '+(Math.abs(approxLen-exact)).toFixed(5);
+  lbl(ctx,d.lbl,10,18,BLUE,'left',11);
+  lbl(ctx,'Yellow = polygonal approx, Blue = true curve',W/2,H-8,MUTED,'center',10);
+}
+
+// ══ 6.5 SURFACE AREA ══
+const surfFns=[
+  {f:x=>Math.sqrt(x),fp:x=>0.5/Math.sqrt(Math.max(x,1e-9)),a:0,b:4,xMin:-.3,xMax:4.5,yMin:-.5,yMax:2.5,lbl:'f=√x'},
+  {f:x=>x,            fp:x=>1,                               a:0,b:3,xMin:-.3,xMax:3.5,yMin:-.3,yMax:3.5,lbl:'f=x (Cone)'},
+  {f:x=>Math.sin(x),  fp:x=>Math.cos(x),                     a:0,b:Math.PI,xMin:-.3,xMax:Math.PI+.3,yMin:-.2,yMax:1.3,lbl:'f=sin(x)'},
+];
+let sfFnIdx=0;
+function setSurfFn(i){sfFnIdx=i;document.querySelectorAll('[id^=bSurf]').forEach((b,j)=>b.classList.toggle('on',j===i));redrawSurface();}
+function initSurface(){sfFnIdx=0;document.querySelectorAll('[id^=bSurf]').forEach((b,j)=>b.classList.toggle('on',j===0));redrawSurface();}
+function redrawSurface(){
+  const d=surfFns[sfFnIdx];
+  const n=parseInt(document.getElementById('surfN').value);
+  document.getElementById('surfNVal').textContent=n;
+  const c=setupCanvas('surfaceCanvas',760,290);if(!c)return;
+  const{ctx,W,H}=c;
+  const{toX,toY}=drawGrid(ctx,W,H,d.xMin,d.xMax,d.yMin,d.yMax);
+  const dx=(d.b-d.a)/n;
+  let approxS=0;
+  const cols=[BLUE+'40',GREEN+'40',YELLOW+'40',PURPLE+'40',ORANGE+'40'];
+  for(let i=0;i<n;i++){
+    const x0=d.a+i*dx, x1=x0+dx;
+    const y0=d.f(x0), y1=d.f(x1);
+    const r=(y0+y1)/2;
+    const segLen=Math.sqrt(dx*dx+(y1-y0)**2);
+    approxS+=2*Math.PI*r*segLen;
+    ctx.fillStyle=cols[i%cols.length];
+    ctx.beginPath();ctx.moveTo(toX(x0),toY(0));ctx.lineTo(toX(x0),toY(y0));
+    ctx.lineTo(toX(x1),toY(y1));ctx.lineTo(toX(x1),toY(0));ctx.closePath();ctx.fill();
+    ctx.strokeStyle=MUTED+'55';ctx.lineWidth=.5;ctx.strokeRect?null:ctx.stroke();
+  }
+  plotFn(ctx,d.f,d.xMin,d.xMax,W,H,d.yMin,d.yMax,BLUE,2.2);
+  const exact=2*Math.PI*numInt(x=>d.f(x)*Math.sqrt(1+d.fp(x)**2),d.a,d.b,800);
+  document.getElementById('surfInfo').textContent=
+    'Approx S ≈ '+approxS.toFixed(4)+'  |  Exact S = 2π∫f√(1+[f\']²)dx ≈ '+exact.toFixed(4);
+  lbl(ctx,d.lbl,10,18,BLUE,'left',11);
+}
+
+// ══ QUIZ ══
+const quizData=[
+  {q:'พื้นที่ระหว่าง f(x)=x และ g(x)=x² บน [0,1] คือ?',
+   opts:['1/2','1/3','1/6','1/4'],ans:2,
+   exp:'A = ∫₀¹(x−x²)dx = [x²/2−x³/3]₀¹ = 1/2−1/3 = 1/6'},
+  {q:'Volume โดย Disk Method หมุน f(x) รอบแกน x คือ?',
+   opts:['2π∫x·f(x)dx','π∫[f(x)]²dx','∫[f(x)]²dx','2π∫[f(x)]²dx'],ans:1,
+   exp:'Disk Method: V = π∫[f(x)]²dx'},
+  {q:'Shell Method ใช้สูตร V = 2π∫x·f(x)dx เมื่อหมุนรอบ?',
+   opts:['แกน x','แกน y','เส้น y=1','เส้น x=1'],ans:1,
+   exp:'Shell Method V = 2π∫x·f(x)dx สำหรับการหมุนรอบแกน y'},
+  {q:'Arc Length คือ L = ∫√(1+?) dx',
+   opts:["[f'(x)]²","f'(x)","f(x)²","f''(x)"],ans:0,
+   exp:"L = ∫√(1+[f'(x)]²) dx มาจาก Pythagoras: ds² = dx² + dy²"},
+  {q:'ถ้า f(x)=x หมุนรอบแกน x [0,3] ปริมาตรคือ?',
+   opts:['3π','9π','27π/3','9π/3'],ans:1,
+   exp:'V = π∫₀³ x² dx = π[x³/3]₀³ = π·9 = 9π'},
+  {q:'Surface Area of Revolution = 2π∫f(x)√(1+[f\']²)dx คือพื้นที่ผิวเมื่อหมุนรอบ?',
+   opts:['แกน y','แกน x','เส้น y=c','เส้น x=c'],ans:1,
+   exp:'หมุนรอบแกน x: S = 2π∫f(x)√(1+[f\'(x)]²)dx'},
+  {q:'Washer Method ต่างจาก Disk Method อย่างไร?',
+   opts:['ไม่มีความแตกต่าง','Washer มีรูตรงกลาง (g>0)','Washer หมุนรอบแกน y','Washer ใช้ Shell แทน'],ans:1,
+   exp:'Washer = Disk ใหญ่ − Disk เล็ก: V = π∫[f²−g²]dx เมื่อมีรู'},
+  {q:'∫₀¹ (x − x²) dx = ?',
+   opts:['1/3','1/4','1/6','1/2'],ans:2,
+   exp:'[x²/2 − x³/3]₀¹ = 1/2 − 1/3 = 1/6'},
+];
+function initQuiz(){
+  const cont=document.getElementById('quizContainer');cont.innerHTML='';
+  quizData.forEach((q,qi)=>{
+    const d=document.createElement('div');
+    d.style.cssText='background:var(--card);border:1px solid var(--border);border-radius:10px;padding:.95rem 1.2rem;margin-bottom:.8rem';
+    d.innerHTML=`<div style="font-size:.65rem;color:var(--muted);font-weight:700;letter-spacing:1px;margin-bottom:.3rem">ข้อ ${qi+1}/${quizData.length}</div>
+<div style="font-size:.93rem;margin-bottom:.65rem">${q.q}</div>
+${q.opts.map((o,oi)=>`<div class="quiz-opt" id="qo-${qi}-${oi}" onclick="checkAns(${qi},${oi})">${String.fromCharCode(65+oi)}) ${o}</div>`).join('')}
+<div id="qf-${qi}" class="quiz-fb" style="display:none"></div>`;
+    cont.appendChild(d);
+  });
+}
+function checkAns(qi,oi){
+  const q=quizData[qi];
+  for(let i=0;i<q.opts.length;i++){
+    const el=document.getElementById('qo-'+qi+'-'+i);el.onclick=null;
+    if(i===q.ans)el.classList.add('correct');else if(i===oi)el.classList.add('wrong');
+  }
+  const fb=document.getElementById('qf-'+qi);fb.style.display='block';
+  if(oi===q.ans){fb.style.background='#001a10';fb.style.color='var(--green)';fb.textContent='✓ ถูกต้อง! '+q.exp;}
+  else{fb.style.background='#1a0008';fb.style.color='var(--red)';fb.textContent='✗ ไม่ถูกต้อง — '+q.exp;}
+}
+
+window.addEventListener('load',()=>{ drawOverview(); });
+</script>
+</body>
+</html>
